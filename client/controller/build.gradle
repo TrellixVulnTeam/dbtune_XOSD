@@ -1,0 +1,99 @@
+plugins {
+//    id "com.github.spotbugs" version "2.0.0"
+    id 'com.github.spotbugs' version '5.0.6'
+}
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'application'
+apply plugin: 'project-report'
+
+mainClassName = "com.controller.Main"
+
+test.testLogging { exceptionFormat "full"; events "failed", "passed", "skipped" }
+
+repositories {
+    mavenCentral()
+}
+
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.11'
+//    runtime fileTree(dir: 'libs', include: '*.jar')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation group: 'net.sourceforge.collections', name: 'collections-generic', version: '4.01'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+    implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.3'
+
+    // https://mvnrepository.com/artifact/com.github.fge/json-schema-validator
+    implementation group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
+    // https://mvnrepository.com/artifact/com.github.fge/jackson-coreutils
+    implementation group: 'com.github.fge', name: 'jackson-coreutils', version: '1.8'
+    // https://mvnrepository.com/artifact/com.github.fge/json-schema-core
+    implementation group: 'com.github.fge', name: 'json-schema-core', version: '1.2.5'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.0'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.0'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.0'
+    implementation(group: "com.github.java-json-tools", name: "json-schema-validator", version: "2.2.8");
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    // https://mvnrepository.com/artifact/commons-cli/commons-cli
+    implementation group: 'commons-cli', name: 'commons-cli', version: '1.2'
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.12'
+
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41'
+
+    // For Oracle, create the directory client/controller/libs and copy the driver
+    // (e.g., ojdbc8.jar) into it. The driver must be manually downloaded from Oracle.
+//    dependencies { implementation files('lib/ojdbc8.jar') }
+    implementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
+}
+
+run {
+    if (project.hasProperty("appArgs")) {
+        args(appArgs.split(' '))
+    }
+    // Below is another way to add args but this causes gradle to
+    // always invoke the run application task
+    // args = ["-c","$config","-t","$time","-d","$dir"]
+}
+
+spotbugs {
+    toolVersion = '4.0.0-beta3'
+    ignoreFailures = true
+}
+
+// Note (07-29-2019): the HTML report for spotbugs is currently broken
+//tasks.withType(com.github.spotbugs.SpotBugsTask) {
+//    reports {
+//        xml.enabled true
+//        html.enabled false
+//    }
+//}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+

@@ -1,0 +1,9 @@
+{
+  "database_type" : "mysql",
+  "database_url" : "jdbc:mysql://223.254.60.12:3306/tpcc?useSSL=false",
+  "username" : "root",
+  "password" : "12345678",
+  "upload_code" : "DEPRECATED",
+  "upload_url" : "DEPRECATED",
+  "workload_name" : "workload_name"
+}
