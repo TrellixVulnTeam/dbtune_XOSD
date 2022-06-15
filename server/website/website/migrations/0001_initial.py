@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             name='DBMSCatalog',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.IntegerField(choices=[(1, 'MySQL'), (2, 'Postgres'), (3, 'Db2'), (4, 'Oracle'), (6, 'SQLite'), (7, 'HStore'), (8, 'Vector'), (5, 'SQL Server'), (9, 'MyRocks'), (10, 'dm')])),
+                ('type', models.IntegerField(choices=[(1, 'MySQL'), (2, 'Postgres'), (3, 'Db2'), (4, 'Oracle'), (6, 'SQLite'), (7, 'HStore'), (8, 'Vector'), (5, 'SQL Server'), (9, 'MyRocks'), (10, 'DM')])),
                 ('version', models.CharField(max_length=16)),
             ],
             options={
@@ -176,7 +176,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=64, verbose_name='session name')),
                 ('description', models.TextField(blank=True, null=True)),
-                ('algorithm', models.IntegerField(choices=[(1, 'Gaussian Process Bandits'), (2, 'Deep Deterministic Policy Gradients'), (3, 'Deep Neural Network')], default=1)),
+                ('algorithm', models.IntegerField(choices=[(1, 'Gaussian Process Bandits(高斯回归)'), (2, 'Deep Deterministic Policy Gradients(DDPG)'), (3, 'Deep Neural Network(DNN)')], default=1)),
                 ('ddpg_actor_model', models.BinaryField(blank=True, null=True)),
                 ('ddpg_critic_model', models.BinaryField(blank=True, null=True)),
                 ('ddpg_reply_memory', models.BinaryField(blank=True, null=True)),

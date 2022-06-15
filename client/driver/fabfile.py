@@ -759,7 +759,7 @@ def set_oltpbench_config():
 
 
 @task
-def loop(i):
+def loop(i, isLoad):
     i = int(i)
 
     # free cache
@@ -779,6 +779,10 @@ def loop(i):
     p = Process(target=run_controller, args=())
     p.start()
     LOG.info('Run the controller')
+
+    if isLoad:
+        load_oltpbench()
+        LOG.info('Run Load OLTP-Bench')
 
     # run oltpbench as a background job
     while not _ready_to_start_oltpbench():
@@ -862,7 +866,7 @@ def set_dynamic_knobs(recommendation, context):
 
 
 @task
-def run_loops(max_iter=10):
+def run_loops(max_iter=10, load=False):
     # dump database if it's not done before.
     dump = dump_database()
     # put the BASE_DB_CONF in the config file
@@ -897,7 +901,7 @@ def run_loops(max_iter=10):
         LOG.info('Wait %s seconds after restarting database', dconf.RESTART_SLEEP_SEC)
         is_ready_db(interval_sec=10)
         LOG.info('The %s-th Loop Starts / Total Loops %s', i + 1, max_iter)
-        loop(i % dconf.RELOAD_INTERVAL if dconf.RELOAD_INTERVAL > 0 else i)
+        loop(i % dconf.RELOAD_INTERVAL if dconf.RELOAD_INTERVAL > 0 else i, load)
         LOG.info('The %s-th Loop Ends / Total Loops %s', i + 1, max_iter)
 
 

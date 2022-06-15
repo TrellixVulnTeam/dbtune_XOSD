@@ -31,6 +31,8 @@ def load_initial_data(apps, schema_editor):
         "mysql-57_metrics.json",
         "mysql-80_knobs.json",
         "mysql-80_metrics.json",
+        "dm-8_knobs.json",
+        "dm-8_metrics.json",
     ]
     for fixture in initial_data_fixtures:
         call_command("loaddata", fixture, app_label="website")

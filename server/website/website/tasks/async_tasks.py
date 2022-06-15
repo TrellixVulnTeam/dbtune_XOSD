@@ -1002,6 +1002,7 @@ def map_workload(map_workload_input):
         return target_data, algorithm
 
     # Get the latest version of pipeline data that's been computed so far.
+    # 获取迄今为止计算的最新版本的管道数据
     latest_pipeline_run = PipelineRun.objects.get_latest()
     assert latest_pipeline_run is not None
     target_data['pipeline_run'] = latest_pipeline_run.pk

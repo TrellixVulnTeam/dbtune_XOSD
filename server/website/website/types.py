@@ -51,7 +51,7 @@ class DBMSType(BaseType):
         VECTOR: 'Vector',
         SQLSERVER: 'SQL Server',
         MYROCKS: 'MyRocks',
-        DM: 'dm',
+        DM: 'DM',
     }
 
 
@@ -192,9 +192,9 @@ class AlgorithmType(BaseType):
     DNN = 3
 
     TYPE_NAMES = {
-        GPR: 'Gaussian Process Bandits',
-        DDPG: 'Deep Deterministic Policy Gradients',
-        DNN: 'Deep Neural Network',
+        GPR: 'Gaussian Process Bandits(高斯回归)',
+        DDPG: 'Deep Deterministic Policy Gradients(DDPG)',
+        DNN: 'Deep Neural Network(DNN)',
     }
 
     SHORT_NAMES = {

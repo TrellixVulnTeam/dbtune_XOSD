@@ -1,0 +1,8 @@
+{
+  "start_time": 1654748236130,
+  "end_time": 1654748297009,
+  "observation_time": 60,
+  "database_type": "dm",
+  "database_version": "8",
+  "workload_name": "tpcc"
+}

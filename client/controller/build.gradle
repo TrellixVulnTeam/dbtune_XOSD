@@ -13,6 +13,7 @@ mainClassName = "com.controller.Main"
 test.testLogging { exceptionFormat "full"; events "failed", "passed", "skipped" }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -66,6 +67,7 @@ dependencies {
     // (e.g., ojdbc8.jar) into it. The driver must be manually downloaded from Oracle.
 //    dependencies { implementation files('lib/ojdbc8.jar') }
     implementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
+    implementation group: 'dm', name: 'Dm8JdbcDriver', version: '8.1.2.38'
 }
 
 run {
@@ -82,18 +84,10 @@ spotbugs {
     ignoreFailures = true
 }
 
-// Note (07-29-2019): the HTML report for spotbugs is currently broken
-//tasks.withType(com.github.spotbugs.SpotBugsTask) {
-//    reports {
-//        xml.enabled true
-//        html.enabled false
-//    }
-//}
-
 tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
     reports {
         xml.required.set(true)
-        html.required.set(true)
+        html.required.set(false)
     }
 }
 

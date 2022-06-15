@@ -157,7 +157,7 @@ OLTPBENCH_HOME = os.path.expanduser('/home/zhc/oltpbench')
 
 # Path to the OLTPBench configuration file
 # OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/tpcc_config_postgres.xml')
-OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/sample_tpcc_config.xml')
+OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/{}_tpcc_config.xml'.format(DB_TYPE))
 
 # Name of the benchmark to run
 OLTPBENCH_BENCH = 'tpcc'
@@ -201,4 +201,4 @@ CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 WEBSITE_URL = 'http://223.254.60.12'
 
 # Code for uploading new results to the website
-UPLOAD_CODE = 'RLP0E06GCT2FDZD4ZFOR'
+UPLOAD_CODE = 'FLZ40CTB0ZIA1MGKWN8K'

@@ -1,0 +1,3350 @@
+[
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.2nd index update conflicts",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.2nd index update conflicts: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.after row trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.after row trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.after stmt trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.after stmt trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.before row trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.before row trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.before stmt trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.before stmt trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.btree direct update count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.btree direct update count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.btree left move fails",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.btree left move fails: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.btree level discard count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.btree level discard count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.btree page discard count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.btree page discard count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.btree split count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.btree split count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.bytes allocated from os",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.bytes allocated from os: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.check point by redo reserve ",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.check point by redo reserve : 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.check point time(ms) used",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.check point time(ms) used: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.check point total count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.check point total count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.command received count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.command received count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.command total time in sec",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.command total time in sec: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.cpu time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.cpu time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.cur concurrent olap query",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.cur concurrent olap query: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.data file extended count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.data file extended count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.data page changes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.data page changes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.data segments cleared",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.data segments cleared: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.data segments created",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.data segments created: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.data segments freed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.data segments freed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.db time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.db time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.ddl event trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.ddl event trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.ddl in pl/sql count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.ddl in pl/sql count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.ddl statements",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.ddl statements: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.delete statements",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.delete statements: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.delete statements in pl/sql",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.delete statements in pl/sql: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.dict object hit count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.dict object hit count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.dict object load count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.dict object load count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.dict object unload count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.dict object unload count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.dynamic exec in pl/sql",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.dynamic exec in pl/sql: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.ep changed count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.ep changed count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hagr buffer used in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hagr buffer used in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hard parse count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hard parse count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hard parse time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hard parse time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hash join count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hash join count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hj buffer merge used in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hj buffer merge used in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hj buffer total used in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hj buffer total used in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.hldr buf sys total size",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.hldr buf sys total size: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer free pages",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer free pages: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer logical read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer logical read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer mem alloc count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer mem alloc count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer mem free count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer mem free count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer mem use pages",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer mem use pages: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer physical read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer physical read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer physical read size in kilobytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer physical read size in kilobytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer physical write count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer physical write count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer physical write size in kilobytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer physical write size in kilobytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer reserve count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer reserve count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge buffer total pages",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge buffer total pages: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.huge file open count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.huge file open count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.ins/del update count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.ins/del update count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.insert statements",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.insert statements: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.insert statements in pl/sql",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.insert statements in pl/sql: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.instead of trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.instead of trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.io wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.io wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.latch wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.latch wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.log write bytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.log write bytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.logic read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.logic read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.login asynchronous task count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.login asynchronous task count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.long records convert count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.long records convert count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.lsn",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.lsn: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.max concurrent olap query",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.max concurrent olap query: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.max files count of memory map table",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.max files count of memory map table: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.memory pool size in bytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.memory pool size in bytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.memory used bytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.memory used bytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.memory used bytes from os",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.memory used bytes from os: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.multi-way sort count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.multi-way sort count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.mutex wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.mutex wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.mvcc retries when deleting",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.mvcc retries when deleting: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.mvcc retries when updating",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.mvcc retries when updating: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.objects hash size in pseg",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.objects hash size in pseg: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.objects in pseg",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.objects in pseg: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.one-way sort count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.one-way sort count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.optimized sort count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.optimized sort count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.os dm database cpu rate",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.os dm database cpu rate: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.os pipe count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.os pipe count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.os system cpu rate",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.os system cpu rate: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.os total cpu rate",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.os total cpu rate: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.package info cache used in bytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.package info cache used in bytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.pages flushed during check point",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.pages flushed during check point: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.parse count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.parse count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.parse time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.parse time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.parser errors",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.parser errors: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.physical multi read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.physical multi read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.physical read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.physical read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.physical write count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.physical write count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.plan cache hit count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.plan cache hit count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.plan total count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.plan total count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload count of first task",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload count of first task: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload count of interrupt",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload count of interrupt: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload count of loaded extents",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload count of loaded extents: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload count of predicted extents",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload count of predicted extents: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload count of scanned extents",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload count of scanned extents: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload count of second task",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload count of second task: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload io wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload io wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.preload wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.preload wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.recycle logic read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.recycle logic read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.recycle page changes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.recycle page changes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.recycle physical read count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.recycle physical read count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.recycle physical write count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.recycle physical write count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo log size in bytes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo log size in bytes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo log size in pages",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo log size in pages: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package allocate waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package allocate waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package allocated",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package allocated: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package concat count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package concat count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package flushed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package flushed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package freed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package freed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package opened",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package opened: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo package released",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo package released: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo sync wait time for commit(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo sync wait time for commit(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.redo sync wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.redo sync wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.reserved hagr buffer in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.reserved hagr buffer in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.reserved hj buffer in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.reserved hj buffer in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.roll file extended count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.roll file extended count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.roll segments cleared",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.roll segments cleared: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.roll segments created",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.roll segments created: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.roll segments freed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.roll segments freed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.rowset cache hit count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.rowset cache hit count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.rowset total count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.rowset total count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.runtime error count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.runtime error count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.runtime objects created",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.runtime objects created: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.runtime objects reclaimed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.runtime objects reclaimed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.runtime objects size allocated",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.runtime objects size allocated: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.select statements",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.select statements: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.select statements in pl/sql",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.select statements in pl/sql: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.serious error trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.serious error trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.session alloc count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.session alloc count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.session free count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.session free count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.shutdown trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.shutdown trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.sort buf global total size(mb)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.sort buf global total size(mb): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.sort buf global used size(mb)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.sort buf global used size(mb): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.sql cache hit count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.sql cache hit count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.sql executed count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.sql executed count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.sql get total count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.sql get total count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.sql node executed count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.sql node executed count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.startup trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.startup trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.svr log buffer average use len(byte)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.svr log buffer average use len(byte): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.svr log free buffer count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.svr log free buffer count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.svr log total buffer count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.svr log total buffer count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.table info hash size in pseg",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.table info hash size in pseg: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.table info items in pseg",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.table info items in pseg: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.table scan count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.table scan count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.task count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.task count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.temp file extended count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.temp file extended count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.temp segments cleared",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.temp segments cleared: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.temp segments created",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.temp segments created: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.temp segments freed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.temp segments freed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.thread switch count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.thread switch count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.timer trigged count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.timer trigged count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total bytes received from client",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total bytes received from client: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total bytes sent to client",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total bytes sent to client: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total hagr buffer in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total hagr buffer in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total hj buffer in m",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total hj buffer in m: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total mail bytes received",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total mail bytes received: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total mail bytes sent",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total mail bytes sent: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total mail letter sent",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total mail letter sent: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.total mail letters received",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.total mail letters received: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction commit count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction commit count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction deadlock count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction deadlock count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction duration waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction duration waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction lock waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction lock waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction rollback count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction rollback count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction total count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction total count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction total time in sec",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction total time in sec: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction view fill count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction view fill count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.transaction view get count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.transaction view get count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.trx exec count",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.trx exec count: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.trx lock wait time(ms)",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.trx lock wait time(ms): 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.undo extents extended",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.undo extents extended: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.undo page changes",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.undo page changes: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.undo pages allocated",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.undo pages allocated: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.undo pages reclaimed",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.undo pages reclaimed: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.update statements",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.update statements: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.update statements in pl/sql",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.update statements in pl/sql: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.vm sql root cache number",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.vm sql root cache number: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.vm sql root cache reserve number",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.vm sql root cache reserve number: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.sysstat.wait concurrent olap query",
+            "vartype": 2,
+            "default": "0",
+            "summary": "sysstat.wait concurrent olap query: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.commit wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.event",
+            "vartype": 1,
+            "default": "commit wait",
+            "summary": "system_event.commit wait.event: commit wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.commit wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.commit wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.commit wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.commit wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.commit wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.wait_class",
+            "vartype": 1,
+            "default": "Transaction",
+            "summary": "system_event.commit wait.wait_class: Transaction",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.commit wait.wait_class#",
+            "vartype": 2,
+            "default": "4",
+            "summary": "system_event.commit wait.wait_class#: 4",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.event",
+            "vartype": 1,
+            "default": "dbfile flush wait",
+            "summary": "system_event.dbfile flush wait.event: dbfile flush wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.wait_class",
+            "vartype": 1,
+            "default": "User I/O",
+            "summary": "system_event.dbfile flush wait.wait_class: User I/O",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile flush wait.wait_class#",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile flush wait.wait_class#: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.event",
+            "vartype": 1,
+            "default": "dbfile read wait",
+            "summary": "system_event.dbfile read wait.event: dbfile read wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.wait_class",
+            "vartype": 1,
+            "default": "User I/O",
+            "summary": "system_event.dbfile read wait.wait_class: User I/O",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.dbfile read wait.wait_class#",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.dbfile read wait.wait_class#: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page s latch wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.event",
+            "vartype": 1,
+            "default": "page s latch wait",
+            "summary": "system_event.page s latch wait.event: page s latch wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page s latch wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page s latch wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page s latch wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page s latch wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page s latch wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.wait_class",
+            "vartype": 1,
+            "default": "Concurrency",
+            "summary": "system_event.page s latch wait.wait_class: Concurrency",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page s latch wait.wait_class#",
+            "vartype": 2,
+            "default": "2",
+            "summary": "system_event.page s latch wait.wait_class#: 2",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page x latch wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.event",
+            "vartype": 1,
+            "default": "page x latch wait",
+            "summary": "system_event.page x latch wait.event: page x latch wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page x latch wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page x latch wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page x latch wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page x latch wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.page x latch wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.wait_class",
+            "vartype": 1,
+            "default": "Concurrency",
+            "summary": "system_event.page x latch wait.wait_class: Concurrency",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.page x latch wait.wait_class#",
+            "vartype": 2,
+            "default": "2",
+            "summary": "system_event.page x latch wait.wait_class#: 2",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg queue busy.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.event",
+            "vartype": 1,
+            "default": "pseg queue busy",
+            "summary": "system_event.pseg queue busy.event: pseg queue busy",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg queue busy.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg queue busy.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg queue busy.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg queue busy.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg queue busy.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.wait_class",
+            "vartype": 1,
+            "default": "Concurrency",
+            "summary": "system_event.pseg queue busy.wait_class: Concurrency",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg queue busy.wait_class#",
+            "vartype": 2,
+            "default": "2",
+            "summary": "system_event.pseg queue busy.wait_class#: 2",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg stack busy.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.event",
+            "vartype": 1,
+            "default": "pseg stack busy",
+            "summary": "system_event.pseg stack busy.event: pseg stack busy",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg stack busy.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg stack busy.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg stack busy.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg stack busy.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.pseg stack busy.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.wait_class",
+            "vartype": 1,
+            "default": "Concurrency",
+            "summary": "system_event.pseg stack busy.wait_class: Concurrency",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.pseg stack busy.wait_class#",
+            "vartype": 2,
+            "default": "2",
+            "summary": "system_event.pseg stack busy.wait_class#: 2",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.rlog flush wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.event",
+            "vartype": 1,
+            "default": "rlog flush wait",
+            "summary": "system_event.rlog flush wait.event: rlog flush wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.rlog flush wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.rlog flush wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.rlog flush wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.rlog flush wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.rlog flush wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.wait_class",
+            "vartype": 1,
+            "default": "Rlog",
+            "summary": "system_event.rlog flush wait.wait_class: Rlog",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.rlog flush wait.wait_class#",
+            "vartype": 2,
+            "default": "3",
+            "summary": "system_event.rlog flush wait.wait_class#: 3",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.table lock busy.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.event",
+            "vartype": 1,
+            "default": "table lock busy",
+            "summary": "system_event.table lock busy.event: table lock busy",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.table lock busy.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.table lock busy.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.table lock busy.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.table lock busy.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.table lock busy.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.wait_class",
+            "vartype": 1,
+            "default": "Concurrency",
+            "summary": "system_event.table lock busy.wait_class: Concurrency",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.table lock busy.wait_class#",
+            "vartype": 2,
+            "default": "2",
+            "summary": "system_event.table lock busy.wait_class#: 2",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.tid lock busy.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.event",
+            "vartype": 1,
+            "default": "tid lock busy",
+            "summary": "system_event.tid lock busy.event: tid lock busy",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.tid lock busy.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.tid lock busy.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.tid lock busy.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.tid lock busy.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.tid lock busy.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.wait_class",
+            "vartype": 1,
+            "default": "Concurrency",
+            "summary": "system_event.tid lock busy.wait_class: Concurrency",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.tid lock busy.wait_class#",
+            "vartype": 2,
+            "default": "2",
+            "summary": "system_event.tid lock busy.wait_class#: 2",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.average_wait_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.trxid lock wait.average_wait_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.event",
+            "vartype": 1,
+            "default": "trxid lock wait",
+            "summary": "system_event.trxid lock wait.event: trxid lock wait",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.smax_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.trxid lock wait.smax_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.smin_time",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.trxid lock wait.smin_time: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.time_waited",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.trxid lock wait.time_waited: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.time_waited_micro",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.trxid lock wait.time_waited_micro: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.total_waits",
+            "vartype": 2,
+            "default": "0",
+            "summary": "system_event.trxid lock wait.total_waits: 0",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.wait_class",
+            "vartype": 1,
+            "default": "Transaction",
+            "summary": "system_event.trxid lock wait.wait_class: Transaction",
+            "scope": "global",
+            "metric_type": 2
+        },
+        "model": "website.MetricCatalog"
+    },
+    {
+        "fields": {
+            "dbms": 190,
+            "name": "global.system_event.trxid lock wait.wait_class#",
+            "vartype": 2,
+            "default": "4",
+            "summary": "system_event.trxid lock wait.wait_class#: 4",
+            "scope": "global",
+            "metric_type": 3
+        },
+        "model": "website.MetricCatalog"
+    }
+]
