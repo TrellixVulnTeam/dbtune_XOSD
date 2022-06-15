@@ -89,7 +89,7 @@
   },
   {
     "model": "website.DBMSCatalog",
-    "pk": 190,
+    "pk": 20,
     "fields": {
       "type": 10,
       "version": "8"

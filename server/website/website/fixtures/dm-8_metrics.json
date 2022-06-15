@@ -1,7 +1,7 @@
 [
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.2nd index update conflicts",
             "vartype": 2,
             "default": "0",
@@ -13,7 +13,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.after row trigged count",
             "vartype": 2,
             "default": "0",
@@ -25,7 +25,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.after stmt trigged count",
             "vartype": 2,
             "default": "0",
@@ -37,7 +37,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.before row trigged count",
             "vartype": 2,
             "default": "0",
@@ -49,7 +49,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.before stmt trigged count",
             "vartype": 2,
             "default": "0",
@@ -61,7 +61,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.btree direct update count",
             "vartype": 2,
             "default": "0",
@@ -73,7 +73,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.btree left move fails",
             "vartype": 2,
             "default": "0",
@@ -85,7 +85,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.btree level discard count",
             "vartype": 2,
             "default": "0",
@@ -97,7 +97,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.btree page discard count",
             "vartype": 2,
             "default": "0",
@@ -109,7 +109,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.btree split count",
             "vartype": 2,
             "default": "0",
@@ -121,7 +121,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.bytes allocated from os",
             "vartype": 2,
             "default": "0",
@@ -133,7 +133,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.check point by redo reserve ",
             "vartype": 2,
             "default": "0",
@@ -145,7 +145,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.check point time(ms) used",
             "vartype": 2,
             "default": "0",
@@ -157,7 +157,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.check point total count",
             "vartype": 2,
             "default": "0",
@@ -169,7 +169,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.command received count",
             "vartype": 2,
             "default": "0",
@@ -181,7 +181,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.command total time in sec",
             "vartype": 2,
             "default": "0",
@@ -193,7 +193,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.cpu time(ms)",
             "vartype": 2,
             "default": "0",
@@ -205,7 +205,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.cur concurrent olap query",
             "vartype": 2,
             "default": "0",
@@ -217,7 +217,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.data file extended count",
             "vartype": 2,
             "default": "0",
@@ -229,7 +229,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.data page changes",
             "vartype": 2,
             "default": "0",
@@ -241,7 +241,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.data segments cleared",
             "vartype": 2,
             "default": "0",
@@ -253,7 +253,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.data segments created",
             "vartype": 2,
             "default": "0",
@@ -265,7 +265,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.data segments freed",
             "vartype": 2,
             "default": "0",
@@ -277,7 +277,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.db time(ms)",
             "vartype": 2,
             "default": "0",
@@ -289,7 +289,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.ddl event trigged count",
             "vartype": 2,
             "default": "0",
@@ -301,7 +301,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.ddl in pl/sql count",
             "vartype": 2,
             "default": "0",
@@ -313,7 +313,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.ddl statements",
             "vartype": 2,
             "default": "0",
@@ -325,7 +325,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.delete statements",
             "vartype": 2,
             "default": "0",
@@ -337,7 +337,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.delete statements in pl/sql",
             "vartype": 2,
             "default": "0",
@@ -349,7 +349,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.dict object hit count",
             "vartype": 2,
             "default": "0",
@@ -361,7 +361,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.dict object load count",
             "vartype": 2,
             "default": "0",
@@ -373,7 +373,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.dict object unload count",
             "vartype": 2,
             "default": "0",
@@ -385,7 +385,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.dynamic exec in pl/sql",
             "vartype": 2,
             "default": "0",
@@ -397,7 +397,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.ep changed count",
             "vartype": 2,
             "default": "0",
@@ -409,7 +409,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hagr buffer used in m",
             "vartype": 2,
             "default": "0",
@@ -421,7 +421,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hard parse count",
             "vartype": 2,
             "default": "0",
@@ -433,7 +433,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hard parse time(ms)",
             "vartype": 2,
             "default": "0",
@@ -445,7 +445,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hash join count",
             "vartype": 2,
             "default": "0",
@@ -457,7 +457,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hj buffer merge used in m",
             "vartype": 2,
             "default": "0",
@@ -469,7 +469,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hj buffer total used in m",
             "vartype": 2,
             "default": "0",
@@ -481,7 +481,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.hldr buf sys total size",
             "vartype": 2,
             "default": "0",
@@ -493,7 +493,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer free pages",
             "vartype": 2,
             "default": "0",
@@ -505,7 +505,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer logical read count",
             "vartype": 2,
             "default": "0",
@@ -517,7 +517,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer mem alloc count",
             "vartype": 2,
             "default": "0",
@@ -529,7 +529,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer mem free count",
             "vartype": 2,
             "default": "0",
@@ -541,7 +541,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer mem use pages",
             "vartype": 2,
             "default": "0",
@@ -553,7 +553,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer physical read count",
             "vartype": 2,
             "default": "0",
@@ -565,7 +565,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer physical read size in kilobytes",
             "vartype": 2,
             "default": "0",
@@ -577,7 +577,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer physical write count",
             "vartype": 2,
             "default": "0",
@@ -589,7 +589,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer physical write size in kilobytes",
             "vartype": 2,
             "default": "0",
@@ -601,7 +601,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer reserve count",
             "vartype": 2,
             "default": "0",
@@ -613,7 +613,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge buffer total pages",
             "vartype": 2,
             "default": "0",
@@ -625,7 +625,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.huge file open count",
             "vartype": 2,
             "default": "0",
@@ -637,7 +637,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.ins/del update count",
             "vartype": 2,
             "default": "0",
@@ -649,7 +649,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.insert statements",
             "vartype": 2,
             "default": "0",
@@ -661,7 +661,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.insert statements in pl/sql",
             "vartype": 2,
             "default": "0",
@@ -673,7 +673,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.instead of trigged count",
             "vartype": 2,
             "default": "0",
@@ -685,7 +685,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.io wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -697,7 +697,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.latch wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -709,7 +709,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.log write bytes",
             "vartype": 2,
             "default": "0",
@@ -721,7 +721,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.logic read count",
             "vartype": 2,
             "default": "0",
@@ -733,7 +733,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.login asynchronous task count",
             "vartype": 2,
             "default": "0",
@@ -745,7 +745,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.long records convert count",
             "vartype": 2,
             "default": "0",
@@ -757,7 +757,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.lsn",
             "vartype": 2,
             "default": "0",
@@ -769,7 +769,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.max concurrent olap query",
             "vartype": 2,
             "default": "0",
@@ -781,7 +781,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.max files count of memory map table",
             "vartype": 2,
             "default": "0",
@@ -793,7 +793,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.memory pool size in bytes",
             "vartype": 2,
             "default": "0",
@@ -805,7 +805,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.memory used bytes",
             "vartype": 2,
             "default": "0",
@@ -817,7 +817,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.memory used bytes from os",
             "vartype": 2,
             "default": "0",
@@ -829,7 +829,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.multi-way sort count",
             "vartype": 2,
             "default": "0",
@@ -841,7 +841,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.mutex wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -853,7 +853,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.mvcc retries when deleting",
             "vartype": 2,
             "default": "0",
@@ -865,7 +865,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.mvcc retries when updating",
             "vartype": 2,
             "default": "0",
@@ -877,7 +877,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.objects hash size in pseg",
             "vartype": 2,
             "default": "0",
@@ -889,7 +889,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.objects in pseg",
             "vartype": 2,
             "default": "0",
@@ -901,7 +901,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.one-way sort count",
             "vartype": 2,
             "default": "0",
@@ -913,7 +913,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.optimized sort count",
             "vartype": 2,
             "default": "0",
@@ -925,7 +925,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.os dm database cpu rate",
             "vartype": 2,
             "default": "0",
@@ -937,7 +937,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.os pipe count",
             "vartype": 2,
             "default": "0",
@@ -949,7 +949,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.os system cpu rate",
             "vartype": 2,
             "default": "0",
@@ -961,7 +961,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.os total cpu rate",
             "vartype": 2,
             "default": "0",
@@ -973,7 +973,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.package info cache used in bytes",
             "vartype": 2,
             "default": "0",
@@ -985,7 +985,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.pages flushed during check point",
             "vartype": 2,
             "default": "0",
@@ -997,7 +997,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.parse count",
             "vartype": 2,
             "default": "0",
@@ -1009,7 +1009,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.parse time(ms)",
             "vartype": 2,
             "default": "0",
@@ -1021,7 +1021,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.parser errors",
             "vartype": 2,
             "default": "0",
@@ -1033,7 +1033,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.physical multi read count",
             "vartype": 2,
             "default": "0",
@@ -1045,7 +1045,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.physical read count",
             "vartype": 2,
             "default": "0",
@@ -1057,7 +1057,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.physical write count",
             "vartype": 2,
             "default": "0",
@@ -1069,7 +1069,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.plan cache hit count",
             "vartype": 2,
             "default": "0",
@@ -1081,7 +1081,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.plan total count",
             "vartype": 2,
             "default": "0",
@@ -1093,7 +1093,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload count of first task",
             "vartype": 2,
             "default": "0",
@@ -1105,7 +1105,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload count of interrupt",
             "vartype": 2,
             "default": "0",
@@ -1117,7 +1117,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload count of loaded extents",
             "vartype": 2,
             "default": "0",
@@ -1129,7 +1129,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload count of predicted extents",
             "vartype": 2,
             "default": "0",
@@ -1141,7 +1141,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload count of scanned extents",
             "vartype": 2,
             "default": "0",
@@ -1153,7 +1153,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload count of second task",
             "vartype": 2,
             "default": "0",
@@ -1165,7 +1165,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload io wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -1177,7 +1177,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.preload wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -1189,7 +1189,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.recycle logic read count",
             "vartype": 2,
             "default": "0",
@@ -1201,7 +1201,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.recycle page changes",
             "vartype": 2,
             "default": "0",
@@ -1213,7 +1213,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.recycle physical read count",
             "vartype": 2,
             "default": "0",
@@ -1225,7 +1225,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.recycle physical write count",
             "vartype": 2,
             "default": "0",
@@ -1237,7 +1237,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo log size in bytes",
             "vartype": 2,
             "default": "0",
@@ -1249,7 +1249,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo log size in pages",
             "vartype": 2,
             "default": "0",
@@ -1261,7 +1261,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package allocate waited",
             "vartype": 2,
             "default": "0",
@@ -1273,7 +1273,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package allocated",
             "vartype": 2,
             "default": "0",
@@ -1285,7 +1285,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package concat count",
             "vartype": 2,
             "default": "0",
@@ -1297,7 +1297,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package flushed",
             "vartype": 2,
             "default": "0",
@@ -1309,7 +1309,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package freed",
             "vartype": 2,
             "default": "0",
@@ -1321,7 +1321,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package opened",
             "vartype": 2,
             "default": "0",
@@ -1333,7 +1333,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo package released",
             "vartype": 2,
             "default": "0",
@@ -1345,7 +1345,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo sync wait time for commit(ms)",
             "vartype": 2,
             "default": "0",
@@ -1357,7 +1357,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.redo sync wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -1369,7 +1369,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.reserved hagr buffer in m",
             "vartype": 2,
             "default": "0",
@@ -1381,7 +1381,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.reserved hj buffer in m",
             "vartype": 2,
             "default": "0",
@@ -1393,7 +1393,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.roll file extended count",
             "vartype": 2,
             "default": "0",
@@ -1405,7 +1405,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.roll segments cleared",
             "vartype": 2,
             "default": "0",
@@ -1417,7 +1417,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.roll segments created",
             "vartype": 2,
             "default": "0",
@@ -1429,7 +1429,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.roll segments freed",
             "vartype": 2,
             "default": "0",
@@ -1441,7 +1441,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.rowset cache hit count",
             "vartype": 2,
             "default": "0",
@@ -1453,7 +1453,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.rowset total count",
             "vartype": 2,
             "default": "0",
@@ -1465,7 +1465,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.runtime error count",
             "vartype": 2,
             "default": "0",
@@ -1477,7 +1477,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.runtime objects created",
             "vartype": 2,
             "default": "0",
@@ -1489,7 +1489,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.runtime objects reclaimed",
             "vartype": 2,
             "default": "0",
@@ -1501,7 +1501,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.runtime objects size allocated",
             "vartype": 2,
             "default": "0",
@@ -1513,7 +1513,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.select statements",
             "vartype": 2,
             "default": "0",
@@ -1525,7 +1525,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.select statements in pl/sql",
             "vartype": 2,
             "default": "0",
@@ -1537,7 +1537,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.serious error trigged count",
             "vartype": 2,
             "default": "0",
@@ -1549,7 +1549,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.session alloc count",
             "vartype": 2,
             "default": "0",
@@ -1561,7 +1561,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.session free count",
             "vartype": 2,
             "default": "0",
@@ -1573,7 +1573,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.shutdown trigged count",
             "vartype": 2,
             "default": "0",
@@ -1585,7 +1585,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.sort buf global total size(mb)",
             "vartype": 2,
             "default": "0",
@@ -1597,7 +1597,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.sort buf global used size(mb)",
             "vartype": 2,
             "default": "0",
@@ -1609,7 +1609,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.sql cache hit count",
             "vartype": 2,
             "default": "0",
@@ -1621,7 +1621,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.sql executed count",
             "vartype": 2,
             "default": "0",
@@ -1633,7 +1633,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.sql get total count",
             "vartype": 2,
             "default": "0",
@@ -1645,7 +1645,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.sql node executed count",
             "vartype": 2,
             "default": "0",
@@ -1657,7 +1657,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.startup trigged count",
             "vartype": 2,
             "default": "0",
@@ -1669,7 +1669,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.svr log buffer average use len(byte)",
             "vartype": 2,
             "default": "0",
@@ -1681,7 +1681,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.svr log free buffer count",
             "vartype": 2,
             "default": "0",
@@ -1693,7 +1693,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.svr log total buffer count",
             "vartype": 2,
             "default": "0",
@@ -1705,7 +1705,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.table info hash size in pseg",
             "vartype": 2,
             "default": "0",
@@ -1717,7 +1717,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.table info items in pseg",
             "vartype": 2,
             "default": "0",
@@ -1729,7 +1729,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.table scan count",
             "vartype": 2,
             "default": "0",
@@ -1741,7 +1741,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.task count",
             "vartype": 2,
             "default": "0",
@@ -1753,7 +1753,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.temp file extended count",
             "vartype": 2,
             "default": "0",
@@ -1765,7 +1765,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.temp segments cleared",
             "vartype": 2,
             "default": "0",
@@ -1777,7 +1777,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.temp segments created",
             "vartype": 2,
             "default": "0",
@@ -1789,7 +1789,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.temp segments freed",
             "vartype": 2,
             "default": "0",
@@ -1801,7 +1801,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.thread switch count",
             "vartype": 2,
             "default": "0",
@@ -1813,7 +1813,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.timer trigged count",
             "vartype": 2,
             "default": "0",
@@ -1825,7 +1825,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total bytes received from client",
             "vartype": 2,
             "default": "0",
@@ -1837,7 +1837,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total bytes sent to client",
             "vartype": 2,
             "default": "0",
@@ -1849,7 +1849,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total hagr buffer in m",
             "vartype": 2,
             "default": "0",
@@ -1861,7 +1861,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total hj buffer in m",
             "vartype": 2,
             "default": "0",
@@ -1873,7 +1873,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total mail bytes received",
             "vartype": 2,
             "default": "0",
@@ -1885,7 +1885,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total mail bytes sent",
             "vartype": 2,
             "default": "0",
@@ -1897,7 +1897,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total mail letter sent",
             "vartype": 2,
             "default": "0",
@@ -1909,7 +1909,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.total mail letters received",
             "vartype": 2,
             "default": "0",
@@ -1921,7 +1921,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction commit count",
             "vartype": 2,
             "default": "0",
@@ -1933,7 +1933,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction deadlock count",
             "vartype": 2,
             "default": "0",
@@ -1945,7 +1945,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction duration waits",
             "vartype": 2,
             "default": "0",
@@ -1957,7 +1957,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction lock waits",
             "vartype": 2,
             "default": "0",
@@ -1969,7 +1969,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction rollback count",
             "vartype": 2,
             "default": "0",
@@ -1981,7 +1981,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction total count",
             "vartype": 2,
             "default": "0",
@@ -1993,7 +1993,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction total time in sec",
             "vartype": 2,
             "default": "0",
@@ -2005,7 +2005,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction view fill count",
             "vartype": 2,
             "default": "0",
@@ -2017,7 +2017,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.transaction view get count",
             "vartype": 2,
             "default": "0",
@@ -2029,7 +2029,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.trx exec count",
             "vartype": 2,
             "default": "0",
@@ -2041,7 +2041,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.trx lock wait time(ms)",
             "vartype": 2,
             "default": "0",
@@ -2053,7 +2053,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.undo extents extended",
             "vartype": 2,
             "default": "0",
@@ -2065,7 +2065,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.undo page changes",
             "vartype": 2,
             "default": "0",
@@ -2077,7 +2077,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.undo pages allocated",
             "vartype": 2,
             "default": "0",
@@ -2089,7 +2089,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.undo pages reclaimed",
             "vartype": 2,
             "default": "0",
@@ -2101,7 +2101,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.update statements",
             "vartype": 2,
             "default": "0",
@@ -2113,7 +2113,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.update statements in pl/sql",
             "vartype": 2,
             "default": "0",
@@ -2125,7 +2125,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.vm sql root cache number",
             "vartype": 2,
             "default": "0",
@@ -2137,7 +2137,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.vm sql root cache reserve number",
             "vartype": 2,
             "default": "0",
@@ -2149,7 +2149,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.sysstat.wait concurrent olap query",
             "vartype": 2,
             "default": "0",
@@ -2161,7 +2161,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2173,7 +2173,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.event",
             "vartype": 1,
             "default": "commit wait",
@@ -2185,7 +2185,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2197,7 +2197,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2209,7 +2209,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2221,7 +2221,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2233,7 +2233,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2245,7 +2245,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.wait_class",
             "vartype": 1,
             "default": "Transaction",
@@ -2257,7 +2257,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.commit wait.wait_class#",
             "vartype": 2,
             "default": "4",
@@ -2269,7 +2269,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2281,7 +2281,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.event",
             "vartype": 1,
             "default": "dbfile flush wait",
@@ -2293,7 +2293,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2305,7 +2305,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2317,7 +2317,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2329,7 +2329,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2341,7 +2341,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2353,7 +2353,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.wait_class",
             "vartype": 1,
             "default": "User I/O",
@@ -2365,7 +2365,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile flush wait.wait_class#",
             "vartype": 2,
             "default": "0",
@@ -2377,7 +2377,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2389,7 +2389,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.event",
             "vartype": 1,
             "default": "dbfile read wait",
@@ -2401,7 +2401,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2413,7 +2413,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2425,7 +2425,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2437,7 +2437,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2449,7 +2449,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2461,7 +2461,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.wait_class",
             "vartype": 1,
             "default": "User I/O",
@@ -2473,7 +2473,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.dbfile read wait.wait_class#",
             "vartype": 2,
             "default": "0",
@@ -2485,7 +2485,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2497,7 +2497,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.event",
             "vartype": 1,
             "default": "page s latch wait",
@@ -2509,7 +2509,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2521,7 +2521,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2533,7 +2533,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2545,7 +2545,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2557,7 +2557,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2569,7 +2569,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.wait_class",
             "vartype": 1,
             "default": "Concurrency",
@@ -2581,7 +2581,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page s latch wait.wait_class#",
             "vartype": 2,
             "default": "2",
@@ -2593,7 +2593,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2605,7 +2605,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.event",
             "vartype": 1,
             "default": "page x latch wait",
@@ -2617,7 +2617,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2629,7 +2629,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2641,7 +2641,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2653,7 +2653,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2665,7 +2665,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2677,7 +2677,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.wait_class",
             "vartype": 1,
             "default": "Concurrency",
@@ -2689,7 +2689,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.page x latch wait.wait_class#",
             "vartype": 2,
             "default": "2",
@@ -2701,7 +2701,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2713,7 +2713,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.event",
             "vartype": 1,
             "default": "pseg queue busy",
@@ -2725,7 +2725,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2737,7 +2737,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2749,7 +2749,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2761,7 +2761,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2773,7 +2773,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2785,7 +2785,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.wait_class",
             "vartype": 1,
             "default": "Concurrency",
@@ -2797,7 +2797,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg queue busy.wait_class#",
             "vartype": 2,
             "default": "2",
@@ -2809,7 +2809,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2821,7 +2821,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.event",
             "vartype": 1,
             "default": "pseg stack busy",
@@ -2833,7 +2833,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2845,7 +2845,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2857,7 +2857,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2869,7 +2869,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2881,7 +2881,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.total_waits",
             "vartype": 2,
             "default": "0",
@@ -2893,7 +2893,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.wait_class",
             "vartype": 1,
             "default": "Concurrency",
@@ -2905,7 +2905,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.pseg stack busy.wait_class#",
             "vartype": 2,
             "default": "2",
@@ -2917,7 +2917,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -2929,7 +2929,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.event",
             "vartype": 1,
             "default": "rlog flush wait",
@@ -2941,7 +2941,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -2953,7 +2953,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -2965,7 +2965,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -2977,7 +2977,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -2989,7 +2989,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -3001,7 +3001,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.wait_class",
             "vartype": 1,
             "default": "Rlog",
@@ -3013,7 +3013,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.rlog flush wait.wait_class#",
             "vartype": 2,
             "default": "3",
@@ -3025,7 +3025,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -3037,7 +3037,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.event",
             "vartype": 1,
             "default": "table lock busy",
@@ -3049,7 +3049,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.smax_time",
             "vartype": 2,
             "default": "0",
@@ -3061,7 +3061,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.smin_time",
             "vartype": 2,
             "default": "0",
@@ -3073,7 +3073,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.time_waited",
             "vartype": 2,
             "default": "0",
@@ -3085,7 +3085,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -3097,7 +3097,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.total_waits",
             "vartype": 2,
             "default": "0",
@@ -3109,7 +3109,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.wait_class",
             "vartype": 1,
             "default": "Concurrency",
@@ -3121,7 +3121,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.table lock busy.wait_class#",
             "vartype": 2,
             "default": "2",
@@ -3133,7 +3133,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -3145,7 +3145,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.event",
             "vartype": 1,
             "default": "tid lock busy",
@@ -3157,7 +3157,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.smax_time",
             "vartype": 2,
             "default": "0",
@@ -3169,7 +3169,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.smin_time",
             "vartype": 2,
             "default": "0",
@@ -3181,7 +3181,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.time_waited",
             "vartype": 2,
             "default": "0",
@@ -3193,7 +3193,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -3205,7 +3205,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.total_waits",
             "vartype": 2,
             "default": "0",
@@ -3217,7 +3217,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.wait_class",
             "vartype": 1,
             "default": "Concurrency",
@@ -3229,7 +3229,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.tid lock busy.wait_class#",
             "vartype": 2,
             "default": "2",
@@ -3241,7 +3241,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.average_wait_micro",
             "vartype": 2,
             "default": "0",
@@ -3253,7 +3253,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.event",
             "vartype": 1,
             "default": "trxid lock wait",
@@ -3265,7 +3265,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.smax_time",
             "vartype": 2,
             "default": "0",
@@ -3277,7 +3277,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.smin_time",
             "vartype": 2,
             "default": "0",
@@ -3289,7 +3289,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.time_waited",
             "vartype": 2,
             "default": "0",
@@ -3301,7 +3301,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.time_waited_micro",
             "vartype": 2,
             "default": "0",
@@ -3313,7 +3313,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.total_waits",
             "vartype": 2,
             "default": "0",
@@ -3325,7 +3325,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.wait_class",
             "vartype": 1,
             "default": "Transaction",
@@ -3337,7 +3337,7 @@
     },
     {
         "fields": {
-            "dbms": 190,
+            "dbms": 20,
             "name": "global.system_event.trxid lock wait.wait_class#",
             "vartype": 2,
             "default": "4",

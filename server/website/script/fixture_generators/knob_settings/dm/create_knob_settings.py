@@ -70,7 +70,7 @@ def process_version(version, delim=','):
 
                 fields.update(
                     scope='global',
-                    dbms=190,
+                    dbms=20,
                     category='',
                     enumvals=None,
                     context='',
@@ -84,8 +84,9 @@ def process_version(version, delim=','):
             # set_field(fields)
             # fields['name'] = ('global.' + fields['name']).lower()
             fields['name'] = ('global.' + fields['name'])
-            fields_list.append(fields)
-            ri += 1
+            if fields['default'] != "NULL":
+                fields_list.append(fields)
+                ri += 1
 
     fields_list = sorted(fields_list, key=itemgetter('name'))
     final_metrics = [dict(model='website.KnobCatalog', fields=fs) for fs in fields_list]

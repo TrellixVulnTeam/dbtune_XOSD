@@ -25,6 +25,7 @@ LOGIN_PORT = 22  # Set when using a port other than the SSH default
 
 # Postgres, Oracle or Mysql
 # DB_TYPE = 'postgres'
+# DB_TYPE = 'mysql'
 DB_TYPE = 'dm'
 
 # Database version
@@ -32,14 +33,17 @@ DB_TYPE = 'dm'
 DB_VERSION = '8.0'
 
 # Name of the database
+# DB_NAME = 'tpcc'
 DB_NAME = 'TPCC'
 
 # Database username
 # DB_USER = 'dbuser'
+# DB_USER = 'root'
 DB_USER = 'TPCC'
 
 # Password for DB_USER
 # DB_PASSWORD = 'dbpassword'
+# DB_PASSWORD = '12345678'
 DB_PASSWORD = '123456789'
 
 # Database admin username (for tasks like restarting the database)
@@ -55,6 +59,7 @@ DB_HOST = 'localhost'
 
 # Database port
 # DB_PORT = '5432'
+# DB_PORT = '3306'
 DB_PORT = '5236'
 
 # If set to True, DB_CONF file is mounted to database container file
@@ -201,4 +206,4 @@ CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 WEBSITE_URL = 'http://223.254.60.12'
 
 # Code for uploading new results to the website
-UPLOAD_CODE = 'FLZ40CTB0ZIA1MGKWN8K'
+UPLOAD_CODE = 'L78LAY1C3N6KA04EM7C4'

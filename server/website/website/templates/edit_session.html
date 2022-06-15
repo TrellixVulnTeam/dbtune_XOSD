@@ -66,44 +66,42 @@
             {% if session %}
                 {#    <a class="btn btn-default" href="{% url 'session' project.pk session.pk %}">Cancel</a>#}
                 <button type="button" class="btn btn-secondary"
-                        onclick="location.href='{% url 'session' project.pk session.pk %}'">
-                    Cancel
+                        onclick="location.href='{% url 'session' project.pk session.pk %}'">Cancel
                 </button>
             {% else %}
                 {#    <a class="btn btn-default" href="{% url 'project_sessions' project.pk %}">Cancel</a>#}
                 <button type="button" class="btn btn-secondary"
-                        onclick="location.href='{% url 'project_sessions' project.pk %}'">
-                    Cancel
+                        onclick="location.href='{% url 'project_sessions' project.pk %}'">Cancel
                 </button>
             {% endif %}
         </div>
         </form>
     </div>
 
-<script language="javascript">
-function show_content() {
-	console.log("In show_content()")
-	//$("#target_obj_row").toggle()
-}
+    <script language="javascript">
+        function show_content() {
+            console.log("In show_content()")
+            //$("#target_obj_row").toggle()
+        }
 
-$(function() {
-	if ("{{ session }}" != "None") {
-	    $("#dbms_row").hide();
-	    $("#cpu_row").hide();
-	    $("#memory_row").hide();
-	    $("#storage_row").hide();
-	    $("#storage_type_row").hide();
-	    $("#algorithm_row").hide();
-	} else {
-		$("#upload_code_row").hide();
-	}
+        $(function () {
+            if ("{{ session }}" !== "None") {
+                $("#dbms_row").hide();
+                $("#cpu_row").hide();
+                $("#memory_row").hide();
+                $("#storage_row").hide();
+                $("#storage_type_row").hide();
+                $("#algorithm_row").hide();
+            } else {
+                $("#upload_code_row").hide();
+            }
 
-	/*if (document.getElementById('id_tuning_session').checked) {
-		$("#target_obj_row").show()
-	} else {
-		$("#target_obj_row").hide()
-	}*/
-});
-</script>
+            /*if (document.getElementById('id_tuning_session').checked) {
+                $("#target_obj_row").show()
+            } else {
+                $("#target_obj_row").hide()
+            }*/
+        });
+    </script>
 
 {% endblock body %}
