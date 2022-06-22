@@ -4,15 +4,10 @@
 # Copyright (c) 2017-18, Carnegie Mellon University Database Group
 #
 
-import logging
 
-from website.models import DBMSCatalog, MetricCatalog
 from website.types import DBMSType
 from ..base.target_objective import (BaseTargetObjective, BaseThroughput, LESS_IS_BETTER,
-                                     MORE_IS_BETTER)
-
-LOG = logging.getLogger(__name__)
-
+                                     MORE_IS_BETTER)  # pylint: disable=relative-beyond-top-level
 
 class CustomDBTime(BaseTargetObjective):
 
@@ -41,52 +36,52 @@ class CustomDBTime(BaseTargetObjective):
         return total_wait_time / 1000.
 
 
-class NormalizedDBTime(BaseTargetObjective):
-
-    def __init__(self):
-        super().__init__(name='db_time', pprint='Normalized DB Time', unit='seconds',
-                         short_unit='s', improvement=LESS_IS_BETTER)
-        # This target objective is designed for Oracle v12.2.0.1.0
-        dbms = DBMSCatalog.objects.get(type=DBMSType.ORACLE, version='12.2.0.1.0')
-        self.default_values = {}
-        for metric in MetricCatalog.objects.filter(dbms=dbms):
-            self.default_values[metric.name] = metric.default
-
-    def reload_default_metrics(self):
-        dbms = DBMSCatalog.objects.get(type=DBMSType.ORACLE, version='12.2.0.1.0')
-        self.default_values = {}
-        for metric in MetricCatalog.objects.filter(dbms=dbms):
-            self.default_values[metric.name] = metric.default
-
-    def compute(self, metrics, observation_time):
-        extra_io_metrics = ["log file sync"]
-        not_io_metrics = ["read by other session"]
-        total_wait_time = 0.
-        has_dba_hist = metrics['global.dba_hist_sys_time_model.db time'] > 0
-        for name, value in metrics.items():
-            if has_dba_hist and 'dba_hist_' not in name:
-                continue
-            if 'db cpu' in name:
-                total_wait_time += float(value)
-            elif 'time_waited_micro_fg' in name:
-                default_wait_time = float(self.default_values[name])
-                wait_time = float(value)
-            elif 'total_waits_fg' in name:
-                default_total_waits = float(self.default_values[name])
-                total_waits = float(value)
-            elif name.endswith('wait_class'):
-                if value == 'Idle':
-                    wait_time = 0
-                elif value in ('User I/O', 'System I/O') or \
-                        any(n in name for n in extra_io_metrics):
-                    if not any(n in name for n in not_io_metrics):
-                        if default_total_waits == 0:
-                            average_wait = 0
-                        else:
-                            average_wait = default_wait_time / default_total_waits
-                        wait_time = total_waits * average_wait
-                total_wait_time += wait_time
-        return total_wait_time / 1000000.
+# class NormalizedDBTime(BaseTargetObjective):
+#
+#     def __init__(self):
+#         super().__init__(name='db_time', pprint='Normalized DB Time', unit='seconds',
+#                          short_unit='s', improvement=LESS_IS_BETTER)
+#         # This target objective is designed for Oracle v12.2.0.1.0
+#         dbms = DBMSCatalog.objects.get(type=DBMSType.ORACLE, version='12.2.0.1.0')
+#         self.default_values = {}
+#         for metric in MetricCatalog.objects.filter(dbms=dbms):
+#             self.default_values[metric.name] = metric.default
+#
+#     def reload_default_metrics(self):
+#         dbms = DBMSCatalog.objects.get(type=DBMSType.ORACLE, version='12.2.0.1.0')
+#         self.default_values = {}
+#         for metric in MetricCatalog.objects.filter(dbms=dbms):
+#             self.default_values[metric.name] = metric.default
+#
+#     def compute(self, metrics, observation_time):
+#         extra_io_metrics = ["log file sync"]
+#         not_io_metrics = ["read by other session"]
+#         total_wait_time = 0.
+#         has_dba_hist = metrics['global.dba_hist_sys_time_model.db time'] > 0
+#         for name, value in metrics.items():
+#             if has_dba_hist and 'dba_hist_' not in name:
+#                 continue
+#             if 'db cpu' in name:
+#                 total_wait_time += float(value)
+#             elif 'time_waited_micro_fg' in name:
+#                 default_wait_time = float(self.default_values[name])
+#                 wait_time = float(value)
+#             elif 'total_waits_fg' in name:
+#                 default_total_waits = float(self.default_values[name])
+#                 total_waits = float(value)
+#             elif name.endswith('wait_class'):
+#                 if value == 'Idle':
+#                     wait_time = 0
+#                 elif value in ('User I/O', 'System I/O') or \
+#                         any(n in name for n in extra_io_metrics):
+#                     if not any(n in name for n in not_io_metrics):
+#                         if default_total_waits == 0:
+#                             average_wait = 0
+#                         else:
+#                             average_wait = default_wait_time / default_total_waits
+#                         wait_time = total_waits * average_wait
+#                 total_wait_time += wait_time
+#         return total_wait_time / 1000000.
 
 
 class RawDBTime(BaseTargetObjective):
@@ -125,13 +120,11 @@ class ElapsedTime(BaseTargetObjective):
 
 
 target_objective_list = tuple((DBMSType.DM, target_obj) for target_obj in [  # pylint: disable=invalid-name
-    # BaseThroughput(transactions_counter=('global.sysstat.user commits',
-    #                                      'global.sysstat.user rollbacks')),
     BaseThroughput(transactions_counter=('global.sysstat.transaction commit count',
                                          'global.sysstat.transaction rollback count')),
-    CustomDBTime(),
+    # CustomDBTime(),
     # NormalizedDBTime(),
-    RawDBTime(),
+    # RawDBTime(),
     # TransactionCounter(),
-    ElapsedTime(),
+    # ElapsedTime(),
 ])

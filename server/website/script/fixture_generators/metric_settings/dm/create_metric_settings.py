@@ -71,7 +71,7 @@ def create_settings(metric_data, dbms):
 
         default = '' if len(str(value)) > 31 else value
         entry = OrderedDict([
-            ('dbms', dbms),
+            ('dbms', 20),
             ('name', 'global.{}'.format(name)),
             ('vartype', vartype),
             ('default', default),

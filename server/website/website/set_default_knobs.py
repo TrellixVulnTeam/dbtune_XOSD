@@ -61,10 +61,10 @@ MAXVAL = 192 * GB
 CPU_PERCENT = 2.0
 
 # Percentage of total memory to use for maxval
-MEMORY_PERCENT = 0.8
+MEMORY_PERCENT = 0.85
 
 # Percentage of total storage to use for maxval
-STORAGE_PERCENT = 0.8
+STORAGE_PERCENT = 0.85
 
 # The maximum connections to the database
 SESSION_NUM = 50.0
@@ -115,7 +115,10 @@ def set_default_knobs(session, cascade=True):
             if dbtype == DBMSType.POSTGRES:
                 if knob.name in ('global.work_mem', 'global.temp_buffers'):
                     maxval /= SESSION_NUM
-
+            if dbtype == DBMSType.DM:
+                if knob.name == 'global.GLOBAL_CPU_N':
+                    minval = int(session.hardware.cpu - 1)
+                    maxval = int(session.hardware.cpu)
             if maxval > knob_maxval:
                 maxval = knob_maxval
 
@@ -126,6 +129,7 @@ def set_default_knobs(session, cascade=True):
                 maxval = knob_maxval
 
             maxval = vtype(maxval)
+            print("name: {name} 随机值: {minval}-{maxval} ".format(name=knob.name, minval=minval, maxval=maxval))
 
         else:
             assert knob.resource == KnobResourceType.OTHER

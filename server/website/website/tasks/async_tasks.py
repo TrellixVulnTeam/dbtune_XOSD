@@ -36,7 +36,6 @@ from website.types import PipelineTaskType, AlgorithmType, VarType
 from website.utils import DataUtil, JSONUtil
 from website.settings import ENABLE_DUMMY_ENCODER, TIME_ZONE, VIEWS_FOR_DDPG
 
-
 LOG = get_task_logger(__name__)
 
 
@@ -403,6 +402,7 @@ def gen_lhs_samples(knobs, nsamples):
     for sidx in range(nsamples):
         lhs_samples.append(dict())
         for fidx in range(nfeats):
+            print("参数名: {name} 值: {value}".format(name=names[fidx], value=samples[sidx][fidx]))
             if types[fidx] == VarType.INTEGER:
                 lhs_samples[-1][names[fidx]] = int(round(samples[sidx][fidx]))
             elif types[fidx] == VarType.BOOL:
@@ -525,16 +525,16 @@ def train_ddpg(train_ddpg_input):
     else:
         if metric_meta[target_objective].improvement == '(less is better)':
             if objective - base_objective <= 0:  # positive reward
-                reward = (np.square((2 * base_objective - objective) / base_objective) - 1)\
-                    * abs(2 * prev_objective - objective) / prev_objective
+                reward = (np.square((2 * base_objective - objective) / base_objective) - 1) \
+                         * abs(2 * prev_objective - objective) / prev_objective
             else:  # negative reward
                 reward = -(np.square(objective / base_objective) - 1) * objective / prev_objective
         else:
             if objective - base_objective > 0:  # positive reward
                 reward = (np.square(objective / base_objective) - 1) * objective / prev_objective
             else:  # negative reward
-                reward = -(np.square((2 * base_objective - objective) / base_objective) - 1)\
-                    * abs(2 * prev_objective - objective) / prev_objective
+                reward = -(np.square((2 * base_objective - objective) / base_objective) - 1) \
+                         * abs(2 * prev_objective - objective) / prev_objective
     LOG.info('%s: reward: %f', task_name, reward)
 
     # Update ddpg
@@ -834,8 +834,8 @@ def process_training_data(target_data):
         X_min[i] = col_min
         X_max[i] = col_max
 
-    return X_columnlabels, X_scaler, X_scaled, y_scaled, X_max, X_min,\
-        dummy_encoder, constraint_helper, pipeline_data_knob, pipeline_data_metric
+    return X_columnlabels, X_scaler, X_scaled, y_scaled, X_max, X_min, \
+           dummy_encoder, constraint_helper, pipeline_data_knob, pipeline_data_metric
 
 
 @shared_task(base=ConfigurationRecommendation, name='configuration_recommendation')
@@ -855,9 +855,9 @@ def configuration_recommendation(recommendation_input):
     LOG.info("%s: Recommending the next configuration...", task_name)
     params = JSONUtil.loads(session.hyperparameters)
 
-    X_columnlabels, X_scaler, X_scaled, y_scaled, X_max, X_min,\
-        dummy_encoder, constraint_helper, pipeline_knobs,\
-        pipeline_metrics = process_training_data(target_data)
+    X_columnlabels, X_scaler, X_scaled, y_scaled, X_max, X_min, \
+    dummy_encoder, constraint_helper, pipeline_knobs, \
+    pipeline_metrics = process_training_data(target_data)
 
     # FIXME: we should generate more samples and use a smarter sampling technique
     num_samples = params['NUM_SAMPLES']
@@ -1046,7 +1046,7 @@ def map_workload(map_workload_input):
 
         # Load knob & metric data for this workload
         knob_data = load_data_helper(pipeline_data, unique_workload, PipelineTaskType.KNOB_DATA)
-        knob_data["data"], knob_data["columnlabels"] =\
+        knob_data["data"], knob_data["columnlabels"] = \
             DataUtil.clean_knob_data(knob_data["data"], knob_data["columnlabels"],
                                      [newest_result.session])
         metric_data = load_data_helper(pipeline_data, unique_workload, PipelineTaskType.METRIC_DATA)

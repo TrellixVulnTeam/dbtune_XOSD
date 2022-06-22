@@ -5,4 +5,4 @@ PASSWORD="$2"
 DB_NAME="$3"
 DP_FILE="$4"
 
-/opt/dmdbms/bin/dimp $USERNAME/$PASSWORD file=$DP_FILE owner=$DB_NAME ignore=y
+/opt/dmdbms/bin/dimpdp $USERNAME/$PASSWORD file=$DP_FILE owner=$DB_NAME TABLE_EXISTS_ACTION=TRUNCATE
