@@ -60,7 +60,7 @@ DB_HOST = 'localhost'
 # Database port
 # DB_PORT = '5432'
 # DB_PORT = '3306'
-DB_PORT = '5236'
+DB_PORT = '15236'
 
 # If set to True, DB_CONF file is mounted to database container file
 # Only available when HOST_CONN is docker or remote_docker
@@ -206,4 +206,4 @@ CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 WEBSITE_URL = 'http://223.254.60.12'
 
 # Code for uploading new results to the website
-UPLOAD_CODE = 'FMB8Y62I1YUSHWY22N3D'
+UPLOAD_CODE = 'EEBZ8C4DT2UIXDM561HD'

@@ -157,7 +157,10 @@ class BaseParser:
                 conv_value = self.convert_string(value, metadata)
 
             elif metadata.vartype == VarType.TIMESTAMP:
-                conv_value = self.convert_timestamp(value, metadata)
+                conv_value = self.convert_integer(value, metadata)
+
+            elif metadata.vartype == VarType.CUSTOM:
+                conv_value = self.convert_integer(value, metadata)
 
             else:
                 raise Exception(
@@ -434,6 +437,8 @@ class BaseParser:
                 fvalue = self.format_string(knob_value, metadata)
             elif metadata.vartype == VarType.TIMESTAMP:
                 fvalue = self.format_timestamp(knob_value, metadata)
+            elif metadata.vartype == VarType.CUSTOM:
+                fvalue = self.format_integer(knob_value, metadata)
             else:
                 raise Exception('Unknown variable type for {}: {}'.format(
                     knob_name, metadata.vartype))

@@ -50,21 +50,24 @@ DEFAULT_TUNABLE_KNOBS = {
 
 # Bytes in a GB
 GB = 1024 ** 3
+MB = 1024
+CPU_CLOCK_CYCLE = 10 ** 9
 
 # Default minval when set to None
 MINVAL = 0
 
 # Default maxval when set to None
 MAXVAL = 192 * GB
+DM_MAXVAL = 1024 * MB
 
 # Percentage of total CPUs to use for maxval
 CPU_PERCENT = 2.0
 
 # Percentage of total memory to use for maxval
-MEMORY_PERCENT = 0.85
+MEMORY_PERCENT = 0.80
 
 # Percentage of total storage to use for maxval
-STORAGE_PERCENT = 0.85
+STORAGE_PERCENT = 0.80
 
 # The maximum connections to the database
 SESSION_NUM = 50.0
@@ -103,11 +106,11 @@ def set_default_knobs(session, cascade=True):
             if knob.resource == KnobResourceType.CPU:
                 maxval = session.hardware.cpu * CPU_PERCENT
             elif knob.resource == KnobResourceType.MEMORY:
-                minval = session.hardware.memory * minval
-                maxval = session.hardware.memory * GB * MEMORY_PERCENT
+                minval = session.hardware.memory * minval if dbtype != DBMSType.DM else minval
+                maxval = session.hardware.memory * MB * MEMORY_PERCENT if dbtype == DBMSType.DM else session.hardware.memory * GB * MEMORY_PERCENT
             elif knob.resource == KnobResourceType.STORAGE:
-                minval = session.hardware.storage * minval
-                maxval = session.hardware.storage * GB * STORAGE_PERCENT
+                minval = session.hardware.storage * minval if dbtype != DBMSType.DM else minval
+                maxval = session.hardware.storage * MB * STORAGE_PERCENT if dbtype == DBMSType.DM else session.hardware.storage * GB * STORAGE_PERCENT
             else:
                 maxval = knob_maxval
 
@@ -119,9 +122,33 @@ def set_default_knobs(session, cascade=True):
                 if knob.name == 'global.GLOBAL_CPU_N':
                     minval = int(session.hardware.cpu - 1)
                     maxval = int(session.hardware.cpu)
+                if knob.name in ['global.WORKER_THREADS', 'global.TASK_THREADS']:
+                    minval = int(session.hardware.cpu)
+                    maxval = int(session.hardware.cpu * 2)
+                if knob.name in ['global.UNDO_EXTENT_NUM']:
+                    maxval = int(session.hardware.cpu ** 2)
+                # CPU时钟周期
+                if knob.name in ['global.SCAN_CPU', 'global.SEEK_CPU', 'global.LKUP_CPU', 'global.NLIJ_CPU',
+                                 'global.HI_CPU', 'global.HI_SEARCH_CPU', 'global.MI_CPU',
+                                 'global.NL_CPU', 'global.FLT_CPU', 'global.LARGE_SORT_CPU', 'global.SMALL_SORT_CPU']:
+                    maxval = int(session.hardware.cpu * 2 * CPU_CLOCK_CYCLE / 1024 / 1024)
+
+                # 内存
+                if knob.name in ['global.BUFFER', 'global.MAX_BUFFER', 'global.AUDIT_SPACE_LIMIT',
+                                 'global.CACHE_POOL_SIZE', 'global.MEMORY_POOL']:
+                    maxval = session.hardware.memory * MB
+                # 以KB为单位
+                if knob.name in ['global.VM_POOL_TARGET', 'global.SESS_POOL_TARGET', 'global.VM_POOL_SIZE']:
+                    maxval = session.hardware.memory * MB * MB
+
+                # 存储
+                if knob.name in ['global.TEMP_SPACE_LIMIT', 'global.CKPT_RLOG_SIZE']:
+                    maxval = session.hardware.storage * MB
+                # 以KB为单位
+                if knob.name in ['global.CKPT_DIRTY_PAGES']:
+                    maxval = session.hardware.storage * MB * MB * STORAGE_PERCENT
             if maxval > knob_maxval:
                 maxval = knob_maxval
-
             if maxval < minval:
                 LOG.warning(("Invalid range for session knob '%s': maxval <= minval "
                              "(minval: %s, maxval: %s). Setting maxval to the vendor setting: %s."),
@@ -129,9 +156,9 @@ def set_default_knobs(session, cascade=True):
                 maxval = knob_maxval
 
             maxval = vtype(maxval)
-            print("name: {name} 随机值: {minval}-{maxval} ".format(name=knob.name, minval=minval, maxval=maxval))
-
+            # print("name: {name} 随机值: {minval}-{maxval} ".format(name=knob.name, minval=minval, maxval=maxval))
         else:
+            # print("assert name: {name} 随机值: {minval}".format(name=knob.name, minval=minval))
             assert knob.resource == KnobResourceType.OTHER
             maxval = knob.maxval
 

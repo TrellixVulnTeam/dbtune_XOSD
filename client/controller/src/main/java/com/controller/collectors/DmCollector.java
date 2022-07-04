@@ -27,7 +27,8 @@ import org.apache.log4j.Logger;
 public class DmCollector extends DBCollector {
     private static final Logger LOG = Logger.getLogger(MySQLCollector.class);
 
-    private static final String VERSION_SQL = "select banner || id_code from v$version limit 1";
+    //    private static final String VERSION_SQL = "select banner || id_code from v$version limit 1";
+    private static final String VERSION_SQL = "select *  from v$VERSION limit 1;";
 
     private static final String PARAMETERS_SQL = "select para_name,para_value from v$dm_ini;";
 
@@ -53,9 +54,8 @@ public class DmCollector extends DBCollector {
             ResultSet out = statement.executeQuery(VERSION_SQL);
             if (out.next()) {
                 String versionStr = out.getString(1);
-                String str = versionStr.split("\n")[0].toUpperCase();
-                int lastSpace = str.lastIndexOf("V");
-                String head = str.substring(lastSpace + 1);
+                int lastSpace = versionStr.lastIndexOf("V");
+                String head = versionStr.substring(lastSpace + 1, versionStr.length());
 //              this.version.append(out.getString(1));
                 this.version.append(head);
             }
@@ -86,7 +86,7 @@ public class DmCollector extends DBCollector {
             int columnCount = meta.getColumnCount();
             String[] columnNames = new String[columnCount];
             for (int i = 0; i < columnCount; ++i) {
-                columnNames[i] = meta.getColumnName(i+1).toLowerCase();
+                columnNames[i] = meta.getColumnName(i + 1).toLowerCase();
             }
             while (out.next()) {
                 String eventName = out.getString(2).toLowerCase();

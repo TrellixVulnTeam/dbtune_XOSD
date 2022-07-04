@@ -23,8 +23,8 @@
             {% if show_descriptions %}
             <td style="vertical-align:middle">{{ project.description|linebreaks }}</td>
             {% endif %}
-            <td style="vertical-align:middle">{{ project.creation_time }}</td>
-            <td style="vertical-align:middle">{{ project.last_update }}</td>
+            <td style="vertical-align:middle">{{ project.creation_time | date:"Y-m-d H:i:s" }}</td>
+            <td style="vertical-align:middle">{{ project.last_update | date:"Y-m-d H:i:s" }}</td>
         </tr>
     {% endfor %}
 </table>

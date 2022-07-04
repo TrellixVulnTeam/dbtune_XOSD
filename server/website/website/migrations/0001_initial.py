@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=128)),
-                ('vartype', models.IntegerField(choices=[(1, 'STRING'), (2, 'INTEGER'), (3, 'REAL'), (4, 'BOOL'), (5, 'ENUM'), (6, 'TIMESTAMP')], verbose_name='variable type')),
+                ('vartype', models.IntegerField(choices=[(1, 'STRING'), (2, 'INTEGER'), (3, 'REAL'), (4, 'BOOL'), (5, 'ENUM'), (6, 'TIMESTAMP'), (7, 'CUSTOM')], verbose_name='variable type')),
                 ('unit', models.IntegerField(choices=[(1, 'bytes'), (2, 'milliseconds'), (3, 'other'), (4, 'microseconds'), (5, 'seconds')])),
                 ('category', models.TextField(null=True)),
                 ('summary', models.TextField(null=True, verbose_name='description')),

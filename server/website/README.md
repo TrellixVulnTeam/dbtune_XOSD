@@ -51,12 +51,16 @@ This is not an efficient way for production. You need to configure other servers
 ```
 mysqladmin create -u <username> -p ottertune
 
-CREATE USER 'ottertune'@'localhost' IDENTIFIED BY 'password';
-create database ottertune default character set utf8mb4 collate utf8mb4_unicode_ci;
+SET GLOBAL validate_password.policy = LOW;
+CREATE USER 'root'@'%' IDENTIFIED BY '12345678';
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '12345678';
-ALTER USER 'ottertune'@'%' IDENTIFIED WITH mysql_native_password BY '12345678';
-FLUSH PRIVILEGES;
 
+CREATE USER 'ottertune'@'%' IDENTIFIED BY '12345678';
+create database ottertune default character set utf8mb4 collate utf8mb4_unicode_ci;
+ALTER USER 'ottertune'@'%' IDENTIFIED WITH mysql_native_password BY '12345678';
+
+grant all privileges on *.* to 'root'@'%';
+FLUSH PRIVILEGES;
 ```
 
 ##### 4. Migrate the Django models into the database
@@ -97,7 +101,7 @@ SyntaxError: invalid syntax
 /usr/local/lib/python3.7/dist-packages/kombu
 
 这是因为在 python 3.7 中将 async 作为了关键字，所以当 py 文件中出现类似 from . import async, base 这类不符合python语法的语句时，Python会报错；
-解决方法： 在 celery 官方的提议下，建议将 kombu下的async.py 文件的文件名改成 asynchronous，然后把引用和这个文件的所有文件的里面的async改为asynchronous
+解决方法： 在 celery 官方的提议下，建议将 kombu下的async.py 文件的文件名改成 asynchronous ,然后把引用和这个文件的所有文件的里面的async改为asynchronous
 ```
 https://blog.csdn.net/qq_51236600/article/details/116681098
 
@@ -107,6 +111,9 @@ apt-get install libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev -y
 
 #### #Django 404 error-page not found
 https://stackoverflow.com/questions/5836674/why-does-debug-false-setting-make-my-django-static-files-access-fail
+
+#### #mysql_config: not found
+apt install libmysqlclient-dev
 
 
 ##### # 执行：【python3  manage.py celery worker 】报错
@@ -122,4 +129,15 @@ User information: uid=0 euid=0 gid=0 egid=0
 
 解决:
 export C_FORCE_ROOT="true"
+```
+
+##### # 登录rabbitmq报错User can only log in via localhost
+```shell
+找到/rabbitmq_server-3.6.14/ebin下面的rabbit.app文件文件完整内容如下（注意后面的半角句号）：
+找到：loopback_users里的<<"guest">>删除。
+
+[{rabbit, [{loopback_users, []}]}]
+
+然后重启
+systemctl restart rabbitmq-server.service
 ```

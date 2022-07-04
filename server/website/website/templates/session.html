@@ -24,10 +24,10 @@ padding-left: 25px;
 border: 2px solid #F5F5F5;
 }
 
-caption > h4 { 
+caption > h4 {
   display: inline-block;
   position: relative;
-  left: 50%; 
+  left: 50%;
   transform: translateX(-50%); }
 caption span {float: right;}
 
@@ -100,11 +100,11 @@ caption span {float: right;}
     </tr>
     <tr>
         <td><div class="text-right">{{ labels.creation_time }}</div></td>
-        <td>{{ session.creation_time }}</td>
+        <td>{{ session.creation_time | date:"Y-m-d H:i:s" }}</td>
     </tr>
     <tr>
         <td><div class="text-right">{{ labels.last_update }}</div></td>
-        <td>{{ session.last_update }}</td>
+        <td>{{ session.last_update | date:"Y-m-d H:i:s" }}</td>
     </tr>
     <tr>
         <td><div class="text-right">{{ labels.target_objective }}</div></td>
@@ -120,7 +120,7 @@ caption span {float: right;}
   <div class="row">
     <div id="sidebar" class="col-md-3" style="width:30%">
       <div id="dbmss">
-        
+
         <div><h4>DBMS</h4></div>
           <div class="boxbody checkbox session-font">
             <ul>
@@ -165,9 +165,9 @@ caption span {float: right;}
                         <input type="checkbox" name="metric" value="{{ metric }}"> {{ metric_meta|get_item:metric|get_attr:"pprint" }}
                         </td>
                     </tr>
-                    {% endfor %} 
+                    {% endfor %}
                 </table>
-            </div> 
+            </div>
         </div>
 
         <div id="knob">
@@ -181,7 +181,7 @@ caption span {float: right;}
                         <input type="checkbox" name="knob" value="{{ knob_name }}" > {{ knob_name }}
                         </td>
                     </tr>
-                    {% endfor %}  
+                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -228,7 +228,7 @@ caption span {float: right;}
 
         <!-- table tools stuff -->
         <link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}css/jquery.dataTables.css'>
-        <script type="text/javascript" src='{{ STATIC_URL }}js/jquery.dataTables.min.js'></script> 
+        <script type="text/javascript" src='{{ STATIC_URL }}js/jquery.dataTables.min.js'></script>
         <script type="text/javascript" src='{{ STATIC_URL }}js/FixedHeader.min.js'></script>
     </div>
 </div>

@@ -82,6 +82,7 @@ class VarType(BaseType):
     BOOL = 4
     ENUM = 5
     TIMESTAMP = 6
+    CUSTOM = 7
 
     TYPE_NAMES = {
         STRING: 'STRING',
@@ -90,6 +91,7 @@ class VarType(BaseType):
         BOOL: 'BOOL',
         ENUM: 'ENUM',
         TIMESTAMP: 'TIMESTAMP',
+        CUSTOM: 'CUSTOM',
     }
 
 

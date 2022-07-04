@@ -1,6 +1,6 @@
 {
   "database_type": "dm",
-  "database_url": "jdbc:dm://localhost:5236",
+  "database_url": "jdbc:dm://localhost:15236",
   "username": "TPCC",
   "password": "123456789",
   "upload_code": "DEPRECATED",

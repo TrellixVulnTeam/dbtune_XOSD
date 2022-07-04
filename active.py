@@ -18,6 +18,8 @@
 
 
 import itertools
+import re
+import  math
 
 lis = [0, 1, 2, 4, 8]
 # lis = [0, 1, 2, 4, 8, 16, 32]
@@ -43,3 +45,30 @@ print("排列组合结果===>  组合总数：{count} 详细结果：{array}\n".
 for i in array:
     total = sum(i)
     print("{i} 两两相加结果: {total}".format(i=i, total=total))
+
+searchObj = re.match(r'BASE_(.*)_CPU', "SCAN_CPU", re.M | re.I)
+if searchObj:
+    print("searchObj.group() : ", searchObj.group())
+else:
+    print("Nothing found!!")
+
+
+# 判断是否为素数
+def is_prime(number):
+    if number == 1:
+        return False
+    sqrt = int(math.sqrt(number))
+    for j in range(2, sqrt + 1):  # 从2到number的算术平方根迭代
+        if number % j == 0:  # 判断j是否为number的因数
+            return False
+    return True
+
+
+# 生成跟当前值最接近的素数
+def generate_prime(number):
+    for j in range(1, 3):  # 从2到number的算术平方根迭代
+        number = number + j
+        if is_prime(number):  # 判断j是否为number的因数
+            return number
+
+print(generate_prime(1))

@@ -153,7 +153,7 @@ ENHANCED_SUBQ_MERGING,0,0,0,1,Whether to use merging subquery opt
 CASE_WHEN_CVT_IFUN,9,9,0,63,Flag of converting subquery in case-when expression to IF operator
 OR_NBEXP_CVT_CASE_WHEN_FLAG,0,0,0,1,Whether to convert or-expression to case-when expression
 NONCONST_OR_CVT_IN_LST_FLAG,0,0,0,1,Whether to convert nonconst or-expression to in-lst expression
-OUTER_CVT_INNER_PULL_UP_COND_FLAG,1,1,0,1,Whether to pull up join condition when outer join converts to inner join
+OUTER_CVT_INNER_PULL_UP_COND_FLAG,3,3,0,7,Whether to pull up join condition when outer join converts to inner join
 AUTOTRACE_LEVEL,0,0,0,2,"trace level, 0:exec; 1: plan index ; 2: plan nl"
 OPT_OR_FOR_HUGE_TABLE_FLAG,0,0,0,1,Whether to use HFSEK to optimize or-expression for HUGE table
 ORDER_BY_NULLS_FLAG,0,0,0,2,Whether to place NULL values to the end of the result set when in ascending order
@@ -190,7 +190,7 @@ OUTER_OPT_NLO_FLAG,0,0,0,7,Flag of enable index join for those whose right child
 DISTINCT_USE_INDEX_SKIP,2,2,0,2,Whether to distinct_use_index_skip
 USE_INDEX_SKIP_SCAN,0,0,0,2,Whether to use index skip scan
 INDEX_SKIP_SCAN_RATE,0.003000,1202590843,0,1,Rate in index skip scan
-SPEED_SEMI_JOIN_PLAN,1,1,0,7,Flag of speeding up the generating process of semi join plan
+SPEED_SEMI_JOIN_PLAN,9,9,0,31,Flag of speeding up the generating process of semi join plan
 COMPLEX_VIEW_MERGING,0,0,0,2,Flag of merging complex view into query without complex view
 HLSM_FLAG,1,1,1,3,Choose one method to realize hlsm operator
 DEL_HP_OPT_FLAG,0,0,0,31,Optimize delete for horization partition table
@@ -204,11 +204,11 @@ MULTI_UPD_MAX_COL_NUM,128,128,2,10000,Max value of column counts when optimize m
 ENHANCE_BIND_PEEKING,0,0,0,1,Enhanced bind peeking
 PHC_BE_ARR_NUM,0,0,0,5000,Number of phc be arr
 GSA_NUM,10,10,0,2000,Number of global sort area
-NBEXP_OPT_FLAG,3,3,0,3,Whether to enable optimization for bool expressions
+NBEXP_OPT_FLAG,7,7,0,7,Whether to enable optimization for bool expressions
 HAGR_HASH_ALGORITHM_FLAG,0,0,0,1,HAGR hash algorithm
 DIST_HASH_ALGORITHM_FLAG,0,0,0,1,Distinct hash algorithm
 UNPIVOT_ORDER_FLAG,0,0,0,1,Whether to sort the result of UNPIVOT operator by columns that don't appear in the UNPIVOT sub-sentence
-INVOCATION_OPT_FLAG,7,7,0,7,type of invocation opt flag
+INVOCATION_OPT_FLAG,55,55,0,63,type of invocation opt flag
 VIEW_FILTER_MERGING,138,138,0,255,Flag of merging view filter
 ENABLE_PARTITION_WISE_OPT,0,0,0,1,whether enable partition-wise optimization
 OPT_MEM_CHECK,0,0,0,1,reduce search space when out of memory
@@ -390,7 +390,7 @@ HP_STAT_SAMPLE_COUNT,50,50,1,65535,Max sample count when stating on horizon part
 LOAD_TABLE,NULL,NULL,NULL,NULL,need to pre-load table
 LOAD_HTABLE,NULL,NULL,NULL,NULL,need to pre-load htable
 CLT_CACHE_TABLES,NULL,NULL,NULL,NULL,Tables that can be cached in client
-RLOG_BUF_SIZE,1024,1024,1,32768,The Number Of Log Pages In One Log Buffer
+RLOG_BUF_SIZE,16384,16384,16384,16384,The Number Of Log Pages In One Log Buffer
 RLOG_POOL_SIZE,256,256,1,4096,Redo Log Pool Size In Megabyte
 RLOG_PARALLEL_ENABLE,0,0,0,1,Whether to enable database to write redo logs in parallel mode
 RLOG_GEN_FOR_HUGE,0,0,0,1,"Whether to generate rlog for huge table, 0: disable, 1: enable"

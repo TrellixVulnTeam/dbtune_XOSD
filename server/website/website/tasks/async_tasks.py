@@ -3,6 +3,7 @@
 #
 # Copyright (c) 2017-18, Carnegie Mellon University Database Group
 #
+import math
 import random
 import queue
 import time
@@ -33,7 +34,7 @@ from website.models import (PipelineData, PipelineRun, Result, Workload, Session
                             MetricCatalog, ExecutionTime, KnobCatalog)
 from website import db
 from website.types import PipelineTaskType, AlgorithmType, VarType
-from website.utils import DataUtil, JSONUtil
+from website.utils import DataUtil, JSONUtil, is_prime, generate_prime
 from website.settings import ENABLE_DUMMY_ENCODER, TIME_ZONE, VIEWS_FOR_DDPG
 
 LOG = get_task_logger(__name__)
@@ -402,7 +403,7 @@ def gen_lhs_samples(knobs, nsamples):
     for sidx in range(nsamples):
         lhs_samples.append(dict())
         for fidx in range(nfeats):
-            print("参数名: {name} 值: {value}".format(name=names[fidx], value=samples[sidx][fidx]))
+            # print("参数名: {name} 值: {value}".format(name=names[fidx], value=samples[sidx][fidx]))
             if types[fidx] == VarType.INTEGER:
                 lhs_samples[-1][names[fidx]] = int(round(samples[sidx][fidx]))
             elif types[fidx] == VarType.BOOL:
@@ -411,11 +412,30 @@ def gen_lhs_samples(knobs, nsamples):
                 lhs_samples[-1][names[fidx]] = int(round(samples[sidx][fidx]))
             elif types[fidx] == VarType.REAL:
                 lhs_samples[-1][names[fidx]] = float(samples[sidx][fidx])
+            elif types[fidx] == VarType.CUSTOM:
+                # print("CUSTOM Current Name===============>: {key}".format(key=names[fidx]))
+                # print("CUSTOM global.BUFFER==============>: {key} : {val}".format(key=names[fidx - 1],val=lhs_samples[-1][names[fidx - 1]]))
+                # print("CUSTOM global.BUFFER==============>: {key} : {val}".format(key=lhs_samples[-1],val=lhs_samples[-1]['global.BUFFER']))
+                if names[fidx] == "global.IO_THR_GROUPS":
+                    io_thr_groups_val = math.ceil(lhs_samples[-1]['global.TASK_THREADS'] * 1.8)
+                    lhs_samples[-1][names[fidx]] = io_thr_groups_val
+                if names[fidx] == "global.MEMORY_N_POOLS":
+                    memory_n_pools_val = int(lhs_samples[-1]['global.MEMORY_POOL'] / 500)
+                    lhs_samples[-1][names[fidx]] = memory_n_pools_val
+                if names[fidx] == "global.BUFFER_POOLS":
+                    buffer_pools_val = int(lhs_samples[-1]['global.BUFFER'] / 500)
+                    lhs_samples[-1][names[fidx]] = buffer_pools_val if is_prime(buffer_pools_val) else generate_prime(
+                        buffer_pools_val)
+                elif names[fidx] == "global.FAST_POOL_PAGES":
+                    buffer_val = int(lhs_samples[-1]['global.BUFFER'])
+                    lhs_samples[-1][names[fidx]] = int(buffer_val * 1024 / 16 / 2)
+                elif names[fidx] == "global.FAST_ROLL_PAGES":
+                    fast_pools_val = int(lhs_samples[-1]['global.FAST_POOL_PAGES'])
+                    lhs_samples[-1][names[fidx]] = int(fast_pools_val * 0.75)
             else:
                 LOG.warning("LHS: vartype not supported: %s (knob name: %s).",
                             VarType.name(types[fidx]), names[fidx])
     random.shuffle(lhs_samples)
-
     return lhs_samples
 
 

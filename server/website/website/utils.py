@@ -357,7 +357,6 @@ class DataUtil(object):
 
 
 class ConversionUtil(object):
-
     DEFAULT_BYTES_SYSTEM = (
         (1024 ** 5, 'PB'),
         (1024 ** 4, 'TB'),
@@ -637,3 +636,22 @@ def git_hash():
             LOG.warning("Failed to get git commit hash.\n\n%s\n\n", e, exc_info=True)
 
     return sha
+
+
+# 判断是否为素数
+def is_prime(number):
+    if number == 1:
+        return False
+    sqrt = int(math.sqrt(number))
+    for j in range(2, sqrt + 1):  # 从2到number的算术平方根迭代
+        if number % j == 0:  # 判断j是否为number的因数
+            return False
+    return True
+
+
+# 生成跟当前值最接近的素数
+def generate_prime(number):
+    for j in range(1, 3):  # 从2到number的算术平方根迭代
+        number = number + j
+        if is_prime:  # 判断j是否为number的因数
+            return number
