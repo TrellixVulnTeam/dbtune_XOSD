@@ -166,8 +166,9 @@ def drop_database():
         run("mysql --user={} --password={} -e 'drop database if exists {}'".format(
             dconf.DB_USER, dconf.DB_PASSWORD, dconf.DB_NAME))
     elif dconf.DB_TYPE == 'dm':
-        run("/opt/dmdbms/bin/disql {}/{} -e 'drop schema {} cascade'".format(
-            dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME))
+        run("/opt/dmdbms/bin/disql {}/{}@{}:{} -e 'drop schema {} cascade'".format(
+            dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_HOST,
+            dconf.DB_PORT, dconf.DB_NAME))
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
 
@@ -181,8 +182,9 @@ def create_database():
         run("mysql --user={} --password={} -e 'create database {}'".format(
             dconf.DB_USER, dconf.DB_PASSWORD, dconf.DB_NAME))
     elif dconf.DB_TYPE == 'dm':
-        run("/opt/dmdbms/bin/disql {}/{} -e 'CREATE SCHEMA {}'".format(
-            dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME))
+        run("/opt/dmdbms/bin/disql {}/{}@{}:{} -e 'CREATE SCHEMA {}'".format(
+            dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_HOST,
+            dconf.DB_PORT, dconf.DB_NAME))
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
 
@@ -196,7 +198,8 @@ def create_user():
     elif dconf.DB_TYPE == 'oracle':
         run_sql_script('createUser.sh', dconf.DB_USER, dconf.DB_PASSWORD)
     elif dconf.DB_TYPE == 'dm':
-        run_sql_script('createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER, dconf.DB_PASSWORD)
+        run_sql_script('createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER, dconf.DB_PASSWORD,
+                       dconf.DB_HOST, dconf.DB_PORT)
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
 
@@ -210,8 +213,10 @@ def drop_user():
     elif dconf.DB_TYPE == 'oracle':
         run_sql_script('dropUser.sh', dconf.DB_USER)
     elif dconf.DB_TYPE == 'dm':
-        run("/opt/dmdbms/bin/disql {}/{} -e 'drop user {} cascade'".format(dconf.ADMIN_USER, dconf.ADMIN_PWD,
-                                                                           dconf.DB_USER))
+        run("/opt/dmdbms/bin/disql {}/{}@{}:{} -e 'drop user {} cascade'".format(dconf.ADMIN_USER, dconf.ADMIN_PWD,
+                                                                                 dconf.DB_HOST,
+                                                                                 dconf.DB_PORT,
+                                                                                 dconf.DB_USER))
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
 
@@ -570,7 +575,10 @@ def dump_database():
         sudo('mysqldump --user={} --password={} --databases {} > {}'.format(
             dconf.DB_USER, dconf.DB_PASSWORD, dconf.DB_NAME, dumpfile))
     elif dconf.DB_TYPE == 'dm':
-        run_sql_script('dumpDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dconf.DB_DUMP_DIR)
+        run_sql_script('dumpDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dconf.DB_DUMP_DIR, dconf.DB_HOST,
+                       dconf.DB_PORT)
+        if not os.path.exists(os.path.join(dconf.DB_DUMP_DIR, dconf.DB_NAME + '.dump')):
+            create_user()
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
     return True
@@ -611,7 +619,10 @@ def restore_database():
     elif dconf.DB_TYPE == 'mysql':
         run('mysql --user={} --password={} < {}'.format(dconf.DB_USER, dconf.DB_PASSWORD, dumpfile))
     elif dconf.DB_TYPE == 'dm':
-        run_sql_script('restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile)
+        drop_user()
+        create_user()
+        run_sql_script('restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile, dconf.DB_HOST,
+                       dconf.DB_PORT)
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
     LOG.info('Finish restoring database')

@@ -4887,6 +4887,44 @@
   {
     "model": "website.KnobCatalog",
     "fields": {
+      "name": "global.WORKER_THREADS",
+      "scope": "global",
+      "dbms": 20,
+      "category": "",
+      "enumvals": null,
+      "context": "",
+      "unit": 3,
+      "tunable": true,
+      "summary": "Number Of Worker Threads",
+      "default": "16",
+      "minval": "1",
+      "vartype": 2,
+      "maxval": "64",
+      "resource": 2
+    }
+  },
+  {
+    "model": "website.KnobCatalog",
+    "fields": {
+      "name": "global.TASK_THREADS",
+      "scope": "global",
+      "dbms": 20,
+      "category": "",
+      "enumvals": null,
+      "context": "",
+      "unit": 3,
+      "tunable": true,
+      "summary": "Number Of Task Threads",
+      "default": "16",
+      "minval": "1",
+      "vartype": 2,
+      "maxval": "1000",
+      "resource": 2
+    }
+  },
+  {
+    "model": "website.KnobCatalog",
+    "fields": {
       "name": "global.HIO_THR_GROUPS",
       "scope": "global",
       "dbms": 20,
@@ -6569,24 +6607,6 @@
   {
     "model": "website.KnobCatalog",
     "fields": {
-      "name": "global.MEMORY_N_POOLS",
-      "scope": "global",
-      "dbms": 20,
-      "category": "",
-      "enumvals": null,
-      "context": "",
-      "unit": 3,
-      "tunable": true,
-      "summary": "Number of Memory Share Pool",
-      "default": "1",
-      "minval": "0",
-      "vartype": 7,
-      "maxval": "2048"
-    }
-  },
-  {
-    "model": "website.KnobCatalog",
-    "fields": {
       "name": "global.MEMORY_POOL",
       "scope": "global",
       "dbms": 20,
@@ -6601,6 +6621,24 @@
       "vartype": 2,
       "maxval": "67108864",
       "resource": 1
+    }
+  },
+  {
+    "model": "website.KnobCatalog",
+    "fields": {
+      "name": "global.MEMORY_N_POOLS",
+      "scope": "global",
+      "dbms": 20,
+      "category": "",
+      "enumvals": null,
+      "context": "",
+      "unit": 3,
+      "tunable": true,
+      "summary": "Number of Memory Share Pool",
+      "default": "1",
+      "minval": "0",
+      "vartype": 7,
+      "maxval": "2048"
     }
   },
   {
@@ -7116,14 +7154,14 @@
       "scope": "global",
       "dbms": 20,
       "category": "",
-      "enumvals": "0",
+      "enumvals": null,
       "context": "",
       "unit": 3,
       "tunable": true,
       "summary": "Flag of message compression mode",
-      "default": "0",
+      "default": "2",
       "minval": "0",
-      "vartype": 5,
+      "vartype": 7,
       "maxval": "2"
     }
   },
@@ -9104,10 +9142,10 @@
       "unit": 3,
       "tunable": true,
       "summary": "The Number Of Log Pages In One Log Buffer",
-      "default": 16384,
-      "minval": 16384,
-      "vartype": 2,
-      "maxval": 16384
+      "default": "16384",
+      "minval": "16384",
+      "vartype": 7,
+      "maxval": "16384"
     }
   },
   {
@@ -9249,9 +9287,9 @@
       "tunable": true,
       "summary": "Redo Log Pool Size In Megabyte",
       "default": "256",
-      "minval": "1",
+      "minval": null,
       "vartype": 5,
-      "maxval": "4096"
+      "maxval": null
     }
   },
   {
@@ -10468,25 +10506,6 @@
   {
     "model": "website.KnobCatalog",
     "fields": {
-      "name": "global.TASK_THREADS",
-      "scope": "global",
-      "dbms": 20,
-      "category": "",
-      "enumvals": null,
-      "context": "",
-      "unit": 3,
-      "tunable": true,
-      "summary": "Number Of Task Threads",
-      "default": "16",
-      "minval": "1",
-      "vartype": 2,
-      "maxval": "1000",
-      "resource": 2
-    }
-  },
-  {
-    "model": "website.KnobCatalog",
-    "fields": {
       "name": "global.TEMP_SIZE",
       "scope": "global",
       "dbms": 20,
@@ -11513,25 +11532,6 @@
       "minval": "0",
       "vartype": 2,
       "maxval": "100"
-    }
-  },
-  {
-    "model": "website.KnobCatalog",
-    "fields": {
-      "name": "global.WORKER_THREADS",
-      "scope": "global",
-      "dbms": 20,
-      "category": "",
-      "enumvals": null,
-      "context": "",
-      "unit": 3,
-      "tunable": true,
-      "summary": "Number Of Worker Threads",
-      "default": "16",
-      "minval": "1",
-      "vartype": 2,
-      "maxval": "64",
-      "resource": 2
     }
   },
   {

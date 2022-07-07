@@ -2481,6 +2481,7 @@ def set_field(fields):
     if fields['name'] == 'JOIN_HASH_SIZE':
         fields['tunable'] = True
         fields['minval'] = 5000
+        fields['maxval'] = 500000
         fields['vartype'] = 2
     # 服务器日志是否记录通信中产生的警告信息。0：不记录；1：记录
     if fields['name'] == 'COMM_TRACE':
@@ -2522,12 +2523,15 @@ def set_field(fields):
     # 2^14=16384 单个日志缓冲区大小（以日志页个数为单位），取值只能为2的次幂值，最小值为1，最大值为20480
     if fields['name'] == 'RLOG_BUF_SIZE':
         fields['tunable'] = True
-        fields['default'] = 16384
-        fields['minval'] = 16384
-        fields['maxval'] = 16384
-        fields['vartype'] = 2
+        # fields['default'] = '8192'
+        # fields['minval'] = None
+        # fields['maxval'] = None
+        fields['vartype'] = 7
+        # fields['enumvals'] = '1024,8192,16384'
     if fields['name'] == 'RLOG_POOL_SIZE':
         fields['tunable'] = True
+        fields['minval'] = None
+        fields['maxval'] = None
         fields['vartype'] = 5
         fields['enumvals'] = '256,512,1024,2048,4096'
     if fields['name'] == 'RLOG_PARALLEL_ENABLE':
@@ -2562,9 +2566,7 @@ def set_field(fields):
     # 与客户端的通信消息是否压缩，0：不压缩；1：压缩；2：系统自动决定每条消息是否压缩
     if fields['name'] == 'MSG_COMPRESS_TYPE':
         fields['tunable'] = True
-        fields['default'] = '0'
-        fields['vartype'] = 5
-        fields['enumvals'] = '0'
+        fields['vartype'] = 7
     # 是否对消息进行校验。0：不检验；1：检验
     if fields['name'] == 'COMM_VALIDATE':
         fields['tunable'] = True
@@ -2611,6 +2613,10 @@ def set_field(fields):
     if fields['name'] == "FAST_COMMIT":
         fields['tunable'] = False
         fields['vartype'] = 1
+    if fields['name'] == "COMMIT_WRITE":
+        fields['tunable'] = False
+        fields['vartype'] = 5
+        fields['enumvals'] = 'wait,nowait,immediate,batch'
     # 控制节点启动状态
     if fields['name'] == "MASTER_STARTUP_STATUS":
         fields['tunable'] = False
@@ -2720,6 +2726,7 @@ def set_field(fields):
         fields['resource'] = 3
     # 默认创建的临时表空间大小，以M为单位。有效值范围（10~1048576）
     if fields['name'] == 'TEMP_SIZE':
+        fields['tunable'] = True
         fields['resource'] = 3
     # 审计文件总存储空间大小限制，以M为单位。有效值范围（0~4294967294），0表示不限制
     if fields['name'] == 'AUDIT_SPACE_LIMIT':

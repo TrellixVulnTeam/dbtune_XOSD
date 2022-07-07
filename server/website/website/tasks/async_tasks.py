@@ -419,19 +419,23 @@ def gen_lhs_samples(knobs, nsamples):
                 if names[fidx] == "global.IO_THR_GROUPS":
                     io_thr_groups_val = math.ceil(lhs_samples[-1]['global.TASK_THREADS'] * 1.8)
                     lhs_samples[-1][names[fidx]] = io_thr_groups_val
-                if names[fidx] == "global.MEMORY_N_POOLS":
-                    memory_n_pools_val = int(lhs_samples[-1]['global.MEMORY_POOL'] / 500)
+                elif names[fidx] == "global.MEMORY_N_POOLS":
+                    memory_n_pools_val = int(lhs_samples[-1]['global.MEMORY_POOL'] / 200)
                     lhs_samples[-1][names[fidx]] = memory_n_pools_val
-                if names[fidx] == "global.BUFFER_POOLS":
-                    buffer_pools_val = int(lhs_samples[-1]['global.BUFFER'] / 500)
-                    lhs_samples[-1][names[fidx]] = buffer_pools_val if is_prime(buffer_pools_val) else generate_prime(
-                        buffer_pools_val)
+                elif names[fidx] == "global.BUFFER_POOLS":
+                    buffer_pools_val = int(lhs_samples[-1]['global.BUFFER'] / 200)
+                    lhs_samples[-1][names[fidx]] = buffer_pools_val if is_prime(buffer_pools_val) else generate_prime(buffer_pools_val)
                 elif names[fidx] == "global.FAST_POOL_PAGES":
                     buffer_val = int(lhs_samples[-1]['global.BUFFER'])
                     lhs_samples[-1][names[fidx]] = int(buffer_val * 1024 / 16 / 2)
                 elif names[fidx] == "global.FAST_ROLL_PAGES":
                     fast_pools_val = int(lhs_samples[-1]['global.FAST_POOL_PAGES'])
                     lhs_samples[-1][names[fidx]] = int(fast_pools_val * 0.75)
+                elif names[fidx] == "global.MSG_COMPRESS_TYPE":
+                    lhs_samples[-1][names[fidx]] = int(0)
+                elif names[fidx] == "global.RLOG_BUF_SIZE":
+                    buffer_val = int(lhs_samples[-1]['global.BUFFER'])
+                    lhs_samples[-1][names[fidx]] = 8192 if buffer_val < 16384 else 16384
             else:
                 LOG.warning("LHS: vartype not supported: %s (knob name: %s).",
                             VarType.name(types[fidx]), names[fidx])

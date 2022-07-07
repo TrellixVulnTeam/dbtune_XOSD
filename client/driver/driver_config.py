@@ -206,4 +206,4 @@ CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 WEBSITE_URL = 'http://223.254.60.12'
 
 # Code for uploading new results to the website
-UPLOAD_CODE = 'EEBZ8C4DT2UIXDM561HD'
+UPLOAD_CODE = 'GQ401Z14MUU76BEU2VZM'

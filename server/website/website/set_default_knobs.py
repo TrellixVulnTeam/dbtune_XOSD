@@ -136,12 +136,16 @@ def set_default_knobs(session, cascade=True):
                 # 内存
                 if knob.name in ['global.BUFFER', 'global.MAX_BUFFER', 'global.AUDIT_SPACE_LIMIT',
                                  'global.CACHE_POOL_SIZE', 'global.MEMORY_POOL']:
+                    minval = session.hardware.memory * MB * MEMORY_PERCENT
                     maxval = session.hardware.memory * MB
                 # 以KB为单位
                 if knob.name in ['global.VM_POOL_TARGET', 'global.SESS_POOL_TARGET', 'global.VM_POOL_SIZE']:
+                    minval = session.hardware.memory * MB * MEMORY_PERCENT
                     maxval = session.hardware.memory * MB * MB
 
                 # 存储
+                if knob.name in ['global.TEMP_SIZE']:
+                    maxval = session.hardware.storage * MB * STORAGE_PERCENT
                 if knob.name in ['global.TEMP_SPACE_LIMIT', 'global.CKPT_RLOG_SIZE']:
                     maxval = session.hardware.storage * MB
                 # 以KB为单位
