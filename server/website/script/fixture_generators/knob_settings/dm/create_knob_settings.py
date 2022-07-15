@@ -2449,7 +2449,7 @@ def set_field(fields):
     if fields['name'] == 'CKPT_DIRTY_PAGES':
         fields['tunable'] = True
         fields['vartype'] = 2
-        fields['resource'] = 3
+        fields['resource'] = 2
     # 指定检查点的时间间隔。以秒为单位，为0时表示不自动定时做检查点。
     if fields['name'] == 'CKPT_INTERVAL':
         fields['tunable'] = True
@@ -2562,6 +2562,7 @@ def set_field(fields):
     # 事务提交后回滚页保持时间，单位为秒。有效值范围（0~ 86400） 注：类型为DOUBLE，可支持毫秒
     if fields['name'] == 'UNDO_RETENTION':
         fields['tunable'] = True
+        fields['maxval'] = 90.00
         fields['vartype'] = 3
     # 与客户端的通信消息是否压缩，0：不压缩；1：压缩；2：系统自动决定每条消息是否压缩
     if fields['name'] == 'MSG_COMPRESS_TYPE':

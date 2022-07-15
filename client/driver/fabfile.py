@@ -150,8 +150,10 @@ def restart_database():
         elif dconf.HOST_CONN == 'remote_docker':
             run('docker restart {}'.format(dconf.CONTAINER_NAME), remote_only=True)
         else:
-            # sudo('service DmServiceDMSERVER restart')
-            sudo('service {} restart'.format(dconf.SERVICE_NAME))
+            sudo(
+                "ctr -n k8s.io task exec --exec-id `ctr -n k8s.io tasks list |grep {}|awk '{{print $2}}'` -t {} bash -- reload".format(
+                    dconf.CONTAINER_NAME, dconf.CONTAINER_NAME))
+            # sudo('service {} restart'.format(dconf.SERVICE_NAME))
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
     return True
@@ -213,10 +215,12 @@ def drop_user():
     elif dconf.DB_TYPE == 'oracle':
         run_sql_script('dropUser.sh', dconf.DB_USER)
     elif dconf.DB_TYPE == 'dm':
-        run("/opt/dmdbms/bin/disql {}/{}@{}:{} -e 'drop user {} cascade'".format(dconf.ADMIN_USER, dconf.ADMIN_PWD,
-                                                                                 dconf.DB_HOST,
-                                                                                 dconf.DB_PORT,
-                                                                                 dconf.DB_USER))
+        run('/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
+                                                                                           dconf.ADMIN_PWD,
+                                                                                           dconf.DB_HOST,
+                                                                                           dconf.DB_PORT,
+                                                                                           dconf.DB_USER),
+            capture=False)
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
 
@@ -577,8 +581,6 @@ def dump_database():
     elif dconf.DB_TYPE == 'dm':
         run_sql_script('dumpDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dconf.DB_DUMP_DIR, dconf.DB_HOST,
                        dconf.DB_PORT)
-        if not os.path.exists(os.path.join(dconf.DB_DUMP_DIR, dconf.DB_NAME + '.dump')):
-            create_user()
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
     return True
@@ -632,6 +634,9 @@ def restore_database():
 def is_ready_db(interval_sec=10):
     if dconf.DB_TYPE == 'mysql':
         cmd_fmt = "mysql --user={} --password={} -e 'exit'".format
+    elif dconf.DB_TYPE == 'dm':
+        run('sleep {}'.format(dconf.RESTART_SLEEP_SEC))
+        return
     else:
         LOG.info('database %s connecting function is not implemented, sleep %s seconds and return',
                  dconf.DB_TYPE, dconf.RESTART_SLEEP_SEC)
@@ -770,7 +775,7 @@ def set_oltpbench_config():
 
 
 @task
-def loop(i, isLoad):
+def loop(i):
     i = int(i)
 
     # free cache
@@ -790,10 +795,6 @@ def loop(i, isLoad):
     p = Process(target=run_controller, args=())
     p.start()
     LOG.info('Run the controller')
-
-    if isLoad:
-        load_oltpbench()
-        LOG.info('Run Load OLTP-Bench')
 
     # run oltpbench as a background job
     while not _ready_to_start_oltpbench():
@@ -878,6 +879,11 @@ def set_dynamic_knobs(recommendation, context):
 
 @task
 def run_loops(max_iter=10, load=False):
+    if load and dconf.DB_TYPE == 'dm':
+        drop_user()
+        create_user()
+        load_oltpbench()
+        LOG.info('Run Load OLTP-Bench')
     # dump database if it's not done before.
     dump = dump_database()
     # put the BASE_DB_CONF in the config file
@@ -912,7 +918,7 @@ def run_loops(max_iter=10, load=False):
         LOG.info('Wait %s seconds after restarting database', dconf.RESTART_SLEEP_SEC)
         is_ready_db(interval_sec=10)
         LOG.info('The %s-th Loop Starts / Total Loops %s', i + 1, max_iter)
-        loop(i % dconf.RELOAD_INTERVAL if dconf.RELOAD_INTERVAL > 0 else i, load)
+        loop(i % dconf.RELOAD_INTERVAL if dconf.RELOAD_INTERVAL > 0 else i)
         LOG.info('The %s-th Loop Ends / Total Loops %s', i + 1, max_iter)
 
 

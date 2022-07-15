@@ -10,7 +10,7 @@ HOST_CONN = 'local'
 
 # The name of the Docker container for the target database
 # (only required if HOST_CONN = docker)
-CONTAINER_NAME = None  # e.g., 'postgres_container'
+CONTAINER_NAME = "dm8"  # e.g., 'postgres_container'
 
 # Host SSH login credentials (only required if HOST_CONN=remote)
 LOGIN_NAME = None
@@ -55,12 +55,12 @@ SERVICE_NAME = 'DmServiceDM1'
 
 
 # Database host address
-DB_HOST = 'localhost'
+DB_HOST = '223.254.60.12'
 
 # Database port
 # DB_PORT = '5432'
 # DB_PORT = '3306'
-DB_PORT = '15236'
+DB_PORT = '5236'
 
 # If set to True, DB_CONF file is mounted to database container file
 # Only available when HOST_CONN is docker or remote_docker
@@ -70,7 +70,8 @@ DB_CONF_MOUNT = False
 # If DB_CONF_MOUNT is True, the path is on the host server, not docker
 # DB_CONF = '/etc/postgresql/9.6/main/postgresql.conf'
 # DB_CONF = '/etc/mysql/mysql.conf.d/mysqld.cnf'
-DB_CONF = '/opt/dmdbms/data/DAMENG/dm.ini'
+# DB_CONF = '/opt/dmdbms/data/DAMENG/dm.ini'
+DB_CONF = '/home/zhc/data/DAMENG/dm.ini'
 
 # Path to the directory for storing database dump files
 DB_DUMP_DIR = None
@@ -206,4 +207,4 @@ CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 WEBSITE_URL = 'http://223.254.60.12'
 
 # Code for uploading new results to the website
-UPLOAD_CODE = 'GQ401Z14MUU76BEU2VZM'
+UPLOAD_CODE = 'A4QAX03TNRS1N9W96K55'

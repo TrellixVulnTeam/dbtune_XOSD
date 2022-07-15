@@ -150,7 +150,7 @@ def set_default_knobs(session, cascade=True):
                     maxval = session.hardware.storage * MB
                 # 以KB为单位
                 if knob.name in ['global.CKPT_DIRTY_PAGES']:
-                    maxval = session.hardware.storage * MB * MB * STORAGE_PERCENT
+                    maxval = 16 * MB * STORAGE_PERCENT
             if maxval > knob_maxval:
                 maxval = knob_maxval
             if maxval < minval:
