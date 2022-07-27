@@ -427,7 +427,7 @@ def gen_lhs_samples(knobs, nsamples):
                     lhs_samples[-1][names[fidx]] = buffer_pools_val if is_prime(buffer_pools_val) else generate_prime(buffer_pools_val)
                 elif names[fidx] == "global.FAST_POOL_PAGES":
                     buffer_val = int(lhs_samples[-1]['global.BUFFER'])
-                    lhs_samples[-1][names[fidx]] = int(buffer_val * 1024 / 16 / 2)
+                    lhs_samples[-1][names[fidx]] = int(buffer_val * 1024 / 16 / 20)
                 elif names[fidx] == "global.FAST_ROLL_PAGES":
                     fast_pools_val = int(lhs_samples[-1]['global.FAST_POOL_PAGES'])
                     lhs_samples[-1][names[fidx]] = int(fast_pools_val * 0.75)

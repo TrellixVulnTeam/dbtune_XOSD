@@ -3,10 +3,13 @@ import sys
 import copy
 import argparse
 import os
+
 sys.path.append("../../../")
 sys.path.append("../")
-from server.website.website.types import VarType   # pylint: disable=import-error,wrong-import-position,line-too-long  # noqa: E402
-from driver_config import OLTPBENCH_HOME  # pylint: disable=import-error,wrong-import-position  # noqa: E402
+from server.website.website.types import \
+    VarType  # pylint: disable=import-error,wrong-import-position,line-too-long  # noqa: E402
+from driver_config import OLTPBENCH_HOME, BENCH_TYPE, \
+    SYSBENCH_HOME  # pylint: disable=import-error,wrong-import-position  # noqa: E402
 
 parser = argparse.ArgumentParser()  # pylint: disable=invalid-name
 parser.add_argument("result_dir")
@@ -30,17 +33,32 @@ USER_DEINFED_METRICS = {
     }
 }
 
+DM_DEINFED_METRICS = {
+    "throughput": {
+        "unit": "transaction / second",
+        "short_unit": "txn/s",
+        "type": VarType.REAL
+    },
+}
+
 
 def get_udm():
-    summary_path = OLTPBENCH_HOME + '/results/outputfile.summary'
-    with open(summary_path, 'r') as f:
-        info = json.load(f)
-    metrics = copy.deepcopy(USER_DEINFED_METRICS)
-    metrics["throughput"]["value"] = info["Throughput (requests/second)"]
-    metrics["latency_99"]["value"] =\
-        info["Latency Distribution"]["99th Percentile Latency (microseconds)"]
-    metrics["latency_95"]["value"] =\
-        info["Latency Distribution"]["95th Percentile Latency (microseconds)"]
+    if BENCH_TYPE.lower() != 'sysbench':
+        summary_path = OLTPBENCH_HOME + '/results/outputfile.summary'
+        with open(summary_path, 'r') as f:
+            info = json.load(f)
+        metrics = copy.deepcopy(USER_DEINFED_METRICS)
+        metrics["throughput"]["value"] = info["Throughput (requests/second)"]
+        metrics["latency_99"]["value"] = \
+            info["Latency Distribution"]["99th Percentile Latency (microseconds)"]
+        metrics["latency_95"]["value"] = \
+            info["Latency Distribution"]["95th Percentile Latency (microseconds)"]
+    else:
+        summary_path = SYSBENCH_HOME + '/outputfile.summary'
+        with open(summary_path, 'r') as f:
+            info = json.load(f)
+        metrics = copy.deepcopy(DM_DEINFED_METRICS)
+        metrics["throughput"]["value"] = info["tps"]
     return metrics
 
 

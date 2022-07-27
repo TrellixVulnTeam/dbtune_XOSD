@@ -51,6 +51,7 @@ This is not an efficient way for production. You need to configure other servers
 ```
 mysqladmin create -u <username> -p ottertune
 
+use mysql;
 SET GLOBAL validate_password.policy = LOW;
 CREATE USER 'root'@'%' IDENTIFIED BY '12345678';
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '12345678';
@@ -66,6 +67,8 @@ FLUSH PRIVILEGES;
 ##### 4. Migrate the Django models into the database
 
 ```
+cd /home/zhc/anaconda3/envs/py37-env/
+source activate py37-env
 #python3 manage.py makemigrations website
 python3 manage.py migrate
 ```
@@ -80,8 +83,8 @@ python3 manage.py createsuperuser
 
 ```
 sudo rabbitmq-server -detached || systemctl restart rabbitmq-server
-python3 manage.py celery worker --loglevel=info --pool=threads
 python3 manage.py runserver 0.0.0.0:8000
+python3 manage.py celery worker --loglevel=info --pool=threads
 python3 manage.py celerybeat --verbosity=2 --loglevel=info 
 ```
 
@@ -140,4 +143,11 @@ export C_FORCE_ROOT="true"
 
 然后重启
 systemctl restart rabbitmq-server.service
+```
+
+##### # error in setup command: use_2to3 is invalid.
+```shell
+在setuptools 58之后的版本已经废弃了use_2to3:
+
+pip install setuptools==57.5.0
 ```

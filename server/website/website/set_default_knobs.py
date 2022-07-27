@@ -138,10 +138,14 @@ def set_default_knobs(session, cascade=True):
                                  'global.CACHE_POOL_SIZE', 'global.MEMORY_POOL']:
                     minval = session.hardware.memory * MB * MEMORY_PERCENT
                     maxval = session.hardware.memory * MB
+
+                if knob.name in ['global.SESS_POOL_SIZE', 'global.VM_POOL_SIZE']:
+                    # maxval = session.hardware.memory *32
+                    maxval = session.hardware.memory * 64
                 # 以KB为单位
-                if knob.name in ['global.VM_POOL_TARGET', 'global.SESS_POOL_TARGET', 'global.VM_POOL_SIZE']:
-                    minval = session.hardware.memory * MB * MEMORY_PERCENT
-                    maxval = session.hardware.memory * MB * MB
+                if knob.name in ['global.SESS_POOL_TARGET', 'global.VM_POOL_TARGET']:
+                    # maxval = session.hardware.memory * 4 * MB
+                    maxval = session.hardware.memory * 5 * MB
 
                 # 存储
                 if knob.name in ['global.TEMP_SIZE']:

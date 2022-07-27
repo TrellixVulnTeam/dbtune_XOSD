@@ -55,7 +55,7 @@ SERVICE_NAME = 'DmServiceDM1'
 
 
 # Database host address
-DB_HOST = '223.254.60.12'
+DB_HOST = '192.168.144.152'
 
 # Database port
 # DB_PORT = '5432'
@@ -122,7 +122,8 @@ DRIVER_HOME = os.path.dirname(os.path.realpath(__file__))
 RESULT_DIR = os.path.join(DRIVER_HOME, 'results')
 
 # Set this to add user defined metrics
-ENABLE_UDM = False
+# ENABLE_UDM = False
+ENABLE_UDM = True
 
 # Path to the User Defined Metrics (UDM), only required when ENABLE_UDM is True
 UDM_DIR = os.path.join(DRIVER_HOME, 'userDefinedMetrics')
@@ -153,21 +154,6 @@ WARMUP_ITERATIONS = 0
 # Let the database initialize for this many seconds after it restarts
 RESTART_SLEEP_SEC = 30
 
-#==========================================================
-#  OLTPBENCHMARK OPTIONS
-#==========================================================
-
-# Path to OLTPBench directory
-# OLTPBENCH_HOME = os.path.expanduser('~/oltpbench')
-OLTPBENCH_HOME = os.path.expanduser('/home/zhc/oltpbench')
-
-# Path to the OLTPBench configuration file
-# OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/tpcc_config_postgres.xml')
-OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/{}_tpcc_config.xml'.format(DB_TYPE))
-
-# Name of the benchmark to run
-OLTPBENCH_BENCH = 'tpcc'
-
 
 #==========================================================
 #  CONTROLLER OPTIONS
@@ -185,6 +171,27 @@ CONTROLLER_CONFIG = os.path.join(CONTROLLER_HOME, 'config/{}_config.json'.format
 
 
 #==========================================================
+#  BENCH OPTIONS
+#==========================================================
+
+# oltpbench or sysbench
+BENCH_TYPE = 'sysbench'
+
+# Path to OLTPBench directory
+OLTPBENCH_HOME = os.path.expanduser('/home/zhc/oltpbench')
+
+# Path to SYSBENCH directory
+SYSBENCH_HOME = os.path.expanduser('/home/zhc/sysbench')
+
+# Path to the OLTPBench configuration file
+# OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/tpcc_config_postgres.xml')
+OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/{}_tpcc_config.xml'.format(DB_TYPE))
+
+# Name of the benchmark to run
+OLTPBENCH_BENCH = 'tpcc'
+
+
+#==========================================================
 #  LOGGING OPTIONS
 #==========================================================
 
@@ -195,7 +202,7 @@ LOG_DIR = os.path.join(DRIVER_HOME, 'log')
 
 # Log files
 DRIVER_LOG = os.path.join(LOG_DIR, 'driver.log')
-OLTPBENCH_LOG = os.path.join(LOG_DIR, 'oltpbench.log')
+BENCH_LOG = os.path.join(LOG_DIR, 'bench.log')
 CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 
 
@@ -204,7 +211,7 @@ CONTROLLER_LOG = os.path.join(LOG_DIR, 'controller.log')
 #==========================================================
 
 # OtterTune website URL
-WEBSITE_URL = 'http://223.254.60.12'
+WEBSITE_URL = 'http://192.168.144.152'
 
 # Code for uploading new results to the website
-UPLOAD_CODE = 'A4QAX03TNRS1N9W96K55'
+UPLOAD_CODE = '0DPJHDNZ6XC86E9VL18E'

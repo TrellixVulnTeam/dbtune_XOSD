@@ -102,7 +102,7 @@ def create_controller_config():
         password=dconf.DB_PASSWORD,
         upload_code='DEPRECATED',
         upload_url='DEPRECATED',
-        workload_name=dconf.OLTPBENCH_BENCH
+        workload_name=dconf.OLTPBENCH_BENCH if dconf.BENCH_TYPE != 'sysbench' else dconf.BENCH_TYPE
     )
 
     with open(dconf.CONTROLLER_CONFIG, 'w') as f:
@@ -300,42 +300,62 @@ def change_conf(next_conf=None):
 
 @task
 def load_oltpbench():
-    if os.path.exists(dconf.OLTPBENCH_CONFIG) is False:
-        msg = 'oltpbench config {} does not exist, '.format(dconf.OLTPBENCH_CONFIG)
-        msg += 'please double check the option in driver_config.py'
-        raise Exception(msg)
-    set_oltpbench_config()
-    cmd = "./oltpbenchmark -b {} -c {} --create=true --load=true". \
-        format(dconf.OLTPBENCH_BENCH, dconf.OLTPBENCH_CONFIG)
-    with lcd(dconf.OLTPBENCH_HOME):  # pylint: disable=not-context-manager
-        local(cmd)
+    if dconf.BENCH_TYPE.lower() == 'oltpbench':
+        if os.path.exists(dconf.OLTPBENCH_CONFIG) is False:
+            msg = 'oltpbench config {} does not exist, '.format(dconf.OLTPBENCH_CONFIG)
+            msg += 'please double check the option in driver_config.py'
+            raise Exception(msg)
+        set_oltpbench_config()
+        cmd = "./oltpbenchmark -b {} -c {} --create=true --load=true". \
+            format(dconf.OLTPBENCH_BENCH, dconf.OLTPBENCH_CONFIG)
+        with lcd(dconf.OLTPBENCH_HOME):  # pylint: disable=not-context-manager
+            local(cmd)
 
 
 @task
-def run_oltpbench():
-    if os.path.exists(dconf.OLTPBENCH_CONFIG) is False:
-        msg = 'oltpbench config {} does not exist, '.format(dconf.OLTPBENCH_CONFIG)
-        msg += 'please double check the option in driver_config.py'
-        raise Exception(msg)
-    set_oltpbench_config()
-    cmd = "./oltpbenchmark -b {} -c {} --execute=true -s 5 -o outputfile". \
-        format(dconf.OLTPBENCH_BENCH, dconf.OLTPBENCH_CONFIG)
-    with lcd(dconf.OLTPBENCH_HOME):  # pylint: disable=not-context-manager
-        local(cmd)
+def load_sysbench():
+    if dconf.BENCH_TYPE.lower() == 'sysbench':
+        cmd = "./src/sysbench ./src/lua/oltp_read_write.lua --tables=250 --table-size=25000 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 prepare > {}".format(
+            dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD, dconf.BENCH_LOG)
+        with lcd(dconf.SYSBENCH_HOME):  # pylint: disable=not-context-manager
+            local(cmd)
+
+
+# @task
+# def run_oltpbench():
+#     if os.path.exists(dconf.OLTPBENCH_CONFIG) is False:
+#         msg = 'oltpbench config {} does not exist, '.format(dconf.OLTPBENCH_CONFIG)
+#         msg += 'please double check the option in driver_config.py'
+#         raise Exception(msg)
+#     set_oltpbench_config()
+#     cmd = "./oltpbenchmark -b {} -c {} --execute=true -s 5 -o outputfile". \
+#         format(dconf.OLTPBENCH_BENCH, dconf.OLTPBENCH_CONFIG)
+#     with lcd(dconf.OLTPBENCH_HOME):  # pylint: disable=not-context-manager
+#         local(cmd)
 
 
 @task
 def run_oltpbench_bg():
-    if os.path.exists(dconf.OLTPBENCH_CONFIG) is False:
-        msg = 'oltpbench config {} does not exist, '.format(dconf.OLTPBENCH_CONFIG)
-        msg += 'please double check the option in driver_config.py'
-        raise Exception(msg)
-    # set oltpbench config, including db username, password, url
-    set_oltpbench_config()
-    cmd = "./oltpbenchmark -b {} -c {} --execute=true -s 5 -o outputfile > {} 2>&1 &". \
-        format(dconf.OLTPBENCH_BENCH, dconf.OLTPBENCH_CONFIG, dconf.OLTPBENCH_LOG)
-    with lcd(dconf.OLTPBENCH_HOME):  # pylint: disable=not-context-manager
-        local(cmd)
+    if dconf.BENCH_TYPE.lower() == 'oltpbench':
+        if os.path.exists(dconf.OLTPBENCH_CONFIG) is False:
+            msg = 'oltpbench config {} does not exist, '.format(dconf.OLTPBENCH_CONFIG)
+            msg += 'please double check the option in driver_config.py'
+            raise Exception(msg)
+        # set oltpbench config, including db username, password, url
+        set_oltpbench_config()
+        cmd = "./oltpbenchmark -b {} -c {} --execute=true -s 5 -o outputfile > {} 2>&1 &". \
+            format(dconf.OLTPBENCH_BENCH, dconf.OLTPBENCH_CONFIG, dconf.BENCH_LOG)
+        with lcd(dconf.OLTPBENCH_HOME):  # pylint: disable=not-context-manager
+            local(cmd)
+
+
+@task
+def run_sysbench():
+    if dconf.BENCH_TYPE.lower() == 'sysbench':
+        cmd = "./src/sysbench ./src/lua/oltp_read_write.lua --tables=250 --table-size=25000 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 --output-dir={} --output-name=outputfile.summary  run > {} 2>&1 &".format(
+            dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD, dconf.SYSBENCH_HOME,dconf.BENCH_LOG)
+        with lcd(dconf.SYSBENCH_HOME):  # pylint: disable=not-context-manager
+            local(cmd)
 
 
 @task
@@ -665,31 +685,38 @@ def _ready_to_start_oltpbench():
 
 def _ready_to_start_controller():
     ready = False
-    if os.path.exists(dconf.OLTPBENCH_LOG):
-        with open(dconf.OLTPBENCH_LOG, 'r') as f:
+    if os.path.exists(dconf.BENCH_LOG):
+        with open(dconf.BENCH_LOG, 'r') as f:
             content = f.read()
-        ready = 'Warmup complete, starting measurements' in content
+        if dconf.BENCH_TYPE.lower() == 'oltpbench':
+            ready = 'Warmup complete, starting measurements' in content
+        else:
+            ready = 'Threads started!' in content
     return ready
 
 
 def _ready_to_shut_down_controller():
     pidfile = os.path.join(dconf.CONTROLLER_HOME, 'pid.txt')
     ready = False
-    if os.path.exists(pidfile) and os.path.exists(dconf.OLTPBENCH_LOG):
-        with open(dconf.OLTPBENCH_LOG, 'r') as f:
+    if os.path.exists(pidfile) and os.path.exists(dconf.BENCH_LOG):
+        with open(dconf.BENCH_LOG, 'r') as f:
             content = f.read()
-        if 'Failed' in content:
-            m = re.search('\n.*Failed.*\n', content)
-            error_msg = m.group(0)
-            LOG.error('OLTPBench Failed!')
-            return True, error_msg
-        ready = 'Output throughput samples into file' in content
+            if dconf.BENCH_TYPE.lower() == 'oltpbench':
+                if 'Failed' in content:
+                    m = re.search('\n.*Failed.*\n', content)
+                    error_msg = m.group(0)
+                    LOG.error('OLTPBench Failed!')
+                    return True, error_msg
+                else:
+                    ready = 'Output throughput samples into file' in content
+            else:
+                ready = 'SQL statistics:' in content
     return ready, None
 
 
 def clean_logs():
     # remove oltpbench and controller log files
-    local('rm -f {} {}'.format(dconf.OLTPBENCH_LOG, dconf.CONTROLLER_LOG))
+    local('rm -f {} {}'.format(dconf.BENCH_LOG, dconf.CONTROLLER_LOG))
 
 
 @task
@@ -800,7 +827,8 @@ def loop(i):
     while not _ready_to_start_oltpbench():
         time.sleep(1)
     run_oltpbench_bg()
-    LOG.info('Run OLTP-Bench')
+    run_sysbench()
+    LOG.info('Run {}.'.format(dconf.BENCH_TYPE))
 
     # the controller starts the first collection
     while not _ready_to_start_controller():
@@ -883,7 +911,8 @@ def run_loops(max_iter=10, load=False):
         drop_user()
         create_user()
         load_oltpbench()
-        LOG.info('Run Load OLTP-Bench')
+        load_sysbench()
+        LOG.info('Run Load {}.'.format(dconf.BENCH_TYPE))
     # dump database if it's not done before.
     dump = dump_database()
     # put the BASE_DB_CONF in the config file

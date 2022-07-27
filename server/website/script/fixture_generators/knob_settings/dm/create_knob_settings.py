@@ -2405,26 +2405,6 @@ def set_field(fields):
     if fields['name'] == 'DICT_BUF_SIZE':
         fields['tunable'] = True
         fields['vartype'] = 2
-    # 系统执行时虚拟机内存池大小，在执行过程中用到的内存大部分是从这里申请的，它的空间是从操作系统中直接申请的，有效值范围（32~1024*1024）
-    if fields['name'] == 'VM_POOL_SIZE':
-        fields['tunable'] = True
-        fields['vartype'] = 2
-        fields['resource'] = 1
-    # 虚拟机内存池能扩充到的最大大小，以KB为单位，有效值范围（0~10*1024*1024），0表示不限制
-    if fields['name'] == 'VM_POOL_TARGET':
-        fields['tunable'] = True
-        fields['vartype'] = 2
-        fields['resource'] = 1
-    # 会话缓冲区大小
-    if fields['name'] == 'SESS_POOL_SIZE':
-        fields['tunable'] = True
-        fields['vartype'] = 2
-        fields['resource'] = 1
-    # 会话缓冲区能扩充到的最大大小，以KB为单位，有效值范围（0~10*1024*1024），0表示不限制
-    if fields['name'] == 'SESS_POOL_TARGET':
-        fields['tunable'] = True
-        fields['vartype'] = 2
-        fields['resource'] = 1
     # VM是否使用HEAP分配内存。0：MEMORY POOL模式；1：HEAP模式；2：MEMORY POOL和HEAP混合模式
     if fields['name'] == 'VM_MEM_HEAP':
         fields['tunable'] = True
@@ -2667,6 +2647,26 @@ def set_field(fields):
     # 共享内存池在扩充到此大小以上后，空闲时收缩回此指定大小，以M为单位
     if fields['name'] == 'MEMORY_TARGET':
         fields['resource'] = 1
+    # 会话缓冲区大小
+    if fields['name'] == 'SESS_POOL_SIZE':
+        fields['tunable'] = True
+        fields['vartype'] = 2
+        fields['resource'] = 1
+    # 会话缓冲区能扩充到的最大大小，以KB为单位，有效值范围（0~10*1024*1024），0表示不限制
+    if fields['name'] == 'SESS_POOL_TARGET':
+        fields['tunable'] = True
+        fields['vartype'] = 2
+        fields['resource'] = 1
+        # 系统执行时虚拟机内存池大小，在执行过程中用到的内存大部分是从这里申请的，它的空间是从操作系统中直接申请的，有效值范围（32~1024*1024）
+    if fields['name'] == 'VM_POOL_SIZE':
+        fields['tunable'] = True
+        fields['vartype'] = 2
+        fields['resource'] = 1
+    # 虚拟机内存池能扩充到的最大大小，以KB为单位，有效值范围（0~10*1024*1024），0表示不限制
+    if fields['name'] == 'VM_POOL_TARGET':
+        fields['tunable'] = True
+        fields['vartype'] = 2
+        fields['resource'] = 1
 
     # ==================CPU参数==================#
     # 工作线程的数目，有效值范围（1~64）
@@ -2718,6 +2718,7 @@ def set_field(fields):
     if fields['name'] == 'GLOBAL_CPU_N':
         fields['resource'] = 2
         fields['vartype'] = 2
+
     # ==================存储参数==================#
     # 磁盘可用空间的报警阀值，单位为兆，有效值范围（50~50000）
     if fields['name'] == 'IDLE_DISK_THRESHOLD':

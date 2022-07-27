@@ -6,8 +6,9 @@
 
 
 from website.types import DBMSType
-from ..base.target_objective import (BaseTargetObjective, BaseThroughput, LESS_IS_BETTER,
+from ..base.target_objective import (BaseTargetObjective, BaseThroughput, BaseUserDefinedTarget, LESS_IS_BETTER,
                                      MORE_IS_BETTER)  # pylint: disable=relative-beyond-top-level
+
 
 class CustomDBTime(BaseTargetObjective):
 
@@ -122,6 +123,8 @@ class ElapsedTime(BaseTargetObjective):
 target_objective_list = tuple((DBMSType.DM, target_obj) for target_obj in [  # pylint: disable=invalid-name
     BaseThroughput(transactions_counter=('global.sysstat.transaction commit count',
                                          'global.sysstat.transaction rollback count')),
+    BaseUserDefinedTarget(target_name='throughput', improvement=MORE_IS_BETTER,
+                          unit='transactions / seconds', short_unit='txn/s')
     # CustomDBTime(),
     # NormalizedDBTime(),
     # RawDBTime(),
