@@ -1,5 +1,4 @@
 import importlib
-import importlib
 import json
 import logging
 import os
@@ -12,18 +11,18 @@ from multiprocessing import Process
 import requests
 from fabric.api import lcd, local, task
 
-from utils import (file_exists, get, get_content, run, run_sql_script, init_kubernetes_client, exec_command_to_pod,
-                   copy_file_to_pod,
-                   check_db_ready)
+from client.driver.utils import file_exists, get, get_content, run, run_sql_script, init_kubernetes_client, \
+    exec_command_to_pod, copy_file_to_pod, check_db_ready
 
 # Configure logging
 LOG = logging.getLogger(__name__)
 
 
 @task
-def run_loops(max_iter=10, load=False, driver_config="driver_config.py"):
+def run_loops(max_iter=10, load=False, driver_config="driver_config", data=None):
     k8sapi = init_kubernetes_client()
-    dconf = load_driver_conf(driver_config)
+    print("driver_config: {}".format(driver_config))
+    dconf = load_driver_conf(driver_config, data)
     if load and dconf.DB_TYPE == 'dm':
         drop_user(dconf)
         create_user(dconf)
@@ -67,11 +66,22 @@ def run_loops(max_iter=10, load=False, driver_config="driver_config.py"):
 
 
 # 加载驱动配置
-def load_driver_conf(driver_conf):
+def load_driver_conf(driver_conf, data):
     mod = importlib.import_module(driver_conf)
+    # 设定动态值
+    mod.DB_HOST = data['host']
+    mod.DB_POD_NAME = data['pod_name']
+    mod.UPLOAD_CODE = data['upload_code']
+    mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME,
+                                         'config/{}_{}_config.json'.format(mod.DB_TYPE, mod.UPLOAD_CODE))
+    # Log files
+    mod.DRIVER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'driver.log')
+    mod.BENCH_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'bench.log')
+    mod.CONTROLLER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'controller.log')
 
     # Create local directories
-    for _d in (os.path.join(mod.RESULT_DIR, mod.DB_INSTANCE_ID), mod.LOG_DIR, mod.TEMP_DIR):
+    for _d in (os.path.join(mod.RESULT_DIR, mod.UPLOAD_CODE), os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE),
+               os.path.join(mod.TEMP_DIR, mod.UPLOAD_CODE)):
         os.makedirs(_d, exist_ok=True)
 
     LOG.setLevel(getattr(logging, mod.LOG_LEVEL, logging.DEBUG))
@@ -115,10 +125,10 @@ def load_sysbench(dconf):
 # 数据dump导出
 @task
 def dump_database(dconf):
-    dumpfile = os.path.join(dconf.DB_DUMP_DIR, dconf.DB_INSTANCE_ID, dconf.DB_NAME + '.dump')
+    dumpfile = os.path.join(dconf.DB_DUMP_DIR, dconf.UPLOAD_CODE, dconf.DB_NAME + '.dump')
     try:
         run_sql_script(dconf, 'dumpDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME,
-                       os.path.join(dconf.DB_DUMP_DIR, dconf.DB_INSTANCE_ID),
+                       os.path.join(dconf.DB_DUMP_DIR, dconf.UPLOAD_CODE),
                        dconf.DB_HOST,
                        dconf.DB_PORT)
         return True
@@ -194,7 +204,7 @@ def get_result(dconf, max_time_sec=180, interval_sec=5, upload_code=None):
 def save_next_config(dconf, next_config, t=None):
     if not t:
         t = int(time.time())
-    with open(os.path.join(dconf.RESULT_DIR, dconf.DB_INSTANCE_ID, '{}__next_config.json'.format(t)), 'w') as f:
+    with open(os.path.join(dconf.RESULT_DIR, dconf.UPLOAD_CODE, '{}__next_config.json'.format(t)), 'w') as f:
         json.dump(next_config, f, indent=2)
     return t
 
@@ -204,7 +214,7 @@ def change_conf(dconf, api, next_conf=None):
     signal = "# configurations recommended by db-tune:\n"
     next_conf = next_conf or {}
 
-    tmp_conf_ini = os.path.join(dconf.TEMP_DIR, dconf.DB_INSTANCE_ID, os.path.basename(dconf.DB_CONF))
+    tmp_conf_ini = os.path.join(dconf.TEMP_DIR, dconf.UPLOAD_CODE, os.path.basename(dconf.DB_CONF))
     get(dconf, dconf.DB_CONF, tmp_conf_ini)
     with open(tmp_conf_ini, 'r') as f:
         lines = f.readlines()
@@ -347,7 +357,7 @@ def clean_logs(dconf):
 @task
 def clean_bench_results(dconf):
     # remove oltpbench result files
-    local('rm -f {}/results/{}_outputfile.summary'.format(dconf.SYSBENCH_HOME, dconf.DB_INSTANCE_ID))
+    local('rm -f {}/results/{}_outputfile.summary'.format(dconf.SYSBENCH_HOME, dconf.UPLOAD_CODE))
 
 
 @task
@@ -371,8 +381,8 @@ def run_controller(dconf):
     cmd = 'gradle run -PappArgs="-c {} -t {} -p output/{} -d output/{}" --no-daemon > {}'.format(
         dconf.CONTROLLER_CONFIG,
         dconf.CONTROLLER_OBSERVE_SEC,
-        dconf.DB_INSTANCE_ID,
-        dconf.DB_INSTANCE_ID,
+        dconf.UPLOAD_CODE,
+        dconf.UPLOAD_CODE,
         dconf.CONTROLLER_LOG)
     with lcd(dconf.CONTROLLER_HOME):  # pylint: disable=not-context-manager
         local(cmd)
@@ -411,7 +421,7 @@ def run_sysbench(dconf):
         cmd = "./src/sysbench ./src/lua/oltp_read_write.lua --tables=250 --table-size=25000 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 --output-dir={} --output-name={}  run > {} 2>&1 &".format(
             dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD,
             os.path.join(dconf.SYSBENCH_HOME, "results"),
-            dconf.DB_INSTANCE_ID + "_outputfile.summary",
+            dconf.UPLOAD_CODE + "_outputfile.summary",
             dconf.BENCH_LOG)
         with lcd(dconf.SYSBENCH_HOME):  # pylint: disable=not-context-manager
             local(cmd)
@@ -431,7 +441,7 @@ def _ready_to_start_controller(dconf):
 
 @task
 def signal_controller(dconf):
-    pidfile = os.path.join(dconf.CONTROLLER_HOME, dconf.DB_INSTANCE_ID, 'pid.txt')
+    pidfile = os.path.join(dconf.CONTROLLER_HOME, dconf.UPLOAD_CODE, 'pid.txt')
     with open(pidfile, 'r') as f:
         pid = int(f.read())
     cmd = 'kill -2 {}'.format(pid)
@@ -440,7 +450,7 @@ def signal_controller(dconf):
 
 
 def _ready_to_shut_down_controller(dconf):
-    pidfile = os.path.join(dconf.CONTROLLER_HOME, dconf.DB_INSTANCE_ID, 'pid.txt')
+    pidfile = os.path.join(dconf.CONTROLLER_HOME, dconf.UPLOAD_CODE, 'pid.txt')
     ready = False
     if os.path.exists(pidfile) and os.path.exists(dconf.BENCH_LOG):
         with open(dconf.BENCH_LOG, 'r') as f:
@@ -469,15 +479,15 @@ def save_dbms_result(dconf):
     if dconf.ENABLE_UDM:
         files.append('user_defined_metrics.json')
     for f_ in files:
-        srcfile = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.DB_INSTANCE_ID, f_)
-        dstfile = os.path.join(dconf.RESULT_DIR, dconf.DB_INSTANCE_ID, '{}__{}'.format(t, f_))
+        srcfile = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.UPLOAD_CODE, f_)
+        dstfile = os.path.join(dconf.RESULT_DIR, dconf.UPLOAD_CODE, '{}__{}'.format(t, f_))
         local('cp {} {}'.format(srcfile, dstfile))
     return t
 
 
 @task
 def upload_result(dconf):
-    result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.DB_INSTANCE_ID)
+    result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.UPLOAD_CODE)
     prefix = ''
     upload_code = dconf.UPLOAD_CODE
     files = {}

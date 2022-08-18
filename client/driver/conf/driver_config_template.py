@@ -55,7 +55,7 @@ DATABASE_DISK = '/'
 OVERRIDE_DB_VERSION = None
 
 # 数据库实例ID
-# DB_INSTANCE_ID = '$DB_INSTANCE_ID'
+# UPLOAD_CODE = '$DB_INSTANCE_ID'
 DB_POD_NAME = '$DB_POD_NAME'
 
 # ==========================================================
@@ -93,6 +93,17 @@ WARMUP_ITERATIONS = 0
 # Let the database initialize for this many seconds after it restarts
 RESTART_SLEEP_SEC = 20
 
+
+
+# ==========================================================
+#  WEBSITE OPTIONS
+# ==========================================================
+# OtterTune website URL
+WEBSITE_URL = 'http://localhost:8000'
+
+# Code for uploading new results to the website
+UPLOAD_CODE = '$UPLOAD_CODE'
+
 # ==========================================================
 #  CONTROLLER OPTIONS
 # ==========================================================
@@ -104,7 +115,7 @@ CONTROLLER_OBSERVE_SEC = 100
 CONTROLLER_HOME = DRIVER_HOME + '/../controller'
 
 # Path to the controller configuration file
-CONTROLLER_CONFIG = os.path.join(CONTROLLER_HOME, 'config/{}_{}_config.json'.format(DB_TYPE, DB_INSTANCE_ID))
+CONTROLLER_CONFIG = os.path.join(CONTROLLER_HOME, 'config/{}_{}_config.json'.format(DB_TYPE, UPLOAD_CODE))
 
 # ==========================================================
 #  BENCH OPTIONS
@@ -124,15 +135,7 @@ LOG_LEVEL = 'DEBUG'
 LOG_DIR = os.path.join(DRIVER_HOME, 'log')
 
 # Log files
-DRIVER_LOG = os.path.join(LOG_DIR, DB_INSTANCE_ID, 'driver.log')
-BENCH_LOG = os.path.join(LOG_DIR, DB_INSTANCE_ID, 'bench.log')
-CONTROLLER_LOG = os.path.join(LOG_DIR, DB_INSTANCE_ID, 'controller.log')
+DRIVER_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'driver.log')
+BENCH_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'bench.log')
+CONTROLLER_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'controller.log')
 
-# ==========================================================
-#  WEBSITE OPTIONS
-# ==========================================================
-# OtterTune website URL
-WEBSITE_URL = 'http://localhost:8000'
-
-# Code for uploading new results to the website
-UPLOAD_CODE = '$UPLOAD_CODE'

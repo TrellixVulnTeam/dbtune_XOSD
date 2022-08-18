@@ -54,6 +54,10 @@ from .utils import (JSONUtil, LabelUtil, MediaUtil, TaskUtil)
 from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY
 
 from .set_default_knobs import set_default_knobs
+from fabric.api import env, lcd, local
+from os.path import realpath, dirname, join
+from pathlib import Path
+from client.driver.fabfile_dm import run_loops
 
 LOG = logging.getLogger(__name__)
 
@@ -1906,6 +1910,9 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
             data = json.loads(request.body)
         else:
             data = request.GET
+
+        if data is None:
+            raise Exception("参数未传递!")
         LOG.info(data)
         # 创建用户
         username = "admin"
@@ -1948,8 +1955,18 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
             LOG.info(msg)
         set_default_knobs(session)
 
-
-
+        data.update({'upload_code': upload_code})
+        # 动态生成一份配置文件
+        project_root = dirname(Path(__file__).resolve().parent.parent.parent)
+        driver_config = 'client.driver.conf.' + upload_code + '_driver_config'
+        shutil.copy2(join(project_root, 'client', 'driver', 'conf', 'driver_config_template.py'),
+                     join(project_root, 'client', 'driver', 'conf', upload_code + '_driver_config.py'))
+        run_loops(max_iter=data['loop_num'], load=True, driver_config=driver_config, data=data)
+        # lcd(join(project_root, 'client', 'driver'))
+        # local("fab -f fabfile_dm.py run_loops:max_iter=" + str(data['loop_num']) +
+        #       ",load=true,driver_config=" + driver_config + ",data=" + str(data))
+        # os.system("cd ../../../client/driver;fab -f fabfile_dm.py run_loops:max_iter=" + data[
+        #     'loop_num'] + ",load=true,driver_config=" + driver_config + ";")
     except Exception as e:
         result['info'] = "创建数据库参数智能推荐失败!" + str(e)
         result['status'] = "failed"

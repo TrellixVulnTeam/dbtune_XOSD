@@ -1,9 +1,9 @@
 import importlib
 import os
-
-from fabric.api import hide, local, settings, task
-from fabric.api import get as _get, put as _put, run as _run, sudo as _sudo
 from os.path import abspath, dirname, join
+
+from fabric.api import get as _get, put as _put, run as _run, sudo as _sudo
+from fabric.api import hide, local, settings, task
 from kubernetes import client, config
 from kubernetes.stream import stream
 
