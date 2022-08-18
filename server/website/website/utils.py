@@ -3,6 +3,8 @@
 #
 # Copyright (c) 2017-18, Carnegie Mellon University Database Group
 #
+# -*-coding:utf-8 -*-
+
 import datetime
 import json
 import logging

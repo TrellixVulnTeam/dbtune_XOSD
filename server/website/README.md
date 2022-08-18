@@ -151,3 +151,25 @@ systemctl restart rabbitmq-server.service
 
 pip install setuptools==57.5.0
 ```
+
+#### # python Django返回HTTP 301？
+```shell
+解决方案:
+
+1.手动
+url尾部收了"/",加上就OK了
+
+import http.client
+con = http.client.HTTPConnection('192.168.0.105:8080')
+con.request("GET", "/logtest/logging/",'',{})
+resu = con.getresponse()
+print(resu.status,resu.reason,resu.info())  #打印读取到的数据
+
+#打印读取的数据
+print (resu.read())
+
+2.自动
+或者Django setings.py配置文件中设置参数为 APPEND_SLASH = True。 作用就是自动在网址结尾加'/'。
+
+https://blog.csdn.net/sandalphon4869/article/details/108297601
+```

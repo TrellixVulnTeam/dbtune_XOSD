@@ -19,15 +19,20 @@
 
 import itertools
 import re
-import  math
+import math
 
 lis = [0, 1, 2, 4, 8]
 # lis = [0, 1, 2, 4, 8, 16, 32]
 
 newLis = []
 
+a = True
+if a:
+    print(1)
+else:
+    print(0)
 # for index in range(len(lis) - 1):
-#     # print(index)
+#     print(index)
 #     array = list(itertools.combinations(list(lis), 2 + index))
 #     print("排列组合结果===>  组合总数：{count} 详细结果：{array}\n".format(count=len(array), array=array))
 #
@@ -71,4 +76,28 @@ def generate_prime(number):
         if is_prime(number):  # 判断j是否为number的因数
             return number
 
+
 print(generate_prime(1))
+
+from string import Template
+import yaml
+
+with open("client/driver/conf/dm_driver_conf_template.yml", encoding='utf-8') as fp:
+    read_yml_str = fp.read()
+    # print(xx)
+
+    tempTemplate1 = Template(read_yml_str)
+    c = tempTemplate1.safe_substitute({"HOST_CONN": "1", "CONTAINER_NAME": "123456 "})
+    # print(c)
+fp.close()
+
+# yml 文件数据，转 python 类型
+yaml_data = yaml.safe_load(c)
+print(yaml_data)
+print(yaml_data[0]['host'])
+print(yaml_data[1]['db'])
+print(yaml_data[2]['driver'])
+
+# 转换成yml字符串并写入文件
+with open("test.yml", "w") as f:
+    yaml.dump(yaml_data, f)

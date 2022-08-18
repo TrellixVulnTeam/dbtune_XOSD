@@ -1,0 +1,46 @@
+- host:
+    CONTAINER_NAME: $CONTAINER
+    HOST_CONN: remote_docker
+- db:
+    ADMIN_PWD: Dameng8888
+    ADMIN_USER: SYSCDB
+    BASE_DB_CONF: None
+    DATABASE_DISK: None
+    DB_CONF: /opt/dmdbms/dm.ini
+    DB_CONF_MOUNT: false
+    DB_DUMP_DIR: None
+    DB_HOST: $DB_HOST
+    DB_NAME: TRAIN
+    DB_PASSWORD: '123456789'
+    DB_PORT: $DB_PORT
+    DB_TYPE: dm
+    DB_USER: TRAIN
+    DB_VERSION: '8.0'
+    OVERRIDE_DB_VERSION: None
+- driver:
+    DB_DUMP_DIR: '*DRIVER_HOME/dumpfiles'
+    DRIVER_HOME: /home/ottertune/client/driver
+    ENABLE_UDM: true
+    MAX_DISK_USAGE: 90
+    RELOAD_INTERVAL: 10
+    RESTART_SLEEP_SEC: 30
+    RESULT_DIR: /home/ottertune/client/driver/results
+    TEMP_DIR: /tmp/driver
+    UDM_DIR: '*DRIVER_HOME/userDefinedMetrics'
+    WARMUP_ITERATIONS: 0
+- controller:
+    CONTROLLER_CONFIG: /home/ottertune/client/controller/dm_config.json
+    CONTROLLER_HOME: /home/ottertune/client/controller
+    CONTROLLER_OBSERVE_SEC: 100
+- bench:
+    BENCH_TYPE: sysbench
+    SYSBENCH_HOME: /home/sysbench
+- log:
+    BENCH_LOG: '*LOG_DIR/bench.log'
+    CONTROLLER_LOG: '*LOG_DIR/controller.log'
+    DRIVER_LOG: '*LOG_DIR/driver.log'
+    LOG_DIR: '*DRIVER_HOME/log'
+    LOG_LEVEL: DEBUG
+- website:
+    UPLOAD_CODE: $UPLOAD_CODE
+    WEBSITE_URL: http://localhost:8000

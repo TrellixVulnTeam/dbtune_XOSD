@@ -1,3 +1,4 @@
+import importlib
 import json
 import sys
 import copy
@@ -8,12 +9,11 @@ sys.path.append("../../../")
 sys.path.append("../")
 from server.website.website.types import \
     VarType  # pylint: disable=import-error,wrong-import-position,line-too-long  # noqa: E402
-from driver_config import OLTPBENCH_HOME, BENCH_TYPE, \
-    SYSBENCH_HOME  # pylint: disable=import-error,wrong-import-position  # noqa: E402
 
 parser = argparse.ArgumentParser()  # pylint: disable=invalid-name
 parser.add_argument("result_dir")
 args = parser.parse_args()  # pylint: disable=invalid-name
+dconf = importlib.import_module(args.result_dir)
 
 USER_DEINFED_METRICS = {
     "throughput": {
@@ -43,8 +43,8 @@ DM_DEINFED_METRICS = {
 
 
 def get_udm():
-    if BENCH_TYPE.lower() != 'sysbench':
-        summary_path = OLTPBENCH_HOME + '/results/outputfile.summary'
+    if dconf.BENCH_TYPE.lower() != 'sysbench':
+        summary_path = dconf.OLTPBENCH_HOME + '/results/outputfile.summary'
         with open(summary_path, 'r') as f:
             info = json.load(f)
         metrics = copy.deepcopy(USER_DEINFED_METRICS)
@@ -54,7 +54,8 @@ def get_udm():
         metrics["latency_95"]["value"] = \
             info["Latency Distribution"]["95th Percentile Latency (microseconds)"]
     else:
-        summary_path = SYSBENCH_HOME + '/outputfile.summary'
+        args.result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.DB_INSTANCE_ID)
+        summary_path = os.path.join(dconf.SYSBENCH_HOME, "results", dconf.DB_INSTANCE_ID + "_outputfile.summary")
         with open(summary_path, 'r') as f:
             info = json.load(f)
         metrics = copy.deepcopy(DM_DEINFED_METRICS)

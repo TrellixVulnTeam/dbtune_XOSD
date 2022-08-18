@@ -26,7 +26,7 @@ DATABASES = {
         'NAME': 'ottertune',
         'USER': 'root',
         'PASSWORD': '12345678',
-        'HOST': 'localhost',
+        'HOST': '192.168.144.152',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES',innodb_strict_mode=1",
@@ -41,6 +41,7 @@ DATABASES = {
 # Can override the DEBUG setting here
 DEBUG = False
 
+# 作用就是自动在网址结尾加'/'
 # ==============================================
 # MANAGER CONFIGURATION
 # ==============================================

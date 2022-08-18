@@ -12,7 +12,6 @@ from django.views.decorators.cache import never_cache
 from website import settings
 from website import views as website_views
 
-
 admin.autodiscover()
 
 # pylint: disable=line-too-long,invalid-name
@@ -32,25 +31,37 @@ urlpatterns = [
 
     # URLs for session views
     url(r'^projects/(?P<project_id>[0-9]+)/sessions$', website_views.project_sessions_view, name='project_sessions'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/$', website_views.session_view, name='session'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/$', website_views.session_view,
+        name='session'),
     url(r'^projects/(?P<project_id>[0-9]+)/sessions/new/$', website_views.create_or_edit_session, name='new_session'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/edit/$', website_views.create_or_edit_session, name='edit_session'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/editKnobs/$', website_views.edit_knobs, name='edit_knobs'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/edit/$',
+        website_views.create_or_edit_session, name='edit_session'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/editKnobs/$', website_views.edit_knobs,
+        name='edit_knobs'),
     url(r'^projects/(?P<project_id>[0-9]+)/sessions/delete/$', website_views.delete_session, name='delete_session'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/dump/$', website_views.download_debug_info, name='dump_debug_data'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/dump_objectives/$', website_views.download_objectives, name='dump_objectives'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/dump/$', website_views.download_debug_info,
+        name='dump_debug_data'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/dump_objectives/$',
+        website_views.download_objectives, name='dump_objectives'),
 
     # URLs for result views
     url(r'^new_result/', website_views.new_result, name='new_result'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/results/(?P<result_id>[0-9]+)/$', website_views.result_view, name='result'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/workloads/(?P<wkld_id>[0-9]+)/$', website_views.workload_view, name='workload'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/knobs/(?P<data_id>[0-9]+)/$', website_views.knob_data_view, name='knob_data'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/metrics/(?P<data_id>[0-9]+)/$', website_views.metric_data_view, name='metric_data'),
-    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/results/(?P<result_id>[0-9]+)/status$', website_views.tuner_status_view, name="tuner_status"),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/results/(?P<result_id>[0-9]+)/$',
+        website_views.result_view, name='result'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/workloads/(?P<wkld_id>[0-9]+)/$',
+        website_views.workload_view, name='workload'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/knobs/(?P<data_id>[0-9]+)/$',
+        website_views.knob_data_view, name='knob_data'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/metrics/(?P<data_id>[0-9]+)/$',
+        website_views.metric_data_view, name='metric_data'),
+    url(r'^projects/(?P<project_id>[0-9]+)/sessions/(?P<session_id>[0-9]+)/results/(?P<result_id>[0-9]+)/status$',
+        website_views.tuner_status_view, name="tuner_status"),
 
     # URLs for the DBMS knob & metric reference pages
-    url(r'^ref/(?P<dbms_name>.+)/(?P<version>.+)/knobs/(?P<knob_name>.+)/$', website_views.dbms_knobs_reference, name="dbms_knobs_ref"),
-    url(r'^ref/(?P<dbms_name>.+)/(?P<version>.+)/metrics/(?P<metric_name>.+)/$', website_views.dbms_metrics_reference, name="dbms_metrics_ref"),
+    url(r'^ref/(?P<dbms_name>.+)/(?P<version>.+)/knobs/(?P<knob_name>.+)/$', website_views.dbms_knobs_reference,
+        name="dbms_knobs_ref"),
+    url(r'^ref/(?P<dbms_name>.+)/(?P<version>.+)/metrics/(?P<metric_name>.+)/$', website_views.dbms_metrics_reference,
+        name="dbms_metrics_ref"),
 
     # URLs to the helper functions called by the javascript code
     url(r'^get_workload_data/', website_views.get_workload_data),
@@ -75,6 +86,8 @@ urlpatterns = [
     url(r'^create/user/', website_views.alt_create_user, name='backdoor_create_user'),
     url(r'^delete/user/', website_views.alt_delete_user, name='backdoor_delete_user'),
     url(r'^info/(?P<name>[0-9a-zA-Z]+)', website_views.alt_get_info, name="backdoor_info"),
+    # 数据库参数训练推荐
+    url(r'^param_recommend/(?P<db_id>.*)/$', website_views.param_recommend, name='param_recommend'),
 
     # train ddpg with results in the given session
     url(r'^train_ddpg/sessions/(?P<session_id>[0-9]+)$', website_views.train_ddpg_loops, name='train_ddpg_loops'),
@@ -85,7 +98,7 @@ urlpatterns = [
     url(r'^test/task_status/(?P<upload_code>[0-9a-zA-Z]+)$', website_views.tuner_status_test, name="tuner_status_test"),
 
     # Pipeline data
-    url(r'^pipeline/data/(?P<pipeline_id>[0-9]+)', website_views.pipeline_data_view, name='pipeline_data_view')
+    url(r'^pipeline/data/(?P<pipeline_id>[0-9]+)', website_views.pipeline_data_view, name='pipeline_data_view'),
 ]
 
 if settings.DEBUG:

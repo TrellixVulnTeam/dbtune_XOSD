@@ -42,6 +42,7 @@ public class Main {
 
     // Default output directory name
     private static final String DEFAULT_DIRECTORY = "output";
+    private static final String DEFAULT_PID = "pid.txt";
 
     // Default observation period time (5 minutes)
     private static final int DEFAULT_TIME_SECONDS = -1;
@@ -73,6 +74,7 @@ public class Main {
         options.addOption("t", "time", true, "The observation time in seconds, default is 300s");
         options.addOption(
                 "d", "directory", true, "Base directory for the result files, default is 'output'");
+        options.addOption("p", "p", true, "pid.txt文件存放位置");
         options.addOption("h", "help", true, "Print this help");
         String configFilePath = null;
 
@@ -108,6 +110,12 @@ public class Main {
         LOG.info("Experiment output directory is set to: " + outputDirectory);
         FileUtil.makeDirIfNotExists(outputDirectory);
 
+        // pid.txt path
+        String pidfile = DEFAULT_PID;
+        if (argsLine.hasOption("p")) {
+            pidfile = argsLine.getOptionValue("p") + "/" + pidfile;
+        }
+
         // Parse controller configuration file
         String configPath = argsLine.getOptionValue("c");
         File configFile = new File(configPath);
@@ -136,7 +144,7 @@ public class Main {
         }
 
         DBCollector collector = getCollector(config);
-        File f = new File("pid.txt");
+        File f = new File(pidfile);
         try {
             // get pid of this process and write the pid to a file before recording the start time
             if (time < 0) {

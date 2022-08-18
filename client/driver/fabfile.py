@@ -28,7 +28,6 @@ from utils import (file_exists, get, get_content, load_driver_conf, parse_bool,
 
 # Loads the driver config file (defaults to driver_config.py)
 dconf = load_driver_conf()  # pylint: disable=invalid-name
-
 # Fabric settings
 fabric_output.update({
     'running': True,
@@ -133,8 +132,8 @@ def restart_database():
         db_log_path = os.path.join(os.path.split(dconf.DB_CONF)[0], 'startup.log')
         local_log_path = os.path.join(dconf.LOG_DIR, 'startup.log')
         local_logs_path = os.path.join(dconf.LOG_DIR, 'startups.log')
-        run_sql_script('restartOracle.sh', db_log_path)
-        get(db_log_path, local_log_path)
+        run_sql_script(dconf, 'restartOracle.sh', db_log_path)
+        get(dconf, db_log_path, local_log_path)
         with open(local_log_path, 'r') as fin, open(local_logs_path, 'a') as fout:
             lines = fin.readlines()
             for line in lines:
@@ -198,9 +197,9 @@ def create_user():
         run("PGPASSWORD={} psql -c \\\"{}\\\" -U postgres -h {}".format(
             dconf.DB_PASSWORD, sql, dconf.DB_HOST))
     elif dconf.DB_TYPE == 'oracle':
-        run_sql_script('createUser.sh', dconf.DB_USER, dconf.DB_PASSWORD)
+        run_sql_script(dconf, 'createUser.sh', dconf.DB_USER, dconf.DB_PASSWORD)
     elif dconf.DB_TYPE == 'dm':
-        run_sql_script('createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER, dconf.DB_PASSWORD,
+        run_sql_script(dconf, 'createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER, dconf.DB_PASSWORD,
                        dconf.DB_HOST, dconf.DB_PORT)
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
@@ -213,7 +212,7 @@ def drop_user():
         run("PGPASSWORD={} psql -c \\\"{}\\\" -U postgres -h {}".format(
             dconf.DB_PASSWORD, sql, dconf.DB_HOST))
     elif dconf.DB_TYPE == 'oracle':
-        run_sql_script('dropUser.sh', dconf.DB_USER)
+        run_sql_script(dconf, 'dropUser.sh', dconf.DB_USER)
     elif dconf.DB_TYPE == 'dm':
         run('/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
                                                                                            dconf.ADMIN_PWD,
@@ -235,7 +234,7 @@ def reset_conf(always=True):
     # i.e. OtterTune signal line is not in the config file.
     signal = "# configurations recommended by ottertune:\n"
     tmp_conf_in = os.path.join(dconf.TEMP_DIR, os.path.basename(dconf.DB_CONF) + '.in')
-    get(dconf.DB_CONF, tmp_conf_in)
+    get(dconf, dconf.DB_CONF, tmp_conf_in)
     with open(tmp_conf_in, 'r') as f:
         lines = f.readlines()
     if signal not in lines:
@@ -248,7 +247,7 @@ def change_conf(next_conf=None):
     next_conf = next_conf or {}
 
     tmp_conf_in = os.path.join(dconf.TEMP_DIR, os.path.basename(dconf.DB_CONF) + '.in')
-    get(dconf.DB_CONF, tmp_conf_in)
+    get(dconf, dconf.DB_CONF, tmp_conf_in)
     with open(tmp_conf_in, 'r') as f:
         lines = f.readlines()
 
@@ -353,7 +352,7 @@ def run_oltpbench_bg():
 def run_sysbench():
     if dconf.BENCH_TYPE.lower() == 'sysbench':
         cmd = "./src/sysbench ./src/lua/oltp_read_write.lua --tables=250 --table-size=25000 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 --output-dir={} --output-name=outputfile.summary  run > {} 2>&1 &".format(
-            dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD, dconf.SYSBENCH_HOME,dconf.BENCH_LOG)
+            dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD, dconf.SYSBENCH_HOME, dconf.BENCH_LOG)
         with lcd(dconf.SYSBENCH_HOME):  # pylint: disable=not-context-manager
             local(cmd)
 
@@ -538,9 +537,10 @@ def download_debug_info(pprint=False):
 
 @task
 def add_udm(result_dir=None):
-    result_dir = result_dir or os.path.join(dconf.CONTROLLER_HOME, 'output')
+    # result_dir = result_dir or os.path.join(dconf.CONTROLLER_HOME, 'output')
     with lcd(dconf.UDM_DIR):  # pylint: disable=not-context-manager
-        local('python3 user_defined_metrics.py {}'.format(result_dir))
+        # local('python3 user_defined_metrics.py {}'.format(result_dir))
+        local('python3 user_defined_metrics.py {}'.format(dconf.__name__))
 
 
 @task
@@ -561,11 +561,7 @@ def upload_batch(result_dir=None, sort=True, upload_code=None):
         LOG.info('Uploaded result %d/%d: %s__*.json', i + 1, count, prefix)
 
 
-"""
-数据dump导出
-"""
-
-
+# 数据dump导出
 @task
 def dump_database():
     dumpfile = os.path.join(dconf.DB_DUMP_DIR, dconf.DB_NAME + '.dump')
@@ -586,10 +582,10 @@ def dump_database():
 
     if dconf.DB_TYPE == 'oracle':
         if dconf.ORACLE_FLASH_BACK:
-            run_sql_script('createRestore.sh', dconf.RESTORE_POINT,
+            run_sql_script(dconf, 'createRestore.sh', dconf.RESTORE_POINT,
                            dconf.RECOVERY_FILE_DEST_SIZE, dconf.RECOVERY_FILE_DEST)
         else:
-            run_sql_script('dumpOracle.sh', dconf.DB_USER, dconf.DB_PASSWORD,
+            run_sql_script(dconf, 'dumpOracle.sh', dconf.DB_USER, dconf.DB_PASSWORD,
                            dconf.DB_NAME, dconf.DB_DUMP_DIR)
     elif dconf.DB_TYPE == 'postgres':
         run('PGPASSWORD={} pg_dump -U {} -h {} -F c -d {} > {}'.format(
@@ -599,7 +595,8 @@ def dump_database():
         sudo('mysqldump --user={} --password={} --databases {} > {}'.format(
             dconf.DB_USER, dconf.DB_PASSWORD, dconf.DB_NAME, dumpfile))
     elif dconf.DB_TYPE == 'dm':
-        run_sql_script('dumpDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dconf.DB_DUMP_DIR, dconf.DB_HOST,
+        run_sql_script(dconf, 'dumpDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dconf.DB_DUMP_DIR,
+                       dconf.DB_HOST,
                        dconf.DB_PORT)
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
@@ -608,16 +605,12 @@ def dump_database():
 
 @task
 def clean_recovery():
-    run_sql_script('removeRestore.sh', dconf.RESTORE_POINT)
+    run_sql_script(dconf, 'removeRestore.sh', dconf.RESTORE_POINT)
     cmds = ("""rman TARGET / <<EOF\nDELETE ARCHIVELOG ALL;\nexit\nEOF""")
     run(cmds)
 
 
-"""
-数据dump导入
-"""
-
-
+# 数据dump导入
 @task
 def restore_database():
     dumpfile = os.path.join(dconf.DB_DUMP_DIR, dconf.DB_NAME + '.dump')
@@ -627,12 +620,12 @@ def restore_database():
     LOG.info('Start restoring database')
     if dconf.DB_TYPE == 'oracle':
         if dconf.ORACLE_FLASH_BACK:
-            run_sql_script('flashBack.sh', dconf.RESTORE_POINT)
+            run_sql_script(dconf, 'flashBack.sh', dconf.RESTORE_POINT)
             clean_recovery()
         else:
             drop_user()
             create_user()
-            run_sql_script('restoreOracle.sh', dconf.DB_USER, dconf.DB_NAME)
+            run_sql_script(dconf, 'restoreOracle.sh', dconf.DB_USER, dconf.DB_NAME)
     elif dconf.DB_TYPE == 'postgres':
         drop_database()
         create_database()
@@ -643,7 +636,7 @@ def restore_database():
     elif dconf.DB_TYPE == 'dm':
         drop_user()
         create_user()
-        run_sql_script('restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile, dconf.DB_HOST,
+        run_sql_script(dconf, 'restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile, dconf.DB_HOST,
                        dconf.DB_PORT)
     else:
         raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
@@ -691,7 +684,10 @@ def _ready_to_start_controller():
         if dconf.BENCH_TYPE.lower() == 'oltpbench':
             ready = 'Warmup complete, starting measurements' in content
         else:
-            ready = 'Threads started!' in content
+            if 'failed' in content:
+                ready = True
+            else:
+                ready = 'Threads started!' in content
     return ready
 
 
@@ -705,12 +701,18 @@ def _ready_to_shut_down_controller():
                 if 'Failed' in content:
                     m = re.search('\n.*Failed.*\n', content)
                     error_msg = m.group(0)
-                    LOG.error('OLTPBench Failed!')
+                    LOG.error('{} Failed!'.format(dconf.BENCH_TYPE))
                     return True, error_msg
                 else:
                     ready = 'Output throughput samples into file' in content
             else:
-                ready = 'SQL statistics:' in content
+                if 'failed' in content:
+                    m = re.search('\n.*Error.*\n', content)
+                    error_msg = m.group(0)
+                    LOG.error('{} Failed!'.format(dconf.BENCH_TYPE))
+                    return True, error_msg
+                else:
+                    ready = 'SQL statistics:' in content
     return ready, None
 
 
@@ -848,7 +850,7 @@ def loop(i):
 
     p.join()
     if error_msg:
-        raise Exception('OLTPBench Failed: ' + error_msg)
+        raise Exception(dconf.BENCH_TYPE + ' Failed: ' + error_msg)
     # add user defined metrics
     if dconf.ENABLE_UDM is True:
         add_udm()

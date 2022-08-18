@@ -3,7 +3,9 @@ import os
 
 from fabric.api import hide, local, settings, task
 from fabric.api import get as _get, put as _put, run as _run, sudo as _sudo
-from os.path import abspath, dirname,join
+from os.path import abspath, dirname, join
+from kubernetes import client, config
+from kubernetes.stream import stream
 
 dconf = None  # pylint: disable=invalid-name
 # 绝对路径
@@ -137,32 +139,30 @@ def sudo(cmd, user=None, capture=True, remote_only=False, **kwargs):
 
 
 @task
-def get(remote_path, local_path, use_sudo=False):
+def get(conf, remote_path, local_path, use_sudo=False):
     use_sudo = parse_bool(use_sudo)
 
-    if dconf.HOST_CONN == 'remote':
+    if conf.HOST_CONN == 'remote':
         res = _get(remote_path, local_path, use_sudo=use_sudo)
-    elif dconf.HOST_CONN == 'local':
+    elif conf.HOST_CONN == 'local':
         pre_cmd = 'sudo ' if use_sudo else ''
         opts = '-r' if os.path.isdir(remote_path) else ''
         res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
     else:  # docker or remote_docker
-        docker_cmd = 'docker cp -L {}:{} {}'.format(dconf.CONTAINER_NAME, remote_path, local_path)
-        if dconf.HOST_CONN == 'docker':
-            if dconf.DB_CONF_MOUNT is True:
+        docker_cmd = 'docker cp -L {}:{} {}'.format(conf.CONTAINER_NAME, remote_path, local_path)
+        if conf.HOST_CONN == 'docker':
+            if conf.DB_CONF_MOUNT is True:
                 pre_cmd = 'sudo ' if use_sudo else ''
                 opts = '-r' if os.path.isdir(remote_path) else ''
                 res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
             else:
                 res = local(docker_cmd)
-        elif dconf.HOST_CONN == 'remote_docker':
-            if dconf.DB_CONF_MOUNT is True:
-                res = _get(remote_path, local_path, use_sudo=use_sudo)
-            else:
-                res = sudo(docker_cmd, remote_only=True)
-                res = _get(local_path, local_path, use_sudo)
+        elif conf.HOST_CONN == 'remote_docker':
+            pre_cmd = 'sudo ' if use_sudo else ''
+            opts = '-r' if os.path.isdir(remote_path) else ''
+            res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
         else:
-            raise Exception('wrong HOST_CONN type {}'.format(dconf.HOST_CONN))
+            raise Exception('wrong HOST_CONN type {}'.format(conf.HOST_CONN))
     return res
 
 
@@ -197,27 +197,27 @@ def put(local_path, remote_path, use_sudo=False):
 
 
 @task
-def run_sql_script(scriptfile, *args):
-    if dconf.DB_TYPE == 'oracle':
-        if dconf.HOST_CONN != 'local':
+def run_sql_script(conf, script_file, *args):
+    if conf.DB_TYPE == 'oracle':
+        if conf.HOST_CONN != 'local':
             scriptdir = join(BASE_DIR, 'oracleScripts')
-            remote_path = join(scriptdir, scriptfile)
+            remote_path = join(scriptdir, script_file)
             if not file_exists(remote_path):
                 run('mkdir -p {}'.format(scriptdir))
-                put(join('./oracleScripts', scriptfile), remote_path)
+                put(join('./oracleScripts', script_file), remote_path)
                 sudo('chown -R oracle:oinstall {}'.format(scriptdir))
         res = run('sh {} {}'.format(remote_path, ' '.join(args)))
-    if dconf.DB_TYPE == 'dm':
+    if conf.DB_TYPE == 'dm':
         # if dconf.HOST_CONN != 'local':
-            scriptdir = join(BASE_DIR, 'dmScripts')
-            remote_path = join(scriptdir, scriptfile)
-            if not file_exists(remote_path):
-                run('mkdir -p {}'.format(scriptdir))
-                put(os.path.join('./dmScripts', scriptfile), remote_path)
-                sudo('chown -R dmdba:dinstall {}'.format(scriptdir))
-            res = run('sh {} {}'.format(remote_path, ' '.join(args)))
+        scriptdir = join(BASE_DIR, 'dmScripts')
+        remote_path = join(scriptdir, script_file)
+        if not file_exists(remote_path):
+            run('mkdir -p {}'.format(scriptdir))
+            put(os.path.join('./dmScripts', script_file), remote_path)
+            sudo('chown -R dmdba:dinstall {}'.format(scriptdir))
+        res = run('sh {} {}'.format(remote_path, ' '.join(args)))
     else:
-        raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
+        raise Exception("Database Type {} Not Implemented !".format(conf.DB_TYPE))
     return res
 
 
@@ -237,3 +237,91 @@ def dir_exists(dirname):
 
 class FabricException(Exception):
     pass
+
+
+def init_kubernetes_client(config_file="/etc/kubernetes/admin.conf"):
+    """
+    init k8s client
+    :param config_file: kubernetes的配置文件
+    :return: kubernetes client对象
+    """
+    config.load_kube_config(config_file=config_file)
+    return client.CoreV1Api()
+
+
+def check_db_ready(api: client.api_client, namespace="dmcp-instance", name=None, container="database"):
+    """
+    检查数据库状态是否正常
+    :return: False: 服务不正常  True：服务正常
+    """
+    exec_command = ['/bin/sh', '-c', 'nc -z ' + dconf.DB_HOST + ' ' + dconf.DB_PORT + ';echo $?']
+    try:
+        resp = stream(api.connect_get_namespaced_pod_exec,
+                      name=name,
+                      namespace=namespace,
+                      container=container,
+                      command=exec_command,
+                      stderr=True, stdin=False,
+                      stdout=True, tty=False)
+        print("Response: " + resp)
+        if resp == 1:
+            return False
+    except client.exceptions.ApiException as e:
+        return False
+    return True
+
+
+def exec_command_to_pod(api: client.api_client, namespace="dmcp-instance", name=None, container="database", cmd=None):
+    """
+    在容器中执行操作
+    """
+    exec_command = ['/bin/sh', '-c', cmd]
+    try:
+        resp = stream(api.connect_get_namespaced_pod_exec,
+                      name=name,
+                      namespace=namespace,
+                      container=container,
+                      command=exec_command,
+                      stderr=True, stdin=False,
+                      stdout=True, tty=False)
+        print("Response: " + resp)
+    except client.exceptions.ApiException as e:
+        return False
+    return True
+
+
+def copy_file_to_pod(api: client.api_client, namespace="dmcp-instance", name=None, container="database", src_file=None,
+                     dest_file=None):
+    """
+    复制本地文件至指定容器内
+    """
+    exec_command = ['/bin/sh']
+    resp = stream(api.connect_get_namespaced_pod_exec,
+                  name=name,
+                  namespace=namespace,
+                  container=container,
+                  command=exec_command,
+                  stderr=True, stdin=True,
+                  stdout=True, tty=False,
+                  _preload_content=False)
+
+    buffer = b''
+    with open(src_file, "rb") as file:
+        buffer += file.read()
+    file.close()
+
+    commands = [bytes("cat <<'EOF' >" + dest_file + "\n", 'utf-8'), buffer, bytes("EOF\n", 'utf-8')]
+
+    while resp.is_open():
+        resp.update(timeout=1)
+        if resp.peek_stdout():
+            print("STDOUT: %s" % resp.read_stdout())
+        if resp.peek_stderr():
+            print("STDERR: %s" % resp.read_stderr())
+        if commands:
+            c = commands.pop(0)
+            print("Running command... %s\n" % c)
+            resp.write_stdin(c)
+        else:
+            break
+    resp.close()

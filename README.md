@@ -24,8 +24,10 @@ For more information, see our [paper](http://db.cs.cmu.edu/papers/2017/p1009-van
 See the [people page](https://github.com/cmu-db/ottertune/graphs/contributors) for the full list of contributors.
 
 
-
-
+## # 启动client
+```shell
+fab run_loops:max_iter=10
+```
 
 #### #MYSQL Too many connections错误的解决办法
 ```properties

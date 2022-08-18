@@ -4,8 +4,11 @@
 # Copyright (c) 2017-18, Carnegie Mellon University Database Group
 #
 # pylint: disable=too-many-lines
+# -*-coding:utf-8 -*-
+
 import base64
 import csv
+import json
 import logging
 import os
 import re
@@ -645,8 +648,9 @@ def handle_result_files(session, files, execution_times=None):
         # Check if workload name only contains alpha-numeric, underscore and hyphen
         if not re.match('^[a-zA-Z0-9_-]+$', workload_name):
             return HttpResponse('Your workload name ' + workload_name + ' contains '
-                                'invalid characters! It should only contain '
-                                'alpha-numeric, underscore(_) and hyphen(-)', status=400)
+                                                                        'invalid characters! It should only contain '
+                                                                        'alpha-numeric, underscore(_) and hyphen(-)',
+                                status=400)
 
         try:
             # Check that we support this DBMS and version
@@ -671,7 +675,7 @@ def handle_result_files(session, files, execution_times=None):
             return HttpResponse('The DBMS must match the type and version '
                                 'specified when creating the session. '
                                 '(expected=' + session.dbms.full_name + ') '
-                                '(actual=' + dbms.full_name + ')', status=400)
+                                                                        '(actual=' + dbms.full_name + ')', status=400)
 
         # Load, process, and store the knobs in the DBMS's configuration
         knob_dict, knob_diffs = parser.parse_dbms_knobs(
@@ -962,12 +966,12 @@ def dbms_data_view(request, context, dbms_data, session, target_obj):
         model_class = KnobData
         featured_names = set(SessionKnob.objects.filter(
             session=session, tunable=True).values_list(
-                'knob__name', flat=True))
+            'knob__name', flat=True))
     else:
         model_class = MetricData
         featured_names = set(MetricCatalog.objects.filter(
             dbms=session.dbms, metric_type__in=MetricType.numeric()).values_list(
-                'name', flat=True))
+            'name', flat=True))
 
     obj_data = getattr(dbms_data, data_type)
     all_data_dict = JSONUtil.loads(obj_data)
@@ -1024,7 +1028,7 @@ def workload_view(request, project_id, session_id, wkld_id):  # pylint: disable=
     for conf in knob_confs:
         latest_result = Result.objects.filter(
             session=session, knob_data=conf, workload=workload).order_by(
-                '-observation_end_time').first()
+            '-observation_end_time').first()
         if not latest_result:
             continue
         knob_conf_map[conf.name] = [conf, latest_result]
@@ -1242,7 +1246,7 @@ def get_timeline_data(request):
     results_per_page = int(request.GET['nres'])
 
     # Get all results related to the selected session, sort by time
-    results = Result.objects.filter(session=session)\
+    results = Result.objects.filter(session=session) \
         .select_related('knob_data', 'metric_data', 'workload')
     results = sorted(results, key=lambda x: x.observation_end_time)
 
@@ -1306,7 +1310,7 @@ def get_timeline_data(request):
                     metric_data = JSONUtil.loads(res.metric_data.data)
                     out.append([
                         res.observation_end_time.astimezone(timezone(TIME_ZONE)).
-                        strftime("%m-%d-%y %H:%M"),
+                            strftime("%m-%d-%y %H:%M"),
                         metric_data[metric] * met_info.scale,
                         "",
                         str(res.pk)
@@ -1332,7 +1336,7 @@ def get_timeline_data(request):
             knob_data = JSONUtil.loads(res.knob_data.data)
             data['data'].append([
                 res.observation_end_time.astimezone(timezone(TIME_ZONE)).
-                strftime("%m-%d-%y %H:%M"),
+                    strftime("%m-%d-%y %H:%M"),
                 knob_data[knob],
                 "",
                 str(res.pk)
@@ -1665,6 +1669,7 @@ def alt_create_or_edit_session(request):
     user = data.pop('user', None)
     project_name = data.pop('project_name', None)
     session_name = data.pop('name', None)
+    session_name = data.pop('hardware', None)
     if 'algorithm' in data:
         data['algorithm'] = AlgorithmType.type(data['algorithm'])
     session_knobs = data.pop('session_knobs', None)
@@ -1680,16 +1685,17 @@ def alt_create_or_edit_session(request):
         dbms_type = DBMSType.type(data.pop('dbms_type'))
         dbms_version = data.pop('dbms_version')
         defaults['dbms'] = get_object_or_404(DBMSCatalog, type=dbms_type, version=dbms_version)
+
         hardware, _ = Hardware.objects.get_or_create(pk=1)
         defaults['hardware'] = hardware
         defaults['upload_code'] = data.pop('upload_code', None) or MediaUtil.upload_code_generator()
         defaults.update(creation_time=ts, last_update=ts, **data)
         if 'ddpg_actor_model' in defaults:
-            defaults['ddpg_actor_model'] =\
+            defaults['ddpg_actor_model'] = \
                 base64.decodebytes(defaults['ddpg_actor_model'].encode('utf8'))
-            defaults['ddpg_critic_model'] =\
+            defaults['ddpg_critic_model'] = \
                 base64.decodebytes(defaults['ddpg_critic_model'].encode('utf8'))
-            defaults['ddpg_reply_memory'] =\
+            defaults['ddpg_reply_memory'] = \
                 base64.decodebytes(defaults['ddpg_replay_memory'].encode('utf8'))
             # There is a typo in the object name. After correcting that typo, remove the next line.
             defaults.pop('ddpg_replay_memory')
@@ -1889,3 +1895,65 @@ def tuner_status_test(request, upload_code):  # pylint: disable=unused-argument,
                 return HttpResponse("Failure: wrong result for task {}".format(name))
 
     return HttpResponse("Success: task status view test passes")
+
+
+# 数据库参数推荐
+@csrf_exempt
+def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many-return-statements
+    result = dict(info='', pipeline_run='', status='', result_id='', recommendation={})
+    try:
+        if request.method == 'POST':
+            data = json.loads(request.body)
+        else:
+            data = request.GET
+        LOG.info(data)
+        # 创建用户
+        username = "admin"
+        password = "admin"
+        if not User.objects.filter(username=username).exists():
+            # db_tune_user, created = utils.create_user(username, password)
+            db_tune_user = User.objects.create_user(username=username, password=password)
+            if db_tune_user is not None:
+                msg = "Successfully created user [{}].".format(username)
+                LOG.info(msg)
+        else:
+            # 用户对象
+            db_tune_user = User.objects.filter(username=username).first()
+
+        # 创建Project
+        project_name = "CDB"
+        if not Project.objects.filter(user=db_tune_user, name=project_name).exists():
+            project = Project.objects.create(user=db_tune_user, name=project_name, creation_time=now(),
+                                             last_update=now())
+            if project is not None:
+                msg = "Successfully created project [CDB]."
+                LOG.info(msg)
+        else:
+            project = Project.objects.filter(user=db_tune_user, name=project_name).first()
+
+        # 创建Session
+        upload_code = MediaUtil.upload_code_generator()
+        # CPU、内存、存储设置
+        hardware, _ = Hardware.objects.get_or_create(cpu=int(data['cpu']), memory=int(data['memory']),
+                                                     storage=int(data['storage']),
+                                                     storage_type=int(data['storage_type']))
+        # target_objective = target_objectives.get_instance(20, "udf.throughput (txn/s)")
+        session = Session.objects.create(name=db_id, tuning_session='lhs',
+                                         dbms_id=20, hardware=hardware, project=project,
+                                         creation_time=now(), last_update=now(), algorithm=AlgorithmType.GPR,
+                                         upload_code=upload_code, user=db_tune_user,
+                                         target_objective="throughput")
+        if session is not None:
+            msg = "Successfully created session [{}].".format(db_id)
+            LOG.info(msg)
+        set_default_knobs(session)
+
+
+
+    except Exception as e:
+        result['info'] = "创建数据库参数智能推荐失败!" + str(e)
+        result['status'] = "failed"
+        return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=500)
+    result['info'] = "创建数据库参数智能推荐成功!"
+    result['status'] = "success"
+    return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=200)

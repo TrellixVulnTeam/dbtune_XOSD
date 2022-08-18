@@ -1,0 +1,154 @@
+---
+#==========================================================
+#  HOST LOGIN
+#==========================================================
+- host:
+    # Valid values: local, remote, docker or remote_docker
+    HOST_CONN: 'remote_docker'
+    CONTAINER_NAME: '$CONTAINER'
+
+#==========================================================
+#  DATABASE OPTIONS
+#==========================================================
+- db:
+    DB_TYPE: 'dm'
+
+    # Database version
+    # DB_VERSION: '9.6'
+    DB_VERSION: '8.0'
+
+    # Name of the database
+    # DB_NAME: 'tpcc'
+    DB_NAME: 'TRAIN'
+
+    # Database username
+    # DB_USER: 'dbuser'
+    # DB_USER: 'root'
+    DB_USER: 'TRAIN'
+
+    # Password for DB_USER
+    # DB_PASSWORD: 'dbpassword'
+    # DB_PASSWORD: '12345678'
+    DB_PASSWORD: '123456789'
+
+    # Database admin username (for tasks like restarting the database)
+    # ADMIN_USER: DB_USER
+    # DM库配置
+    ADMIN_USER: 'SYSCDB'
+    ADMIN_PWD: 'Dameng8888'
+
+    # Database host address
+    DB_HOST: '$DB_HOST'
+
+    # Database port
+    # DB_PORT: '5432'
+    # DB_PORT: '3306'
+    DB_PORT: '$DB_PORT'
+
+    # If set to True, DB_CONF file is mounted to database container file
+    # Only available when HOST_CONN is docker or remote_docker
+    DB_CONF_MOUNT: False
+
+    # Path to the configuration file on the database server
+    # If DB_CONF_MOUNT is True, the path is on the host server, not docker
+    DB_CONF: '/opt/dmdbms/dm.ini'
+
+    # Path to the directory for storing database dump files
+    DB_DUMP_DIR: None
+
+    # Base config settings to always include when installing new configurations
+    BASE_DB_CONF: None
+
+    # Name of the device on the database server to monitor the disk usage, or None to disable
+    DATABASE_DISK: None
+
+    # Set this to a different database version to override the current version
+    OVERRIDE_DB_VERSION: None
+
+#==========================================================
+#  DRIVER OPTIONS
+#==========================================================
+- driver:
+    # Path to this driver
+    DRIVER_HOME: '/home/ottertune/client/driver'
+
+    # Path to the directory for storing results
+    RESULT_DIR: '/home/ottertune/client/driver/results'
+
+    # Set this to add user defined metrics
+    # ENABLE_UDM: False
+    ENABLE_UDM: True
+
+    # Path to the User Defined Metrics (UDM), only required when ENABLE_UDM is True
+    UDM_DIR: '*DRIVER_HOME/userDefinedMetrics'
+
+    # Path to temp directory
+    TEMP_DIR: '/tmp/driver'
+
+    # Path to the directory for storing database dump files
+    DB_DUMP_DIR: '*DRIVER_HOME/dumpfiles'
+
+    # Reload the database after running this many iterations
+    RELOAD_INTERVAL: 10
+
+    # The maximum allowable disk usage percentage. Reload the database
+    # whenever the current disk usage exceeds this value.
+    MAX_DISK_USAGE: 90
+
+    # Execute this many warmup iterations before uploading the next result
+    # to the website
+    WARMUP_ITERATIONS: 0
+
+    # Let the database initialize for this many seconds after it restarts
+    RESTART_SLEEP_SEC: 30
+
+
+#==========================================================
+#  CONTROLLER OPTIONS
+#==========================================================
+- controller:
+    # Controller observation time, OLTPBench will be disabled for
+    # monitoring if the time is specified
+    CONTROLLER_OBSERVE_SEC: 100
+
+    # Path to the controller directory
+    CONTROLLER_HOME: '/home/ottertune/client/controller'
+
+    # Path to the controller configuration file
+    CONTROLLER_CONFIG: '/home/ottertune/client/controller/dm_config.json'
+
+
+#==========================================================
+#  BENCH OPTIONS
+#==========================================================
+- bench:
+    # oltpbench or sysbench
+    BENCH_TYPE: 'sysbench'
+
+    # Path to SYSBENCH directory
+    SYSBENCH_HOME: '/home/sysbench'
+
+#==========================================================
+#  LOGGING OPTIONS
+#==========================================================
+- log:
+    LOG_LEVEL: 'DEBUG'
+
+    # Path to log directory
+    LOG_DIR: '*DRIVER_HOME/log'
+
+    # Log files
+    DRIVER_LOG: '*LOG_DIR/driver.log'
+    BENCH_LOG: '*LOG_DIR/bench.log'
+    CONTROLLER_LOG: '*LOG_DIR/controller.log'
+
+
+#==========================================================
+#  WEBSITE OPTIONS
+#==========================================================
+- website:
+    # OtterTune website URL
+    WEBSITE_URL: 'http://localhost:8000'
+
+    # Code for uploading new results to the website
+    UPLOAD_CODE: '$UPLOAD_CODE'

@@ -7,6 +7,7 @@
 Common Django settings for the OtterTune project.
 
 """
+# -*- coding: UTF-8 -*-
 
 import os
 import sys
@@ -283,6 +284,7 @@ LOGGING = {
             'maxBytes': 2097152,
             'backupCount': 5,
             'formatter': 'standard',
+            'encoding': 'utf8',
         },
         'celery': {
             'level': 'DEBUG',
@@ -299,6 +301,7 @@ LOGGING = {
             'maxBytes': 2097152,
             'backupCount': 15,
             'formatter': 'standard',
+            'encoding': 'utf8',
         },
         'dblog': {
             'level': 'DEBUG',
@@ -311,7 +314,7 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'standard'
+            'formatter': 'standard',
         },
         'mail_admins': {
             'level': 'ERROR',

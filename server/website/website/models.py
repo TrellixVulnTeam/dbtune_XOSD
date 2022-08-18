@@ -142,7 +142,6 @@ class Hardware(BaseModel):
 
 
 class Session(BaseModel):
-
     TUNING_OPTIONS = OrderedDict([
         ("tuning_session", "Tuning Session"),
         ("no_tuning_session", "No Tuning"),
@@ -174,6 +173,7 @@ class Session(BaseModel):
 
     target_objective = models.CharField(
         max_length=64, default=target_objectives.default())
+    # 使用GPU运行设置为： "GPR_USE_GPFLOW": false
     hyperparameters = models.TextField(default='''{
     "DDPG_ACTOR_HIDDEN_SIZES": [128, 128, 64],
     "DDPG_ACTOR_LEARNING_RATE": 0.02,
@@ -402,7 +402,6 @@ class WorkloadManager(models.Manager):
 
 
 class Workload(BaseModel):
-
     objects = WorkloadManager()
 
     dbms = models.ForeignKey(DBMSCatalog)
