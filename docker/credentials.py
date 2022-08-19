@@ -31,16 +31,18 @@ if isinstance(db_opts, str):
 
 SECRET_KEY = ''.join(random.choice(string.hexdigits) for _ in range(16))
 DATABASES = {
-             'default': {'ENGINE': 'django.db.backends.' + backend,
-                         'NAME': db_name,
-                         'USER': db_user,
-                         'PASSWORD': db_pwd,
-                         'HOST': db_host,
-                         'PORT': db_port,
-                         'OPTIONS': db_opts,
-                         }
-             }
-DEBUG = debug
+    'default': {'ENGINE': 'django.db.backends.' + backend,
+                'NAME': db_name,
+                'USER': db_user,
+                'PASSWORD': db_pwd,
+                'HOST': db_host,
+                'PORT': db_port,
+                'OPTIONS': db_opts,
+                }
+}
+
+DEBUG = False
+
 ADMINS = ()
 MANAGERS = ADMINS
 ALLOWED_HOSTS = ['*']

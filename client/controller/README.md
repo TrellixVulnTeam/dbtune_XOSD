@@ -10,3 +10,7 @@ To run the controller, you need to provide a configuration file and provide comm
    * configuration file path (flag : `-c`) </br>
      The path of the input configuration file (required). Sample config files are under the directory `config`.
  
+```shell
+使用mavenLocal() 时Gradle默认会按以下顺序去查找本地的maven仓库：
+USER_HOME/.m2/settings.xml >> M2_HOME/conf/settings.xml >> USER_HOME/.m2/repository。注意，环境变量要加入M2_HOME
+```

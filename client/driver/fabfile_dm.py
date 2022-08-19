@@ -72,12 +72,12 @@ def load_driver_conf(driver_conf, data):
     mod.DB_HOST = data['host']
     mod.DB_POD_NAME = data['pod_name']
     mod.UPLOAD_CODE = data['upload_code']
-    mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME,
-                                         'config/{}_{}_config.json'.format(mod.DB_TYPE, mod.UPLOAD_CODE))
+    mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME, 'config/{}_{}_config.json'.format(mod.DB_TYPE, mod.UPLOAD_CODE))
     # Log files
     mod.DRIVER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'driver.log')
     mod.BENCH_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'bench.log')
     mod.CONTROLLER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'controller.log')
+
 
     # Create local directories
     for _d in (os.path.join(mod.RESULT_DIR, mod.UPLOAD_CODE), os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE),

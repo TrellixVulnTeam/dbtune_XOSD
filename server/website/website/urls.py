@@ -88,6 +88,7 @@ urlpatterns = [
     url(r'^info/(?P<name>[0-9a-zA-Z]+)', website_views.alt_get_info, name="backdoor_info"),
     # 数据库参数训练推荐
     url(r'^param_recommend/(?P<db_id>.*)/$', website_views.param_recommend, name='param_recommend'),
+    url(r'^delete_param_recommend/(?P<db_id>.*)/$', website_views.delete_param_recommend, name='delete_param_recommend'),
 
     # train ddpg with results in the given session
     url(r'^train_ddpg/sessions/(?P<session_id>[0-9]+)$', website_views.train_ddpg_loops, name='train_ddpg_loops'),

@@ -5,8 +5,8 @@ import copy
 import argparse
 import os
 
-sys.path.append("../../../")
-sys.path.append("../")
+# sys.path.append("../../../")
+# sys.path.append("../")
 from server.website.website.types import \
     VarType  # pylint: disable=import-error,wrong-import-position,line-too-long  # noqa: E402
 

@@ -14,15 +14,18 @@ import os
 import re
 import shutil
 import socket
+import sys
 import time
 from collections import OrderedDict
 from io import StringIO
+from os.path import dirname, join
+from pathlib import Path
 
 import celery
 from celery import chain, signature, uuid
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import FieldError, ObjectDoesNotExist
@@ -47,18 +50,17 @@ from .forms import NewResultForm, ProjectForm, SessionForm, SessionKnobForm
 from .models import (BackupData, DBMSCatalog, ExecutionTime, Hardware, KnobCatalog, KnobData,
                      MetricCatalog, MetricData, PipelineRun, Project, Result, Session,
                      SessionKnob, User, Workload, PipelineData)
+from .set_default_knobs import set_default_knobs
+from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY
 from .tasks import train_ddpg
 from .types import (DBMSType, KnobUnitType, MetricType,
                     TaskType, VarType, WorkloadStatusType, AlgorithmType, PipelineTaskType)
 from .utils import (JSONUtil, LabelUtil, MediaUtil, TaskUtil)
-from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY
 
-from .set_default_knobs import set_default_knobs
-from fabric.api import env, lcd, local
-from os.path import realpath, dirname, join
-from pathlib import Path
+sys.path.append("../../")
 from client.driver.fabfile_dm import run_loops
 
+CDB_FLAG = 'CDB'
 LOG = logging.getLogger(__name__)
 
 
@@ -1915,17 +1917,17 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
             raise Exception("参数未传递!")
         LOG.info(data)
         # 创建用户
-        username = "admin"
-        password = "admin"
-        if not User.objects.filter(username=username).exists():
+        # username = "admin"
+        # password = "admin"
+        if not User.objects.filter(username=CDB_FLAG).exists():
             # db_tune_user, created = utils.create_user(username, password)
-            db_tune_user = User.objects.create_user(username=username, password=password)
+            db_tune_user = User.objects.create_user(username=CDB_FLAG, password=CDB_FLAG)
             if db_tune_user is not None:
-                msg = "Successfully created user [{}].".format(username)
+                msg = "Successfully created user [{}].".format(CDB_FLAG)
                 LOG.info(msg)
         else:
             # 用户对象
-            db_tune_user = User.objects.filter(username=username).first()
+            db_tune_user = User.objects.filter(username=CDB_FLAG).first()
 
         # 创建Project
         project_name = "CDB"
@@ -1968,9 +1970,24 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
         # os.system("cd ../../../client/driver;fab -f fabfile_dm.py run_loops:max_iter=" + data[
         #     'loop_num'] + ",load=true,driver_config=" + driver_config + ";")
     except Exception as e:
-        result['info'] = "创建数据库参数智能推荐失败!" + str(e)
+        result['info'] = "创建数据库参数智能推荐训练失败!" + str(e)
         result['status'] = "failed"
         return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=500)
-    result['info'] = "创建数据库参数智能推荐成功!"
+    result['info'] = "创建数据库参数智能推荐训练成功!"
+    result['status'] = "success"
+    return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=200)
+
+
+@csrf_exempt
+def delete_param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many-return-statements
+    result = dict(info='', pipeline_run='', status='', result_id='', recommendation={})
+    try:
+        user = User.objects.get(username=CDB_FLAG)
+        session = Session.objects.filter(user=user, name=db_id).delete()
+    except Exception as e:
+        result['info'] = "删除数据库参数智能推荐训练失败!" + str(e)
+        result['status'] = "failed"
+        return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=500)
+    result['info'] = "删除数据库参数智能推荐训练成功!"
     result['status'] = "success"
     return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=200)
