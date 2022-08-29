@@ -1,53 +1,59 @@
-#!/bin/sh
+#!/bin/bash
 
-maxcounter=${MAX_DB_CONN_ATTEMPTS:-60}
+ps -ef | grep "mysql" | grep -v grep | tr -s " " | cut -d" " -f2 | xargs kill -9
 
-if [ "$maxcounter" -le 0 ]; then
-    echo "Skipping wait-for-it.sh..."
-    exit 0
+nohup mysqld_safe --defaults-file=/home/mysql/conf/my.cnf >/dev/null 2>&1 &
+if [ "$?" -ne 0 ]; then
+  echo "mysql service not ready..."
+  exit 0
 fi
 
-if [ -z "$BACKEND" ]; then
-    echo "ERROR: variable 'BACKEND' must be set. Exiting."
-    exit 1
-fi
-
-# wait until the database is really available
-echo "Trying to connect to $BACKEND (timeout=${maxcounter}s)"
-echo ""
-
-ready () {
-
-    if [ "$BACKEND" = "mysql" ]; then
-        mysql \
-            --host="$DB_HOST" \
-            --protocol TCP \
-            -u"$DB_USER" \
-            -p"$DB_PASSWORD" \
-            -e "show databases;" > /dev/null 2>&1
-    else
-        PGPASSWORD="$DB_PASSWORD" psql \
-            -h "$DB_HOST" \
-            -U "$DB_USER" \
-            -c "select * from pg_database" > /dev/null 2>&1
-    fi
-    return $?
+ready() {
+  a=`netstat -nlp | grep 3306 | wc -l`
+  if [ "$a" -gt "0" ];then
+      return 0
+  else
+      return 1
+  fi
 }
 
- 
-counter=1
-while ! ready; do
-    counter=`expr $counter + 1`
 
-    if [ $counter -gt $maxcounter ]; then
-        >&2 echo "ERROR: Could not connect to $BACKEND after $MAX_DB_CONN_ATTEMPTS seconds; Exiting."
-        exit 1
-    fi;
-    sleep 1
+counter=1
+max_counter=30
+while ! ready; do
+  counter=$(expr $counter + 1)
+
+  if [ $counter -gt $max_counter ]; then
+    echo "ERROR: Could not connect to mysql; Exiting..."
+    exit 1
+  fi
+  sleep 1
 done
 
+db_password='MTIzNDU2NzgK'
+pwd=$(echo $db_password | base64 -d)
+
+# 本地首次使用sock文件登录mysql是不需要密码的
+mysql -S /home/mysql/tmp/mysqld.sock <<EOF
+use mysql;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$pwd';
+grant all privileges on *.* to 'root'@'localhost';
+# 刷新权限表
+FLUSH PRIVILEGES;
+CREATE USER 'root'@'%' IDENTIFIED BY '$pwd';
+# 修改密码
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '$pwd';
+grant all privileges on *.* to 'root'@'%';
+# 刷新权限表
+FLUSH PRIVILEGES;
+select host,user,authentication_string from mysql.user;
+create database db_tune default character set utf8mb4 collate utf8mb4_unicode_ci;
+EOF
+
+# 登录sock软连接到tmp目录
+ln -fs /home/mysql/tmp/mysqld.sock /tmp/mysql.sock
+
 echo "-=------------------------------------------------------"
-echo "-=------------------------------------------------------"
-echo "Connected to $BACKEND!"
-echo "-=------------------------------------------------------"
+echo "-=---------------  数据库列表： ---------------------------"
+echo "$(mysql --host="localhost" --protocol TCP -u"root" -p"$pwd" -e "show databases;")"
 echo "-=------------------------------------------------------"

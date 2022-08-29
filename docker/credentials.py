@@ -3,29 +3,29 @@ import random
 import string
 from datetime import timedelta
 from os import environ as env
+import base64
 
-debug = env.get('DEBUG', 'true').lower() == 'true'
+debug = env.get('DEBUG', 'False')
 rabbitmq_host = env.get('RABBITMQ_HOST', 'localhost')
-backend = env.get('BACKEND', 'postgresql')
-db_name = env.get('DB_NAME', 'ottertune')
+rabbitmq_port = env.get('RABBITMQ_PORT', '5672')
+rabbitmq_user = env.get('RABBITMQ_USER', 'guest')
+rabbitmq_pwd = env.get('RABBITMQ_PWD', 'guest')
+default_queue = env.get('CELERY_DEFAULT_QUEUE', 'default')
+CELERY_APP_QUEUE = env.get('CELERY_APP_QUEUE', 'app')
+backend = env.get('BACKEND', 'mysql')
+db_name = env.get('DB_NAME', 'db_tune')
 db_host = env.get('DB_HOST', 'localhost')
-db_pwd = env.get('DB_PASSWORD', '')
-bg_run_every = env.get('BG_TASKS_RUN_EVERY', None)  # minutes
+db_port = env.get('DB_PORT', '3306')
+db_user = env.get('DB_USER', 'root')
+db_pwd = env.get('DB_PASSWORD', 'MTIzNDU2Nzg=')
+db_pwd = base64.b64decode(db_pwd).decode('utf-8')
 
-if backend == 'mysql':
-    default_user = 'root'
-    default_port = '3306'
-    default_opts = {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES',innodb_strict_mode=1",
-    }
-else:
-    default_user = 'postgres'
-    default_port = '5432'
-    default_opts = {}
-
-db_user = env.get('DB_USER', default_user)
-db_port = env.get('DB_PORT', default_port)
+default_opts = {
+    'init_command': "SET sql_mode='STRICT_TRANS_TABLES',innodb_strict_mode=1",
+}
 db_opts = env.get('DB_OPTS', default_opts)
+bg_run_every = env.get('BG_TASKS_RUN_EVERY', 5)  # minutes
+
 if isinstance(db_opts, str):
     db_opts = json.loads(db_opts) if db_opts else {}
 
@@ -41,12 +41,12 @@ DATABASES = {
                 }
 }
 
-DEBUG = False
+DEBUG = debug
 
 ADMINS = ()
 MANAGERS = ADMINS
 ALLOWED_HOSTS = ['*']
-BROKER_URL = 'amqp://guest:guest@{}:5672//'.format(rabbitmq_host)
+BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(rabbitmq_user, rabbitmq_pwd, rabbitmq_host, rabbitmq_port)
 
 if bg_run_every is not None:
     # Defines the periodic task schedule for celerybeat

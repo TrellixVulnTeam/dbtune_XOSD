@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import json
 import os
 
 from celery import Celery
@@ -20,3 +21,12 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
+
+
+@app.task(bind=True, name='push_message_to_queue')
+def push_message(msg):
+    """
+    推送消息至应用队列
+    :return:
+    """
+    return json.load(msg)

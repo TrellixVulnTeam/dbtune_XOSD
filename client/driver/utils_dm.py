@@ -7,49 +7,8 @@ from fabric.api import hide, local, settings, task
 from kubernetes import client, config
 from kubernetes.stream import stream
 
-dconf = None  # pylint: disable=invalid-name
 # 绝对路径
 BASE_DIR = dirname(abspath(__file__))
-
-
-def load_driver_conf():
-    # The default config file is 'driver_config.py' but you can use
-    # set the env 'DRIVER_CONFIG' to the path of a different config
-    # file to override it.
-    global dconf  # pylint: disable=global-statement,invalid-name
-    if not dconf:
-        driver_conf = os.environ.get('DRIVER_CONFIG', 'driver_config')
-        if driver_conf.endswith('.py'):
-            driver_conf = driver_conf[:-len('.py')]
-        mod = importlib.import_module(driver_conf)
-        dconf = mod
-
-        # Generate the login string of the host connection
-        if dconf.HOST_CONN == 'local':
-            login_str = 'localhost'
-
-        elif dconf.HOST_CONN in ['remote', 'remote_docker']:
-            if not dconf.LOGIN_HOST:
-                raise ValueError("LOGIN_HOST must be set if HOST_CONN=remote")
-
-            login_str = dconf.LOGIN_HOST
-            if dconf.LOGIN_NAME:
-                login_str = '{}@{}'.format(dconf.LOGIN_NAME, login_str)
-
-            if dconf.LOGIN_PORT:
-                login_str += ':{}'.format(dconf.LOGIN_PORT)
-
-        elif dconf.HOST_CONN == 'docker':
-            if not dconf.CONTAINER_NAME:
-                raise ValueError("CONTAINER_NAME must be set if HOST_CONN=docker")
-            login_str = 'localhost'
-
-        else:
-            raise ValueError(("Invalid HOST_CONN: {}. Valid values are "
-                              "'local', 'remote', or 'docker'.").format(dconf.HOST_CONN))
-        dconf.LOGIN = login_str
-
-    return dconf
 
 
 def parse_bool(value):
@@ -70,7 +29,7 @@ def get_content(response):
 
 
 @task
-def run(cmd, capture=True, remote_only=False, **kwargs):
+def run(dconf, cmd, capture=True, remote_only=False, **kwargs):
     capture = parse_bool(capture)
 
     try:
@@ -107,7 +66,65 @@ def run(cmd, capture=True, remote_only=False, **kwargs):
 
 
 @task
-def sudo(cmd, user=None, capture=True, remote_only=False, **kwargs):
+def get(conf, remote_path, local_path, use_sudo=False):
+    use_sudo = parse_bool(use_sudo)
+
+    if conf.HOST_CONN == 'remote':
+        res = _get(remote_path, local_path, use_sudo=use_sudo)
+    elif conf.HOST_CONN == 'local':
+        pre_cmd = 'sudo ' if use_sudo else ''
+        opts = '-r' if os.path.isdir(remote_path) else ''
+        res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
+    else:  # docker or remote_docker
+        docker_cmd = 'docker cp -L {}:{} {}'.format(conf.CONTAINER_NAME, remote_path, local_path)
+        if conf.HOST_CONN == 'docker':
+            if conf.DB_CONF_MOUNT is True:
+                pre_cmd = 'sudo ' if use_sudo else ''
+                opts = '-r' if os.path.isdir(remote_path) else ''
+                res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
+            else:
+                res = local(docker_cmd)
+        elif conf.HOST_CONN == 'remote_docker':
+            pre_cmd = 'sudo ' if use_sudo else ''
+            opts = '-r' if os.path.isdir(remote_path) else ''
+            res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
+        else:
+            raise Exception('wrong HOST_CONN type {}'.format(conf.HOST_CONN))
+    return res
+
+
+@task
+def put(dconf, local_path, remote_path, use_sudo=False):
+    use_sudo = parse_bool(use_sudo)
+
+    if dconf.HOST_CONN == 'remote':
+        res = _put(local_path, remote_path, use_sudo=use_sudo)
+    elif dconf.HOST_CONN == 'local':
+        pre_cmd = 'sudo ' if use_sudo else ''
+        opts = '-r' if os.path.isdir(local_path) else ''
+        res = local('{}cp {} {} {}'.format(pre_cmd, opts, local_path, remote_path))
+    else:  # docker or remote_docker
+        docker_cmd = 'docker cp -L {} {}:{}'.format(local_path, dconf.CONTAINER_NAME, remote_path)
+        if dconf.HOST_CONN == 'docker':
+            if dconf.DB_CONF_MOUNT is True:
+                pre_cmd = 'sudo ' if use_sudo else ''
+                opts = '-r' if os.path.isdir(local_path) else ''
+                res = local('{}cp {} {} {}'.format(pre_cmd, opts, local_path, remote_path))
+            else:
+                res = local(docker_cmd)
+        elif dconf.HOST_CONN == 'remote_docker':
+            if dconf.DB_CONF_MOUNT is True:
+                res = _put(local_path, remote_path, use_sudo=use_sudo)
+            else:
+                res = _put(local_path, local_path, use_sudo=use_sudo)
+                res = sudo(docker_cmd, remote_only=True)
+        else:
+            raise Exception('wrong HOST_CONN type {}'.format(dconf.HOST_CONN))
+    return res
+
+
+@task
+def sudo(dconf, cmd, user=None, capture=True, remote_only=False, **kwargs):
     capture = parse_bool(capture)
 
     if dconf.HOST_CONN == 'remote':
@@ -139,67 +156,9 @@ def sudo(cmd, user=None, capture=True, remote_only=False, **kwargs):
 
 
 @task
-def get(remote_path, local_path, use_sudo=False):
-    use_sudo = parse_bool(use_sudo)
-
-    if dconf.HOST_CONN == 'remote':
-        res = _get(remote_path, local_path, use_sudo=use_sudo)
-    elif dconf.HOST_CONN == 'local':
-        pre_cmd = 'sudo ' if use_sudo else ''
-        opts = '-r' if os.path.isdir(remote_path) else ''
-        res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
-    else:  # docker or remote_docker
-        docker_cmd = 'docker cp -L {}:{} {}'.format(dconf.CONTAINER_NAME, remote_path, local_path)
-        if dconf.HOST_CONN == 'docker':
-            if dconf.DB_CONF_MOUNT is True:
-                pre_cmd = 'sudo ' if use_sudo else ''
-                opts = '-r' if os.path.isdir(remote_path) else ''
-                res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
-            else:
-                res = local(docker_cmd)
-        elif dconf.HOST_CONN == 'remote_docker':
-            pre_cmd = 'sudo ' if use_sudo else ''
-            opts = '-r' if os.path.isdir(remote_path) else ''
-            res = local('{}cp {} {} {}'.format(pre_cmd, opts, remote_path, local_path))
-        else:
-            raise Exception('wrong HOST_CONN type {}'.format(dconf.HOST_CONN))
-    return res
-
-
-@task
-def put(local_path, remote_path, use_sudo=False):
-    use_sudo = parse_bool(use_sudo)
-
-    if dconf.HOST_CONN == 'remote':
-        res = _put(local_path, remote_path, use_sudo=use_sudo)
-    elif dconf.HOST_CONN == 'local':
-        pre_cmd = 'sudo ' if use_sudo else ''
-        opts = '-r' if os.path.isdir(local_path) else ''
-        res = local('{}cp {} {} {}'.format(pre_cmd, opts, local_path, remote_path))
-    else:  # docker or remote_docker
-        docker_cmd = 'docker cp -L {} {}:{}'.format(local_path, dconf.CONTAINER_NAME, remote_path)
-        if dconf.HOST_CONN == 'docker':
-            if dconf.DB_CONF_MOUNT is True:
-                pre_cmd = 'sudo ' if use_sudo else ''
-                opts = '-r' if os.path.isdir(local_path) else ''
-                res = local('{}cp {} {} {}'.format(pre_cmd, opts, local_path, remote_path))
-            else:
-                res = local(docker_cmd)
-        elif dconf.HOST_CONN == 'remote_docker':
-            if dconf.DB_CONF_MOUNT is True:
-                res = _put(local_path, remote_path, use_sudo=use_sudo)
-            else:
-                res = _put(local_path, local_path, use_sudo=use_sudo)
-                res = sudo(docker_cmd, remote_only=True)
-        else:
-            raise Exception('wrong HOST_CONN type {}'.format(dconf.HOST_CONN))
-    return res
-
-
-@task
-def run_sql_script(script_file, *args):
-    if dconf.DB_TYPE == 'oracle':
-        if dconf.HOST_CONN != 'local':
+def run_sql_script(conf, script_file, *args):
+    if conf.DB_TYPE == 'oracle':
+        if conf.HOST_CONN != 'local':
             scriptdir = join(BASE_DIR, 'oracleScripts')
             remote_path = join(scriptdir, script_file)
             if not file_exists(remote_path):
@@ -207,7 +166,7 @@ def run_sql_script(script_file, *args):
                 put(join('./oracleScripts', script_file), remote_path)
                 sudo('chown -R oracle:oinstall {}'.format(scriptdir))
         res = run('sh {} {}'.format(remote_path, ' '.join(args)))
-    if dconf.DB_TYPE == 'dm':
+    if conf.DB_TYPE == 'dm':
         # if dconf.HOST_CONN != 'local':
         scriptdir = join(BASE_DIR, 'dmScripts')
         remote_path = join(scriptdir, script_file)
@@ -217,7 +176,7 @@ def run_sql_script(script_file, *args):
             sudo('chown -R dmdba:dinstall {}'.format(scriptdir))
         res = run('sh {} {}'.format(remote_path, ' '.join(args)))
     else:
-        raise Exception("Database Type {} Not Implemented !".format(dconf.DB_TYPE))
+        raise Exception("Database Type {} Not Implemented !".format(conf.DB_TYPE))
     return res
 
 
@@ -239,7 +198,7 @@ class FabricException(Exception):
     pass
 
 
-def init_kubernetes_client(config_file="/etc/kubernetes/admin.dconf"):
+def init_kubernetes_client(config_file="/etc/kubernetes/admin.conf"):
     """
     init k8s client
     :param config_file: kubernetes的配置文件
@@ -249,7 +208,7 @@ def init_kubernetes_client(config_file="/etc/kubernetes/admin.dconf"):
     return client.CoreV1Api()
 
 
-def check_db_ready(api: client.api_client, namespace="dmcp-instance", name=None, container="database"):
+def check_db_ready(dconf, api: client.api_client, namespace="dmcp-instance", name=None, container="database"):
     """
     检查数据库状态是否正常
     :return: False: 服务不正常  True：服务正常

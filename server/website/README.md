@@ -67,8 +67,12 @@ FLUSH PRIVILEGES;
 ##### 4. Migrate the Django models into the database
 
 ```
+conda create --name py37-env python=3.7
 cd /home/zhc/anaconda3/envs/py37-env/
-source activate py37-env
+#source activate py37-env
+conda activate py37-env
+conda deactivate
+
 #python3 manage.py makemigrations website
 python3 manage.py migrate
 ```

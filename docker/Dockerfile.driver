@@ -1,13 +1,60 @@
-FROM ottertune-base
+FROM alpine:latest AS mysql
+COPY ./mysql-8.0.30-linux-glibc2.17-x86_64-minimal.tar.xz /home/mysql.tar.xz
+WORKDIR /home
+RUN tar -xvf  mysql.tar.xz && \
+    mv mysql-8.0.30-linux-glibc2.17-x86_64-minimal  /usr/local/mysql  &&  \
+    chmod -R 755 /usr/local/mysql && \
+    rm -rf mysql.tar.xz
 
-ARG GRADLE_VERSION=gradle-5.5.1
+FROM python:3.6 AS python
+WORKDIR /home
+COPY ./whl ./whl
+COPY ./server/website/requirements.txt  ./requirements.txt
+RUN python3 --version  &&  \
+    pip3 --version  &&  \
+    pip3 install --no-cache-dir ./whl/pip-21.3.1-py3-none-any.whl  &&  \
+    pip3 install --no-cache-dir --no-index --find-links=./whl -r ./requirements.txt  && \
+    ls -l /usr/lib/python3/site-packages/ &&  \
+    rm -rf ./whl
 
-ENV GRADLE_HOME=/opt/${GRADLE_VERSION}
-ENV PATH=${GRADLE_HOME}/bin:${PATH}
+FROM centos:centos8
+LABEL TAG=v1.0
 
-RUN /install.sh driver
+RUN sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-* && \
+    sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-* && \
+    yum install -y python3 python3-setuptools python3-pip python36-devel \
+    nc net-tools tar telnet java-1.8.0-openjdk make gcc  \
+    python3-PyMySQL libaio-devel numactl-devel ncurses-compat-libs \
+    --nogpgcheck  && \
+    yum clean all
 
-COPY ./client /app
+ENV DM_HOME=/opt/dmdbms
+ENV PATH=${DM_HOME}:/usr/local/mysql/bin:${PATH}
+ENV DJANGO_SETTINGS_MODULE=website.settings
+ENV C_FORCE_ROOT=true
+ENV LANG C.UTF-8
 
-WORKDIR /app/driver
+COPY --from=mysql /usr/local/mysql /usr/local/mysql
+COPY --from=python /usr/bin/python3.6 /usr/bin/python3
+COPY --from=python /usr/lib64/python3.6 /usr/lib64/python3.6
 
+RUN python3 --version
+
+COPY ./dmdbms /opt/dmdbms
+COPY ./client  ./client
+COPY ./controller.jar ./client/controller/controller.jar
+COPY ./server  ./server
+WORKDIR ./server/website
+
+
+COPY ./docker/credentials.py  ./website/settings/credentials.py
+COPY ./docker/install.sh ./docker/start.sh  ./docker/wait-for-it.sh ./
+
+#RUN chmod +x /opt/dmdbms/bin/*  &&  \
+#    chmod +x ./*.sh &&  \
+#    ./install.sh
+
+EXPOSE 8000 5555
+
+#ENTRYPOINT ["./start.sh"]
+CMD ["sleep","3600"]

@@ -45,13 +45,14 @@ from pytz import timezone
 
 from . import models as app_models
 from . import utils
+from .celery import push_message
 from .db import parser, target_objectives
 from .forms import NewResultForm, ProjectForm, SessionForm, SessionKnobForm
 from .models import (BackupData, DBMSCatalog, ExecutionTime, Hardware, KnobCatalog, KnobData,
                      MetricCatalog, MetricData, PipelineRun, Project, Result, Session,
                      SessionKnob, User, Workload, PipelineData)
 from .set_default_knobs import set_default_knobs
-from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY
+from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY, CELERY_APP_QUEUE
 from .tasks import train_ddpg
 from .types import (DBMSType, KnobUnitType, MetricType,
                     TaskType, VarType, WorkloadStatusType, AlgorithmType, PipelineTaskType)
@@ -1384,7 +1385,7 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
               len(group_res), next_config)
 
     response = dict(celery_status='', result_id=latest_result.pk, message='', errors=[])
-
+    msg = dict(message='', status='SUCCESS', id=latest_result.session.name, recommendation='', performance='')
     if group_res.failed():
         errors = [t.traceback for t in task_list if t.traceback]
         if errors:
@@ -1394,6 +1395,7 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
             message='Celery failed to get the next configuration')
         status_code = 400
 
+        msg.update(message='failed to get the next configuration!', status='FAILURE')
     elif group_res.ready():
         assert group_res.successful()
         latest_result = Result.objects.filter(session=session).latest('creation_time')
@@ -1403,6 +1405,8 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
             message='Celery successfully recommended the next configuration')
         status_code = 200
 
+        msg.update(message='successfully recommended the next configuration!', recommendation=next_config,
+                   performance=latest_result.session.target_objective)
     else:  # One or more tasks are still waiting to execute
         celery_status = 'PENDING'
         if CHECK_CELERY:
@@ -1410,6 +1414,10 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
         response.update(celery_status=celery_status, message='Result not ready')
         status_code = 202
 
+        msg.update(message='Service not ready, failed to get the next configuration!', status='FAILURE')
+
+    # 推送消息至队列
+    push_message.apply_async(queue=CELERY_APP_QUEUE, args=[msg])
     return HttpResponse(JSONUtil.dumps(response, pprint=True), status=status_code,
                         content_type='application/json')
 
@@ -1906,7 +1914,8 @@ def tuner_status_test(request, upload_code):  # pylint: disable=unused-argument,
 # 数据库参数推荐
 @csrf_exempt
 def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many-return-statements
-    result = dict(info='', pipeline_run='', status='', result_id='', recommendation={})
+    result = dict(message='', status='SUCCESS')
+    # result = dict(message='', status='', result_id='', recommendation={},tps='')
     try:
         if request.method == 'POST':
             data = json.loads(request.body)
@@ -1935,7 +1944,7 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
             project = Project.objects.create(user=db_tune_user, name=project_name, creation_time=now(),
                                              last_update=now())
             if project is not None:
-                msg = "Successfully created project [CDB]."
+                msg = "Successfully created project [{}].".format(project_name)
                 LOG.info(msg)
         else:
             project = Project.objects.filter(user=db_tune_user, name=project_name).first()
@@ -1944,8 +1953,7 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
         upload_code = MediaUtil.upload_code_generator()
         # CPU、内存、存储设置
         hardware, _ = Hardware.objects.get_or_create(cpu=int(data['cpu']), memory=int(data['memory']),
-                                                     storage=int(data['storage']),
-                                                     storage_type=int(data['storage_type']))
+                                                     storage=int(data['storage']), storage_type=5)
         # target_objective = target_objectives.get_instance(20, "udf.throughput (txn/s)")
         session = Session.objects.create(name=db_id, tuning_session='lhs',
                                          dbms_id=20, hardware=hardware, project=project,
@@ -1970,24 +1978,28 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
         # os.system("cd ../../../client/driver;fab -f fabfile_dm.py run_loops:max_iter=" + data[
         #     'loop_num'] + ",load=true,driver_config=" + driver_config + ";")
     except Exception as e:
-        result['info'] = "创建数据库参数智能推荐训练失败!" + str(e)
-        result['status'] = "failed"
+        # result['info'] = "创建数据库参数智能推荐训练失败!" + str(e)
+        # result['status'] = "failed"
+        result.update(message="创建数据库参数智能推荐训练失败!" + str(e), status="FAILURE")
         return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=500)
-    result['info'] = "创建数据库参数智能推荐训练成功!"
-    result['status'] = "success"
+    # result['info'] = "创建数据库参数智能推荐训练成功!"
+    # result['status'] = "success"
+    result.update(message="创建数据库参数智能推荐训练成功!")
     return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=200)
 
 
 @csrf_exempt
 def delete_param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many-return-statements
-    result = dict(info='', pipeline_run='', status='', result_id='', recommendation={})
+    result = dict(message='', status='SUCCESS')
     try:
         user = User.objects.get(username=CDB_FLAG)
         session = Session.objects.filter(user=user, name=db_id).delete()
     except Exception as e:
-        result['info'] = "删除数据库参数智能推荐训练失败!" + str(e)
-        result['status'] = "failed"
+        # result['info'] = "删除数据库参数智能推荐训练失败!" + str(e)
+        # result['status'] = "failed"
+        result.update(message="删除数据库参数智能推荐训练失败!" + str(e), status="FAILURE")
         return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=500)
-    result['info'] = "删除数据库参数智能推荐训练成功!"
-    result['status'] = "success"
+    # result['info'] = "删除数据库参数智能推荐训练成功!"
+    # result['status'] = "success"
+    result.update(message="删除数据库参数智能推荐训练成功!")
     return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=200)

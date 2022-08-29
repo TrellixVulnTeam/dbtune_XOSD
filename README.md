@@ -38,3 +38,8 @@ fab run_loops:max_iter=10
     打开MYSQL安装目录打开MY.INI找到max_connections (一般设置到500～1000比较合适，重启mysql)。
     max_connections=1000
 ```
+
+
+```shell
+docker build -f docker/Dockerfile  . -t hub.dameng.com/amd64/db-tune:v1.0 --no-cache=true
+```

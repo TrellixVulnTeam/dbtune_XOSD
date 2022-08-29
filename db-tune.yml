@@ -2,58 +2,96 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: db-tune
+  namespace: tune
   labels:
-    app: nginx
+    app: db-tune
 spec:
+  type: NodePort
   ports:
-    - port: 80
-      name: web
-  clusterIP: None
+    - name: web
+      port: 8000
+      targetPort: 8000
+      nodePort: 31800
+      protocol: TCP
+    - name: celery
+      port: 5555
+      targetPort: 5555
+      nodePort: 31555
+      protocol: TCP
   selector:
-    app: nginx
+    app: db-tune
 
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: web
+  name: db-tune
+  namespace: tune
 spec:
   selector:
     matchLabels:
-      app: nginx # has to match .spec.template.metadata.labels
-  serviceName: "nginx"
-  replicas: 3 # by default is 1
-  minReadySeconds: 10 # by default is 0
+      app: db-tune
+  serviceName: "db-tune"
+  replicas: 1
+  minReadySeconds: 10
   template:
     metadata:
       labels:
-        app: nginx # has to match .spec.selector.matchLabels
+        app: db-tune
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: node02
       terminationGracePeriodSeconds: 10
+      #如果在POD中使用hostNetwork:true配置网络，pod中运行的应用程序可以直接看到宿主主机的网络接口，宿主主机所在的局域网上所有网络接口都可以访问到该应用程序。
+#      hostNetwork: true
       containers:
-        - name: nginx
-          image: k8s.gcr.io/nginx-slim:0.8
-          ports:
-            - containerPort: 80
-              name: web
-          volumeMounts:
-            - name: www
-              mountPath: /usr/share/nginx/html
+#        - name: nginx
+#          image: hub.dameng.com/amd64/nginx:1.19
+#          ports:
+#            - containerPort: 80
+#              name: web
+#          volumeMounts:
+#            - name: www
+#              mountPath: /www/html
         - name: db-tune
-          image: k8s.gcr.io/db-tune:1.0
+          image: hub.dameng.com/amd64/db-tune:v1.0
+          env:
+            - name: RABBITMQ_HOST
+              value: "192.168.113.145"
+            - name: RABBITMQ_PORT
+              value: "5691"
+            - name: RABBITMQ_USER
+              value: "admin"
+            - name: RABBITMQ_PWD
+              value: "dameng@777"
+          resources:
+            requests:
+              memory: 8Gi
+              cpu: 0.5
+            limits:
+              memory: 16Gi
+              cpu: 2
           ports:
-            - containerPort: 80
-              name: web
+            - containerPort: 5555
+              name: celery
+            - containerPort: 8000
+              name: server
           volumeMounts:
-            - name: www
-              mountPath: /usr/share/nginx/html
+#            - name: www
+#              mountPath: /www/html
+            - name: kubernetes-cfg
+              mountPath: /etc/kubernetes/admin.conf
+      volumes:
+        - name: kubernetes-cfg
+          hostPath:
+            path: /etc/kubernetes/admin.conf
   volumeClaimTemplates:
-    - metadata:
-        name: www
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "my-storage-class"
-        resources:
-          requests:
-            storage: 1Gi
+#    - metadata:
+#        name: www
+#      spec:
+#        accessModes: [ "ReadWriteOnce" ]
+#        storageClassName: "csi-ceph-pool"
+#        resources:
+#          requests:
+#            storage: 20Gi

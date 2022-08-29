@@ -1,8 +1,7 @@
+import argparse
+import copy
 import importlib
 import json
-import sys
-import copy
-import argparse
 import os
 
 # sys.path.append("../../../")
@@ -54,8 +53,8 @@ def get_udm():
         metrics["latency_95"]["value"] = \
             info["Latency Distribution"]["95th Percentile Latency (microseconds)"]
     else:
-        args.result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.DB_INSTANCE_ID)
-        summary_path = os.path.join(dconf.SYSBENCH_HOME, "results", dconf.DB_INSTANCE_ID + "_outputfile.summary")
+        args.result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.UPLOAD_CODE)
+        summary_path = os.path.join(dconf.SYSBENCH_HOME, "results", dconf.UPLOAD_CODE + "_outputfile.summary")
         with open(summary_path, 'r') as f:
             info = json.load(f)
         metrics = copy.deepcopy(DM_DEINFED_METRICS)

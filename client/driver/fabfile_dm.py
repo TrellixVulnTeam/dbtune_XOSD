@@ -11,7 +11,7 @@ from multiprocessing import Process
 import requests
 from fabric.api import lcd, local, task
 
-from client.driver.utils import file_exists, get, get_content, run, run_sql_script, init_kubernetes_client, \
+from client.driver.utils_dm import file_exists, get, get_content, run, run_sql_script, init_kubernetes_client, \
     exec_command_to_pod, copy_file_to_pod, check_db_ready
 
 # Configure logging
@@ -72,12 +72,12 @@ def load_driver_conf(driver_conf, data):
     mod.DB_HOST = data['host']
     mod.DB_POD_NAME = data['pod_name']
     mod.UPLOAD_CODE = data['upload_code']
-    mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME, 'config/{}_{}_config.json'.format(mod.DB_TYPE, mod.UPLOAD_CODE))
+    mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME,
+                                         'config/{}_{}_config.json'.format(mod.DB_TYPE, mod.UPLOAD_CODE))
     # Log files
     mod.DRIVER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'driver.log')
     mod.BENCH_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'bench.log')
     mod.CONTROLLER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'controller.log')
-
 
     # Create local directories
     for _d in (os.path.join(mod.RESULT_DIR, mod.UPLOAD_CODE), os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE),
@@ -100,11 +100,12 @@ def load_driver_conf(driver_conf, data):
 
 @task
 def drop_user(dconf):
-    run('/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
-                                                                                       dconf.ADMIN_PWD,
-                                                                                       dconf.DB_HOST,
-                                                                                       dconf.DB_PORT,
-                                                                                       dconf.DB_USER), capture=False)
+    run(dconf, '/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
+                                                                                              dconf.ADMIN_PWD,
+                                                                                              dconf.DB_HOST,
+                                                                                              dconf.DB_PORT,
+                                                                                              dconf.DB_USER),
+        capture=False)
 
 
 @task
@@ -252,11 +253,11 @@ def change_conf(dconf, api, next_conf=None):
 def is_ready_db(api, dconf):
     # 重试3次，每次RESTART_SLEEP_SEC秒
     for index in range(3):
-        if check_db_ready(api=api, name=dconf.DB_POD_NAME):
+        if check_db_ready(dconf, api=api, name=dconf.DB_POD_NAME):
             return True
         time.sleep(dconf.RESTART_SLEEP_SEC)
         if index == 2:
-            return check_db_ready(api=api, name=dconf.DB_POD_NAME)
+            return check_db_ready(dconf, api=api, name=dconf.DB_POD_NAME)
 
 
 @task
@@ -366,7 +367,7 @@ def check_disk_usage(dconf):
     disk_use = 0
     if partition:
         cmd = "df -h {}".format(partition)
-        out = run(cmd).splitlines()[1]
+        out = run(dconf, cmd).splitlines()[1]
         m = re.search(r'\d+(?=%)', out)
         if m:
             disk_use = int(m.group(0))
@@ -378,7 +379,8 @@ def check_disk_usage(dconf):
 def run_controller(dconf):
     LOG.info('Controller config path: %s', dconf.CONTROLLER_CONFIG)
     create_controller_config(dconf)
-    cmd = 'gradle run -PappArgs="-c {} -t {} -p output/{} -d output/{}" --no-daemon > {}'.format(
+    # cmd = 'gradle run -PappArgs="-c {} -t {} -p output/{} -d output/{}" --no-daemon > {}'.format(
+    cmd = 'java -jar controller.jar -c {} -t {} -p output/{} -d output/{} > {}'.format(
         dconf.CONTROLLER_CONFIG,
         dconf.CONTROLLER_OBSERVE_SEC,
         dconf.UPLOAD_CODE,
