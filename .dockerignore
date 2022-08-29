@@ -1,7 +1,10 @@
 !client
 client/controller/.gradle
-client/controller/build
+client/controller/build*
+client/controller/src
 client/controller/output
+client/controller/sample_output
+client/controller/gradle.properties
 client/driver/log
 client/driver/results
 !docker
@@ -16,7 +19,8 @@ server/website/debug_*.tar.gz
 server/website/session_knobs.json
 server/website/dump_website.json
 server/website/script
-server/website/website/settings/*credentials.py
+server/website/tests
+server/website/website/settings/*credentials*.py
 **/.git*
 **/*.swp
 **/*.swo
