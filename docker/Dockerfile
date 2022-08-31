@@ -18,14 +18,17 @@ RUN sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-* && \
     yum clean all
 
 ENV DM_HOME=/opt/dmdbms
-ENV PATH=${DM_HOME}:/usr/local/mysql/bin:${PATH}
+ENV PATH=/usr/local/mysql/bin:${PATH}
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DM_HOME/bin
 ENV DJANGO_SETTINGS_MODULE=website.settings
 ENV C_FORCE_ROOT=true
 ENV LANG C.UTF-8
 
 COPY --from=build_mysql /usr/local/mysql /usr/local/mysql
 
+WORKDIR /home
 COPY ./dmdbms /opt/dmdbms
+COPY ./sysbench ./sysbench
 COPY ./client  ./client
 COPY ./controller.jar ./client/controller/controller.jar
 COPY ./server  ./server

@@ -23,7 +23,7 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-@app.task(bind=True, name='push_message_to_queue')
+@app.task(bind=True, name='push_message')
 def push_message(msg):
     """
     推送消息至应用队列

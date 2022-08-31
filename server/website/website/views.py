@@ -5,7 +5,6 @@
 #
 # pylint: disable=too-many-lines
 # -*-coding:utf-8 -*-
-
 import base64
 import csv
 import json
@@ -15,6 +14,7 @@ import re
 import shutil
 import socket
 import sys
+import threading
 import time
 from collections import OrderedDict
 from io import StringIO
@@ -60,9 +60,18 @@ from .utils import (JSONUtil, LabelUtil, MediaUtil, TaskUtil)
 
 sys.path.append("../../")
 from client.driver.fabfile_dm import run_loops
+from multiprocessing import Process
+from concurrent.futures import ThreadPoolExecutor
+
+theard_pool = ThreadPoolExecutor(max_workers=20)
+
+LOG = logging.getLogger(__name__)
 
 CDB_FLAG = 'CDB'
-LOG = logging.getLogger(__name__)
+
+
+# 进程池
+# processPool = Pool(50)
 
 
 # For the html template to access dict object
@@ -1939,15 +1948,14 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
             db_tune_user = User.objects.filter(username=CDB_FLAG).first()
 
         # 创建Project
-        project_name = "CDB"
-        if not Project.objects.filter(user=db_tune_user, name=project_name).exists():
-            project = Project.objects.create(user=db_tune_user, name=project_name, creation_time=now(),
+        if not Project.objects.filter(user=db_tune_user, name=CDB_FLAG).exists():
+            project = Project.objects.create(user=db_tune_user, name=CDB_FLAG, creation_time=now(),
                                              last_update=now())
             if project is not None:
-                msg = "Successfully created project [{}].".format(project_name)
+                msg = "Successfully created project [{}].".format(CDB_FLAG)
                 LOG.info(msg)
         else:
-            project = Project.objects.filter(user=db_tune_user, name=project_name).first()
+            project = Project.objects.filter(user=db_tune_user, name=CDB_FLAG).first()
 
         # 创建Session
         upload_code = MediaUtil.upload_code_generator()
@@ -1971,12 +1979,17 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
         driver_config = 'client.driver.conf.' + upload_code + '_driver_config'
         shutil.copy2(join(project_root, 'client', 'driver', 'conf', 'driver_config_template.py'),
                      join(project_root, 'client', 'driver', 'conf', upload_code + '_driver_config.py'))
-        run_loops(max_iter=data['loop_num'], load=True, driver_config=driver_config, data=data)
-        # lcd(join(project_root, 'client', 'driver'))
-        # local("fab -f fabfile_dm.py run_loops:max_iter=" + str(data['loop_num']) +
-        #       ",load=true,driver_config=" + driver_config + ",data=" + str(data))
-        # os.system("cd ../../../client/driver;fab -f fabfile_dm.py run_loops:max_iter=" + data[
-        #     'loop_num'] + ",load=true,driver_config=" + driver_config + ";")
+
+        task = theard_pool.submit(run_loops, data['loop_num'], True, driver_config, data)
+        LOG.info("线程[%s]开始工作!", task)
+        LOG.info("线程[%s]执行结果: [%s]", task, task.result())
+        # run_loops(max_iter=data['loop_num'], load=True, driver_config=driver_config, data=data)
+        # p = Process(target=run_loops, args=(data['loop_num'], True, driver_config, data))
+        # p.start()
+        # 等待子进程结束后再继续往下运行，通常用于进程间的同步
+        # p.join()
+        # r = processPool.apply_async(func=run_loops, args=(data['loop_num'], True, driver_config, data))
+        # LOG.info("进程[%s]开始工作!", p.name)
     except Exception as e:
         # result['info'] = "创建数据库参数智能推荐训练失败!" + str(e)
         # result['status'] = "failed"
@@ -1993,7 +2006,24 @@ def delete_param_recommend(request, db_id):  # pylint: disable=unused-argument,t
     result = dict(message='', status='SUCCESS')
     try:
         user = User.objects.get(username=CDB_FLAG)
-        session = Session.objects.filter(user=user, name=db_id).delete()
+        session = Session.objects.filter(user__username=user, project__name=CDB_FLAG, name=db_id).first()
+        if session is None:
+            raise Exception("记录已删除或不存在!")
+        # 删除表中记录
+        Session.objects.filter(user__username=user, project__name=CDB_FLAG, name=db_id).delete()
+
+        project_root = dirname(Path(__file__).resolve().parent.parent.parent)
+        driver_path = join(project_root, 'client', 'driver')
+        config_file = join(driver_path, 'conf', session.upload_code + '_driver_config.py')
+        # 杀掉训练进程
+        os.system('ps -ef | grep "{}" | grep -v grep | tr -s " " | cut -d" " -f2 | xargs kill -9'.format(config_file))
+        # 删除动态配置文件
+        os.remove(config_file)
+        # 删除动态日志文件
+        log_file = join(driver_path, 'log', session.upload_code)
+        results_file = join(driver_path, 'results', session.upload_code)
+        shutil.rmtree(log_file)
+        shutil.rmtree(results_file)
     except Exception as e:
         # result['info'] = "删除数据库参数智能推荐训练失败!" + str(e)
         # result['status'] = "failed"

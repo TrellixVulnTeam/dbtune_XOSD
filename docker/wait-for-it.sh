@@ -30,6 +30,8 @@ while ! ready; do
   sleep 1
 done
 
+sleep 3
+
 db_password='MTIzNDU2NzgK'
 pwd=$(echo $db_password | base64 -d)
 
@@ -57,3 +59,12 @@ echo "-=------------------------------------------------------"
 echo "-=---------------  数据库列表： ---------------------------"
 echo "$(mysql --host="localhost" --protocol TCP -u"root" -p"$pwd" -e "show databases;")"
 echo "-=------------------------------------------------------"
+
+mysql_res=`mysql --host="localhost" --protocol TCP -u"root" -p"$pwd" -s -Ne "SELECT
+                                                                  count(*) num
+                                                              FROM
+                                                                  information_schema.TABLES
+                                                              WHERE
+                                                                  table_schema = 'db_tune';"`
+res=`echo "$mysql_res"| awk 'NR==1{print}'`
+export IS_DB_INIT="$res"

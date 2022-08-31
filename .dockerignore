@@ -30,3 +30,4 @@ server/website/website/settings/*credentials*.py
 **/*.bak
 **/.DS_Store
 **/__pycache__
+**/*.tar

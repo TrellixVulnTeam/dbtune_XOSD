@@ -65,4 +65,3 @@ torch>=1.2.0
 torchvision>=0.4.0
 setuptools==57.5.0
 kubernetes==24.2.0
-flower

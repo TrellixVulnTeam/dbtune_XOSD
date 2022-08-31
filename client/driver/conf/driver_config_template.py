@@ -6,7 +6,7 @@ from pathlib import Path
 #  HOST LOGIN
 # ==========================================================
 # Valid values= local, remote, docker or remote_docker
-HOST_CONN = 'remote_docker'
+HOST_CONN = 'local'
 
 # ==========================================================
 #  DATABASE OPTIONS

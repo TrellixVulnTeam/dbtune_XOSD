@@ -6,10 +6,9 @@ import re
 import time
 from collections import OrderedDict
 from logging.handlers import RotatingFileHandler
-from multiprocessing import Process
 
 import requests
-from fabric.api import lcd, local, task
+from fabric.api import lcd, local
 
 from client.driver.utils_dm import file_exists, get, get_content, run, run_sql_script, init_kubernetes_client, \
     exec_command_to_pod, copy_file_to_pod, check_db_ready
@@ -18,7 +17,6 @@ from client.driver.utils_dm import file_exists, get, get_content, run, run_sql_s
 LOG = logging.getLogger(__name__)
 
 
-@task
 def run_loops(max_iter=10, load=False, driver_config="driver_config", data=None):
     k8sapi = init_kubernetes_client()
     print("driver_config: {}".format(driver_config))
@@ -70,6 +68,7 @@ def load_driver_conf(driver_conf, data):
     mod = importlib.import_module(driver_conf)
     # 设定动态值
     mod.DB_HOST = data['host']
+    mod.DB_PORT = str(data['port']) if data['port'] is not None else '5236'
     mod.DB_POD_NAME = data['pod_name']
     mod.UPLOAD_CODE = data['upload_code']
     mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME,
@@ -98,33 +97,38 @@ def load_driver_conf(driver_conf, data):
     return mod
 
 
-@task
 def drop_user(dconf):
-    run(dconf, '/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
-                                                                                              dconf.ADMIN_PWD,
-                                                                                              dconf.DB_HOST,
-                                                                                              dconf.DB_PORT,
-                                                                                              dconf.DB_USER),
+    # cmd = './disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
+    #                                                                                      dconf.ADMIN_PWD,
+    #                                                                                      dconf.DB_HOST,
+    #                                                                                      dconf.DB_PORT,
+    #                                                                                      dconf.DB_USER)
+    # with lcd("/opt/dmdbms/bin"):  # pylint: disable=not-context-manager
+    #     local(cmd, capture=False)
+    run(dconf=dconf,
+        cmd='/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
+                                                                                           dconf.ADMIN_PWD,
+                                                                                           dconf.DB_HOST,
+                                                                                           dconf.DB_PORT,
+                                                                                           dconf.DB_USER),
         capture=False)
 
 
-@task
 def create_user(dconf):
     run_sql_script(dconf, 'createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER,
                    dconf.DB_PASSWORD,
                    dconf.DB_HOST, dconf.DB_PORT)
 
 
-@task
 def load_sysbench(dconf):
-    cmd = "./src/sysbench ./src/lua/oltp_read_write.lua --tables=250 --table-size=25000 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 prepare > {}".format(
+    cmd = "./sysbench ./oltp_read_write.lua --tables=25 --table-size=2500 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 prepare > {}".format(
         dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD, dconf.BENCH_LOG)
     with lcd(dconf.SYSBENCH_HOME):  # pylint: disable=not-context-manager
         local(cmd)
 
 
 # 数据dump导出
-@task
+
 def dump_database(dconf):
     dumpfile = os.path.join(dconf.DB_DUMP_DIR, dconf.UPLOAD_CODE, dconf.DB_NAME + '.dump')
     try:
@@ -137,12 +141,10 @@ def dump_database(dconf):
         return False
 
 
-@task
 def restart_database(dconf, api):
     return exec_command_to_pod(api=api, name=dconf.DB_POD_NAME, cmd='reload')
 
 
-@task
 def get_result(dconf, max_time_sec=180, interval_sec=5, upload_code=None):
     max_time_sec = int(max_time_sec)
     interval_sec = int(interval_sec)
@@ -201,7 +203,6 @@ def get_result(dconf, max_time_sec=180, interval_sec=5, upload_code=None):
     return response_dict
 
 
-@task
 def save_next_config(dconf, next_config, t=None):
     if not t:
         t = int(time.time())
@@ -210,7 +211,6 @@ def save_next_config(dconf, next_config, t=None):
     return t
 
 
-@task
 def change_conf(dconf, api, next_conf=None):
     signal = "# configurations recommended by db-tune:\n"
     next_conf = next_conf or {}
@@ -249,7 +249,6 @@ def change_conf(dconf, api, next_conf=None):
     local('rm -f {}'.format(tmp_conf_ini))
 
 
-@task
 def is_ready_db(api, dconf):
     # 重试3次，每次RESTART_SLEEP_SEC秒
     for index in range(3):
@@ -260,7 +259,6 @@ def is_ready_db(api, dconf):
             return check_db_ready(dconf, api=api, name=dconf.DB_POD_NAME)
 
 
-@task
 def restore_database(dconf):
     """
     dump数据导入
@@ -268,16 +266,15 @@ def restore_database(dconf):
     :return:
     """
     dumpfile = os.path.join(dconf.DB_DUMP_DIR, dconf.DB_NAME + '.dump')
-    if not file_exists(dumpfile):
+    if not file_exists(dconf, dumpfile):
         raise FileNotFoundError("Database dumpfile '{}' does not exist!".format(dumpfile))
     LOG.info('Start restoring database')
-    drop_user()
-    create_user()
+    drop_user(dconf)
+    create_user(dconf)
     run_sql_script(dconf, 'restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile, dconf.DB_HOST,
                    dconf.DB_PORT)
 
 
-@task
 def loop(i, dconf, api):
     i = int(i)
 
@@ -288,15 +285,16 @@ def loop(i, dconf, api):
     clean_logs(dconf)
 
     if dconf.ENABLE_UDM is True:
-        clean_bench_results()
+        clean_bench_results(dconf)
 
     # check disk usage
     if check_disk_usage(dconf) > dconf.MAX_DISK_USAGE:
         LOG.warning('Exceeds max disk usage %s', dconf.MAX_DISK_USAGE)
 
     # run controller from another process
-    p = Process(target=run_controller(dconf), args=())
-    p.start()
+    # p = Process(target=run_controller(dconf), args=())
+    # p.start()
+    run_controller(dconf)
     LOG.info('Run the controller')
 
     # run bench as a background job
@@ -321,7 +319,7 @@ def loop(i, dconf, api):
     signal_controller(dconf)
     LOG.info('Start the second collection, shut down the controller')
 
-    p.join()
+    # p.join()
     if error_msg:
         raise Exception(dconf.BENCH_TYPE + ' Failed: ' + error_msg)
     # add user defined metrics
@@ -345,7 +343,6 @@ def loop(i, dconf, api):
         change_conf(response['recommendation'])
 
 
-@task
 def free_cache(dconf, api):
     exec_command_to_pod(api=api, name=dconf.DB_POD_NAME, cmd='echo 3 > /proc/sys/vm/drop_caches')
 
@@ -355,13 +352,11 @@ def clean_logs(dconf):
     local('rm -f {} {}'.format(dconf.BENCH_LOG, dconf.CONTROLLER_LOG))
 
 
-@task
 def clean_bench_results(dconf):
     # remove oltpbench result files
     local('rm -f {}/results/{}_outputfile.summary'.format(dconf.SYSBENCH_HOME, dconf.UPLOAD_CODE))
 
 
-@task
 def check_disk_usage(dconf):
     partition = dconf.DATABASE_DISK
     disk_use = 0
@@ -375,7 +370,6 @@ def check_disk_usage(dconf):
     return disk_use
 
 
-@task
 def run_controller(dconf):
     LOG.info('Controller config path: %s', dconf.CONTROLLER_CONFIG)
     create_controller_config(dconf)
@@ -390,7 +384,6 @@ def run_controller(dconf):
         local(cmd)
 
 
-@task
 def create_controller_config(dconf):
     dburl_fmt = 'jdbc:dm://{host}:{port}'.format
 
@@ -417,10 +410,9 @@ def _ready_to_start_bench(dconf):
     return ready
 
 
-@task
 def run_sysbench(dconf):
     if dconf.BENCH_TYPE.lower() == 'sysbench':
-        cmd = "./src/sysbench ./src/lua/oltp_read_write.lua --tables=250 --table-size=25000 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 --output-dir={} --output-name={}  run > {} 2>&1 &".format(
+        cmd = "./sysbench ./oltp_read_write.lua --tables=25 --table-size=2500 --db-driver=dm --dm-db={}:{} --dm-user={} --dm-password={}  --auto-inc=1 --threads=128 --time=180 --report-interval=10 --thread-init-timeout=60 --output-dir={} --output-name={}  run > {} 2>&1 &".format(
             dconf.DB_HOST, dconf.DB_PORT, dconf.DB_USER, dconf.DB_PASSWORD,
             os.path.join(dconf.SYSBENCH_HOME, "results"),
             dconf.UPLOAD_CODE + "_outputfile.summary",
@@ -441,7 +433,6 @@ def _ready_to_start_controller(dconf):
     return ready
 
 
-@task
 def signal_controller(dconf):
     pidfile = os.path.join(dconf.CONTROLLER_HOME, dconf.UPLOAD_CODE, 'pid.txt')
     with open(pidfile, 'r') as f:
@@ -467,14 +458,12 @@ def _ready_to_shut_down_controller(dconf):
     return ready
 
 
-@task
 def add_udm(dconf):
     # result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output')
     with lcd(dconf.UDM_DIR):  # pylint: disable=not-context-manager
         local('python3 user_defined_metrics.py {}'.format(dconf.__name__))
 
 
-@task
 def save_dbms_result(dconf):
     t = int(time.time())
     files = ['knobs.json', 'metrics_after.json', 'metrics_before.json', 'summary.json']
@@ -487,7 +476,6 @@ def save_dbms_result(dconf):
     return t
 
 
-@task
 def upload_result(dconf):
     result_dir = os.path.join(dconf.CONTROLLER_HOME, 'output', dconf.UPLOAD_CODE)
     prefix = ''

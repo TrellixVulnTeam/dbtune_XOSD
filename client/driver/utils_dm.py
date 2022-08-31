@@ -1,4 +1,3 @@
-import importlib
 import os
 from os.path import abspath, dirname, join
 
@@ -28,7 +27,6 @@ def get_content(response):
     return content
 
 
-@task
 def run(dconf, cmd, capture=True, remote_only=False, **kwargs):
     capture = parse_bool(capture)
 
@@ -59,13 +57,12 @@ def run(dconf, cmd, capture=True, remote_only=False, **kwargs):
         if 'unexpected keyword argument' in err:
             offender = err.rsplit(' ', 1)[-1][1:-1]
             kwargs.pop(offender)
-            res = run(cmd, **kwargs)
+            res = run(dconf, cmd, **kwargs)
         else:
             raise e
     return res
 
 
-@task
 def get(conf, remote_path, local_path, use_sudo=False):
     use_sudo = parse_bool(use_sudo)
 
@@ -93,7 +90,6 @@ def get(conf, remote_path, local_path, use_sudo=False):
     return res
 
 
-@task
 def put(dconf, local_path, remote_path, use_sudo=False):
     use_sudo = parse_bool(use_sudo)
 
@@ -123,7 +119,6 @@ def put(dconf, local_path, remote_path, use_sudo=False):
     return res
 
 
-@task
 def sudo(dconf, cmd, user=None, capture=True, remote_only=False, **kwargs):
     capture = parse_bool(capture)
 
@@ -155,43 +150,19 @@ def sudo(dconf, cmd, user=None, capture=True, remote_only=False, **kwargs):
     return res
 
 
-@task
 def run_sql_script(conf, script_file, *args):
-    if conf.DB_TYPE == 'oracle':
-        if conf.HOST_CONN != 'local':
-            scriptdir = join(BASE_DIR, 'oracleScripts')
-            remote_path = join(scriptdir, script_file)
-            if not file_exists(remote_path):
-                run('mkdir -p {}'.format(scriptdir))
-                put(join('./oracleScripts', script_file), remote_path)
-                sudo('chown -R oracle:oinstall {}'.format(scriptdir))
-        res = run('sh {} {}'.format(remote_path, ' '.join(args)))
-    if conf.DB_TYPE == 'dm':
-        # if dconf.HOST_CONN != 'local':
-        scriptdir = join(BASE_DIR, 'dmScripts')
-        remote_path = join(scriptdir, script_file)
-        if not file_exists(remote_path):
-            run('mkdir -p {}'.format(scriptdir))
-            put(os.path.join('./dmScripts', script_file), remote_path)
-            sudo('chown -R dmdba:dinstall {}'.format(scriptdir))
-        res = run('sh {} {}'.format(remote_path, ' '.join(args)))
-    else:
-        raise Exception("Database Type {} Not Implemented !".format(conf.DB_TYPE))
-    return res
+    scriptdir = join(BASE_DIR, 'dmScripts')
+    remote_path = join(scriptdir, script_file)
+    if not file_exists(conf, remote_path):
+        run(conf, 'mkdir -p {}'.format(scriptdir))
+        put(conf, os.path.join('./dmScripts', script_file), remote_path)
+    return run(conf, 'sh {} {}'.format(remote_path, ' '.join(args)))
 
 
-@task
-def file_exists(filename):
-    with settings(warn_only=True), hide('warnings'):  # pylint: disable=not-context-manager
-        res = run('[ -f {} ]'.format(filename))
-    return res.return_code == 0
-
-
-@task
-def dir_exists(dirname):
-    with settings(warn_only=True), hide('warnings'):  # pylint: disable=not-context-manager
-        res = run('[ -d {} ]'.format(dirname))
-    return res.return_code == 0
+def file_exists(conf, filename):
+    # with settings(warn_only=True), hide('warnings'):  # pylint: disable=not-context-manager
+    # res = run(conf, '[ ls -l {} ]'.format(filename))
+    return os.path.exists(filename)
 
 
 class FabricException(Exception):
