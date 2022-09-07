@@ -11,9 +11,9 @@ ret = api.list_pod_for_all_namespaces(watch=False)
 for i in ret.items:
     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
 
-exec_command = ['/bin/sh', '-c', 'nc -z localhost 5236;echo $?']
+exec_command = ['/bin/sh', '-c', '/usr/local/bin/reload;echo $?']
 resp = stream(api.connect_get_namespaced_pod_exec,
-              name='dm1547852714717470720-0',
+              name='dm1564236029523857408-0',
               namespace='dmcp-instance',
               container='database',
               command=exec_command,

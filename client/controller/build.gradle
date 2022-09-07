@@ -79,6 +79,13 @@ run {
     // args = ["-c","$config","-t","$time","-d","$dir"]
 }
 
+//将src文件夹中的资源文件同时打包
+processResources {
+    from('src/main/java') {
+        include '**/*.json'
+    }
+}
+
 spotbugs {
     toolVersion = '4.0.0-beta3'
     ignoreFailures = true
@@ -90,4 +97,6 @@ tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
         html.required.set(false)
     }
 }
+
+
 

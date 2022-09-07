@@ -6,6 +6,7 @@
 
 package com.controller.collectors;
 
+import com.controller.types.DatabaseType;
 import com.controller.util.JSONUtil;
 import com.controller.util.json.JSONException;
 import com.controller.util.json.JSONObject;
@@ -48,6 +49,7 @@ public class DmCollector extends DBCollector {
 
     public DmCollector(String oriDBUrl, String username, String password) {
         try {
+            Class.forName(DatabaseType.DM.getSuggestedDriver()).newInstance();
             Connection conn = DriverManager.getConnection(oriDBUrl, username, password);
             Statement statement = conn.createStatement();
             // Collect DBMS version
@@ -98,7 +100,7 @@ public class DmCollector extends DBCollector {
             }
 
             conn.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             LOG.error("Error while collecting DB parameters: " + e.getMessage());
             e.printStackTrace();
         }

@@ -61,7 +61,7 @@ MAXVAL = 192 * GB
 DM_MAXVAL = 1024 * MB
 
 # Percentage of total CPUs to use for maxval
-CPU_PERCENT = 2.0
+CPU_PERCENT = 2
 
 # Percentage of total memory to use for maxval
 MEMORY_PERCENT = 0.80
@@ -126,6 +126,7 @@ def set_default_knobs(session, cascade=True):
                     minval = int(session.hardware.cpu)
                     maxval = int(session.hardware.cpu * 2)
                 if knob.name in ['global.UNDO_EXTENT_NUM']:
+                    minval = int(session.hardware.cpu)
                     maxval = int(session.hardware.cpu ** 2)
                 # CPU时钟周期
                 if knob.name in ['global.SCAN_CPU', 'global.SEEK_CPU', 'global.LKUP_CPU', 'global.NLIJ_CPU',

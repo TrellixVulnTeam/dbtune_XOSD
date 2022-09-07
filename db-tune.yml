@@ -35,6 +35,9 @@ spec:
   serviceName: "db-tune"
   replicas: 1
   minReadySeconds: 10
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Retain
   template:
     metadata:
       labels:
@@ -44,16 +47,16 @@ spec:
         kubernetes.io/hostname: node02
       terminationGracePeriodSeconds: 10
       #如果在POD中使用hostNetwork:true配置网络，pod中运行的应用程序可以直接看到宿主主机的网络接口，宿主主机所在的局域网上所有网络接口都可以访问到该应用程序。
-#      hostNetwork: true
+      #      hostNetwork: true
       containers:
-#        - name: nginx
-#          image: hub.dameng.com/amd64/nginx:1.19
-#          ports:
-#            - containerPort: 80
-#              name: web
-#          volumeMounts:
-#            - name: www
-#              mountPath: /www/html
+        #        - name: nginx
+        #          image: hub.dameng.com/amd64/nginx:1.19
+        #          ports:
+        #            - containerPort: 80
+        #              name: web
+        #          volumeMounts:
+        #            - name: www
+        #              mountPath: /www/html
         - name: db-tune
           image: hub.dameng.com/amd64/db-tune:v1.0
           env:
@@ -78,20 +81,20 @@ spec:
             - containerPort: 8000
               name: server
           volumeMounts:
-#            - name: www
-#              mountPath: /www/html
+            - name: data
+              mountPath: /var/lib/mysql/data
             - name: kubernetes-cfg
-              mountPath: /etc/kubernetes/admin.conf
+              mountPath: /etc/kubernetes/kubernetes.conf
       volumes:
         - name: kubernetes-cfg
           hostPath:
-            path: /etc/kubernetes/admin.conf
+            path: /etc/kubernetes/kubernetes.conf
   volumeClaimTemplates:
-#    - metadata:
-#        name: www
-#      spec:
-#        accessModes: [ "ReadWriteOnce" ]
-#        storageClassName: "csi-ceph-pool"
-#        resources:
-#          requests:
-#            storage: 20Gi
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "csi-ceph-pool"
+        resources:
+          requests:
+            storage: 20Gi

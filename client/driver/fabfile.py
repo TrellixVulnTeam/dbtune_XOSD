@@ -701,7 +701,7 @@ def _ready_to_shut_down_controller():
                 if 'Failed' in content:
                     m = re.search('\n.*Failed.*\n', content)
                     error_msg = m.group(0)
-                    LOG.error('{} Failed!'.format(dconf.BENCH_TYPE))
+                    LOG.error('%s Failed!'.format(dconf.BENCH_TYPE))
                     return True, error_msg
                 else:
                     ready = 'Output throughput samples into file' in content
@@ -709,7 +709,7 @@ def _ready_to_shut_down_controller():
                 if 'failed' in content:
                     m = re.search('\n.*Error.*\n', content)
                     error_msg = m.group(0)
-                    LOG.error('{} Failed!'.format(dconf.BENCH_TYPE))
+                    LOG.error('%s Failed!'.format(dconf.BENCH_TYPE))
                     return True, error_msg
                 else:
                     ready = 'SQL statistics:' in content

@@ -228,7 +228,11 @@ CELERYBEAT_SCHEDULE = {
     'run-every-5m': {
         'task': 'run_background_tasks',
         'schedule': timedelta(minutes=5),
-    }
+    },
+    # 'run-every-1m': {
+    #     'task': 'push_msg',
+    #     'schedule': timedelta(minutes=1),
+    # }
 }
 
 # The Celery documentation recommends disabling the rate limits

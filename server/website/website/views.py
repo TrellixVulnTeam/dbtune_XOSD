@@ -14,7 +14,6 @@ import re
 import shutil
 import socket
 import sys
-import threading
 import time
 from collections import OrderedDict
 from io import StringIO
@@ -45,28 +44,26 @@ from pytz import timezone
 
 from . import models as app_models
 from . import utils
-from .celery import push_message
 from .db import parser, target_objectives
 from .forms import NewResultForm, ProjectForm, SessionForm, SessionKnobForm
 from .models import (BackupData, DBMSCatalog, ExecutionTime, Hardware, KnobCatalog, KnobData,
                      MetricCatalog, MetricData, PipelineRun, Project, Result, Session,
                      SessionKnob, User, Workload, PipelineData)
+from .mq.producter import push_msg
 from .set_default_knobs import set_default_knobs
-from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY, CELERY_APP_QUEUE
+from .settings import LOG_DIR, TIME_ZONE, CHECK_CELERY
 from .tasks import train_ddpg
 from .types import (DBMSType, KnobUnitType, MetricType,
                     TaskType, VarType, WorkloadStatusType, AlgorithmType, PipelineTaskType)
-from .utils import (JSONUtil, LabelUtil, MediaUtil, TaskUtil)
+from .utils import (JSONUtil, LabelUtil, MediaUtil, TaskUtil, remove_files)
 
 sys.path.append("../../")
 from client.driver.fabfile_dm import run_loops
-from multiprocessing import Process
 from concurrent.futures import ThreadPoolExecutor
 
 theard_pool = ThreadPoolExecutor(max_workers=20)
 
 LOG = logging.getLogger(__name__)
-
 CDB_FLAG = 'CDB'
 
 
@@ -1394,7 +1391,7 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
               len(group_res), next_config)
 
     response = dict(celery_status='', result_id=latest_result.pk, message='', errors=[])
-    msg = dict(message='', status='SUCCESS', id=latest_result.session.name, recommendation='', performance='')
+    msg = dict(message=None, status=None, id=latest_result.session.name, recommendation=None, performance=None)
     if group_res.failed():
         errors = [t.traceback for t in task_list if t.traceback]
         if errors:
@@ -1404,7 +1401,7 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
             message='Celery failed to get the next configuration')
         status_code = 400
 
-        msg.update(message='failed to get the next configuration!', status='FAILURE')
+        # msg.update(message='failed to get the next configuration!', status='FAILURE')
     elif group_res.ready():
         assert group_res.successful()
         latest_result = Result.objects.filter(session=session).latest('creation_time')
@@ -1414,8 +1411,23 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
             message='Celery successfully recommended the next configuration')
         status_code = 200
 
-        msg.update(message='successfully recommended the next configuration!', recommendation=next_config,
-                   performance=latest_result.session.target_objective)
+        # 默认第一次为初始值，故TPS和训练记录不推送
+        rs_count = Result.objects.filter(session=session).count()
+        if rs_count > 1:
+            # 上一条，小于本条的降序第一个即是上一条（推荐配置和TPS值对应）
+            result = Result.objects.filter(id__lt=latest_result.id, session=session).all().order_by("-id").first()
+            backup = BackupData.objects.filter(result=result).first()
+            bench = json.loads(json.loads(backup.other)['user_defined_metrics'])['throughput']
+            config = json.loads(result.next_configuration)
+            msg.update(message='successfully recommended the configuration!', status='SUCCESS',
+                       recommendation=config['recommendation'],
+                       performance=bench['value'])
+        else:
+            result = Result.objects.filter(session=session).all().order_by("-id").first()
+            backup = BackupData.objects.filter(result=result).first()
+            bench = json.loads(json.loads(backup.other)['user_defined_metrics'])['throughput']
+            msg.update(message='successfully recommended the configuration!', status='SUCCESS',
+                       performance=bench['value'])
     else:  # One or more tasks are still waiting to execute
         celery_status = 'PENDING'
         if CHECK_CELERY:
@@ -1423,10 +1435,11 @@ def give_result(request, upload_code):  # pylint: disable=unused-argument
         response.update(celery_status=celery_status, message='Result not ready')
         status_code = 202
 
-        msg.update(message='Service not ready, failed to get the next configuration!', status='FAILURE')
-
-    # 推送消息至队列
-    push_message.apply_async(queue=CELERY_APP_QUEUE, args=[msg])
+        # msg.update(message='Service not ready, failed to get the next configuration!', status='FAILURE')
+    if msg['status'] is not None:
+        # 推送消息至队列
+        push_msg(json.dumps(msg))
+        # push_message.apply_async(queue=CELERY_APP_QUEUE, args=[msg])
     return HttpResponse(JSONUtil.dumps(response, pprint=True), status=status_code,
                         content_type='application/json')
 
@@ -1973,23 +1986,26 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
             LOG.info(msg)
         set_default_knobs(session)
 
-        data.update({'upload_code': upload_code})
+        data.update({'upload_code': upload_code, 'db_id': db_id})
         # 动态生成一份配置文件
         project_root = dirname(Path(__file__).resolve().parent.parent.parent)
         driver_config = 'client.driver.conf.' + upload_code + '_driver_config'
         shutil.copy2(join(project_root, 'client', 'driver', 'conf', 'driver_config_template.py'),
                      join(project_root, 'client', 'driver', 'conf', upload_code + '_driver_config.py'))
 
-        task = theard_pool.submit(run_loops, data['loop_num'], True, driver_config, data)
+        # 默认第一次为初始参数，训练次数+1
+        task = theard_pool.submit(run_loops, data['loop_num'] + 1, True, driver_config, data)
+        # 回调
+        # task.add_done_callback()
         LOG.info("线程[%s]开始工作!", task)
-        LOG.info("线程[%s]执行结果: [%s]", task, task.result())
+        # LOG.info("线程[%s]执行结果: [%s]", task, task.result())
         # run_loops(max_iter=data['loop_num'], load=True, driver_config=driver_config, data=data)
         # p = Process(target=run_loops, args=(data['loop_num'], True, driver_config, data))
         # p.start()
         # 等待子进程结束后再继续往下运行，通常用于进程间的同步
         # p.join()
-        # r = processPool.apply_async(func=run_loops, args=(data['loop_num'], True, driver_config, data))
         # LOG.info("进程[%s]开始工作!", p.name)
+        # processPool.apply_async(func=run_loops, args=(data['loop_num'], True, driver_config, data))
     except Exception as e:
         # result['info'] = "创建数据库参数智能推荐训练失败!" + str(e)
         # result['status'] = "failed"
@@ -2011,24 +2027,32 @@ def delete_param_recommend(request, db_id):  # pylint: disable=unused-argument,t
             raise Exception("记录已删除或不存在!")
         # 删除表中记录
         Session.objects.filter(user__username=user, project__name=CDB_FLAG, name=db_id).delete()
-
-        project_root = dirname(Path(__file__).resolve().parent.parent.parent)
-        driver_path = join(project_root, 'client', 'driver')
-        config_file = join(driver_path, 'conf', session.upload_code + '_driver_config.py')
-        # 杀掉训练进程
-        os.system('ps -ef | grep "{}" | grep -v grep | tr -s " " | cut -d" " -f2 | xargs kill -9'.format(config_file))
-        # 删除动态配置文件
-        os.remove(config_file)
-        # 删除动态日志文件
-        log_file = join(driver_path, 'log', session.upload_code)
-        results_file = join(driver_path, 'results', session.upload_code)
-        shutil.rmtree(log_file)
-        shutil.rmtree(results_file)
     except Exception as e:
         # result['info'] = "删除数据库参数智能推荐训练失败!" + str(e)
         # result['status'] = "failed"
         result.update(message="删除数据库参数智能推荐训练失败!" + str(e), status="FAILURE")
         return HttpResponse(JSONUtil.dumps(result), content_type='application/json;charset=utf-8', status=500)
+    try:
+        project_root = dirname(Path(__file__).resolve().parent.parent.parent)
+        # 删除driver模块目录
+        driver_path = join(project_root, 'client', 'driver')
+        config_file = join(driver_path, 'conf', session.upload_code + '_driver_config.py')
+        # 杀掉训练进程
+        os.system(
+            'ps -ef | grep "{}" | grep -v grep | tr -s " " | cut -d" " -f2 | xargs kill -9'.format(session.upload_code))
+        # 删除动态配置文件
+        os.remove(config_file)
+        # /tmp/driver
+        shutil.rmtree(join('/tmp/driver', session.upload_code))
+        # 删除动态日志文件
+        for name in ('log', 'results', 'dumpfiles'):
+            shutil.rmtree(join(driver_path, name, session.upload_code))
+        # 删除controller模块目录
+        controller_path = join(project_root, 'client', 'controller')
+        shutil.rmtree(join(controller_path, "output", session.upload_code))
+        remove_files(join(controller_path, 'config'), '*' + session.upload_code + '*.json')
+    except Exception as e:
+        LOG.warning("动态文件、临时文件未能成功删除,可能是不存在或者已被清理! %s", e)
     # result['info'] = "删除数据库参数智能推荐训练成功!"
     # result['status'] = "success"
     result.update(message="删除数据库参数智能推荐训练成功!")

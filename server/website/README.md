@@ -88,6 +88,12 @@ python3 manage.py createsuperuser
 ```
 sudo rabbitmq-server -detached || systemctl restart rabbitmq-server
 python3 manage.py runserver 0.0.0.0:8000
+# Django在开发环境下，dev-server如果检测到local.py被修改了，它会自动重启并动态加载新的内容。
+# 如果不想dev server自动重启可以禁用auto-reloader，命令如下：
+# python3 manage.py runserver 0.0.0.0:8000  --noreload
+# python3 manage.py celery flower
+# 读取配置启动
+# python3 manage.py celery --setting=settings
 python3 manage.py celery worker --loglevel=info --pool=threads
 python3 manage.py celerybeat --verbosity=2 --loglevel=info 
 ```

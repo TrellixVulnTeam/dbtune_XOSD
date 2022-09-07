@@ -1,7 +1,8 @@
 import os
-from os.path import realpath, dirname, join
+from os.path import dirname, join
 from pathlib import Path
 
+LOG = None
 # ==========================================================
 #  HOST LOGIN
 # ==========================================================
@@ -42,7 +43,7 @@ DB_CONF_MOUNT = False
 
 # Path to the configuration file on the database server
 # If DB_CONF_MOUNT is True, the path is on the host server, not docker
-DB_CONF = '/opt/dmdbms/dm.ini'
+DB_CONF = 'dm.ini'
 REMOTE_DB_CONF = '/opt/dmdbms/data/DAMENG/dm.ini'
 
 # Base config settings to always include when installing new configurations
@@ -55,7 +56,7 @@ DATABASE_DISK = '/'
 OVERRIDE_DB_VERSION = None
 
 # 数据库实例ID
-# UPLOAD_CODE = '$DB_INSTANCE_ID'
+DB_ID = None
 DB_POD_NAME = '$DB_POD_NAME'
 
 # ==========================================================
@@ -91,9 +92,7 @@ MAX_DISK_USAGE = 90
 WARMUP_ITERATIONS = 0
 
 # Let the database initialize for this many seconds after it restarts
-RESTART_SLEEP_SEC = 20
-
-
+RESTART_SLEEP_SEC = 10
 
 # ==========================================================
 #  WEBSITE OPTIONS
@@ -107,10 +106,6 @@ UPLOAD_CODE = '$UPLOAD_CODE'
 # ==========================================================
 #  CONTROLLER OPTIONS
 # ==========================================================
-# Controller observation time, OLTPBench will be disabled for
-# monitoring if the time is specified
-CONTROLLER_OBSERVE_SEC = 100
-
 # Path to the controller directory
 CONTROLLER_HOME = DRIVER_HOME + '/../controller'
 
@@ -126,6 +121,9 @@ BENCH_TYPE = 'sysbench'
 # Path to SYSBENCH directory
 SYSBENCH_HOME = os.path.expanduser('/home/sysbench')
 
+# sysbench timeout
+SYSBENCH_TIMEOUT = 200
+
 # ==========================================================
 #  LOGGING OPTIONS
 # ==========================================================
@@ -135,7 +133,6 @@ LOG_LEVEL = 'DEBUG'
 LOG_DIR = os.path.join(DRIVER_HOME, 'log')
 
 # Log files
-DRIVER_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'driver.log')
-BENCH_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'bench.log')
-CONTROLLER_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'controller.log')
-
+# DRIVER_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'driver.log')
+# BENCH_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'bench.log')
+# CONTROLLER_LOG = os.path.join(LOG_DIR, UPLOAD_CODE, 'controller.log')

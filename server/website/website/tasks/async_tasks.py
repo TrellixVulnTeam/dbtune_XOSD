@@ -404,6 +404,7 @@ def gen_lhs_samples(knobs, nsamples):
         lhs_samples.append(dict())
         for fidx in range(nfeats):
             # print("参数名: {name} 值: {value}".format(name=names[fidx], value=samples[sidx][fidx]))
+            # LOG.info("参数名: {name} 值: {value}".format(name=names[fidx], value=samples[sidx][fidx]))
             if types[fidx] == VarType.INTEGER:
                 lhs_samples[-1][names[fidx]] = int(round(samples[sidx][fidx]))
             elif types[fidx] == VarType.BOOL:
@@ -424,7 +425,8 @@ def gen_lhs_samples(knobs, nsamples):
                     lhs_samples[-1][names[fidx]] = memory_n_pools_val
                 elif names[fidx] == "global.BUFFER_POOLS":
                     buffer_pools_val = int(lhs_samples[-1]['global.BUFFER'] / 200)
-                    lhs_samples[-1][names[fidx]] = buffer_pools_val if is_prime(buffer_pools_val) else generate_prime(buffer_pools_val)
+                    lhs_samples[-1][names[fidx]] = buffer_pools_val if is_prime(buffer_pools_val) else generate_prime(
+                        buffer_pools_val)
                 elif names[fidx] == "global.FAST_POOL_PAGES":
                     buffer_val = int(lhs_samples[-1]['global.BUFFER'])
                     lhs_samples[-1][names[fidx]] = int(buffer_val * 1024 / 16 / 20)

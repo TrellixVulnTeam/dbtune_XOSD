@@ -14,6 +14,8 @@ Private/custom Django settings for the OtterTune project.
 # ==============================================
 
 # SECURITY WARNING: keep the secret key used in production secret!
+from urllib.parse import quote_plus
+
 SECRET_KEY = 'ADD ME!!'
 
 # ==============================================
@@ -66,15 +68,16 @@ ALLOWED_HOSTS = ['*']
 # RABBITMQ/CELERY CONFIGURATION
 # ==============================================
 # Broker URL for RabbitMq
-BROKER_URL = 'amqp://guest:guest@localhost:5672//'
-CELERY_TASK_SERIALIZER = 'msgpack'
-CELERY_RESULT_SERIALIZER = 'msgpack'
+pwd = quote_plus('dameng@777')
+BROKER_URL = 'amqp://admin:' + pwd + '@192.168.113.145:5691//'
+# CELERY_TASK_SERIALIZER = 'msgpack'
+# CELERY_RESULT_SERIALIZER = 'msgpack'
 # CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
 # CELERY_ACCEPT_CONTENT = ["msgpack"]
 CELERY_DEFAULT_QUEUE = "default"
 CELERY_APP_QUEUE = "app"
 CELERY_QUEUES = {
-    "default": { # 这是上面指定的默认队列
+    "default": {  # 这是上面指定的默认队列
         "exchange": "default",
         "exchange_type": "direct",
         "routing_key": "default"

@@ -6,6 +6,7 @@
 # -*-coding:utf-8 -*-
 
 import datetime
+import glob
 import json
 import logging
 import math
@@ -27,8 +28,8 @@ from django.utils.text import capfirst
 from django_db_logger.models import StatusLog
 from djcelery.models import TaskMeta
 
-from .models import DBMSCatalog, MetricCatalog, KnobCatalog, Result, Session, SessionKnob
-from .settings import common
+from .models import DBMSCatalog, KnobCatalog, Result, Session, SessionKnob
+from .settings import BROKER_URL
 from .types import LabelStyleType, VarType
 
 LOG = logging.getLogger(__name__)
@@ -600,9 +601,9 @@ def check_and_run_celery():
     if 'pong' in celery_status:
         return 'celery is running'
 
-    rabbitmq_url = common.BROKER_URL.split('@')[-1]
-    hostname = rabbitmq_url.split(':')[0]
-    port = rabbitmq_url.split(':')[1].split('/')[0]
+    host_ip = BROKER_URL.split("@")[-1].replace("//", "")
+    hostname = host_ip.split(':')[0]
+    port = host_ip.split(':')[1]
     rabbitmq_status = os.popen('telnet {} {}'.format(hostname, port)).read()
     LOG.info(rabbitmq_status)
 
@@ -638,6 +639,28 @@ def git_hash():
             LOG.warning("Failed to get git commit hash.\n\n%s\n\n", e, exc_info=True)
 
     return sha
+
+
+def ext_files(curr_dir='.', ext='*.txt'):
+    """
+    通配符获取指定目录下的文件
+    :param curr_dir:
+    :param ext: 通配符
+    :return:
+    """
+    for i in glob.glob(os.path.join(curr_dir, ext)):
+        yield i
+
+
+def remove_files(rootdir, ext):
+    """
+    删除目录下的符合的文件
+    :param rootdir:
+    :param ext:
+    :return:
+    """
+    for i in ext_files(rootdir, ext):
+        os.remove(i)
 
 
 # 判断是否为素数

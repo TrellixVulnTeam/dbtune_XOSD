@@ -2537,6 +2537,7 @@ def set_field(fields):
         fields['enumvals'] = '0,1'
     if fields['name'] == 'UNDO_EXTENT_NUM':
         fields['tunable'] = True
+        fields['default'] = 4
         fields['vartype'] = 2
         fields['resource'] = 2
     # 事务提交后回滚页保持时间，单位为秒。有效值范围（0~ 86400） 注：类型为DOUBLE，可支持毫秒

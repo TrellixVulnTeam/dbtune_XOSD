@@ -4,6 +4,7 @@ import string
 from datetime import timedelta
 from os import environ as env
 import base64
+from urllib.parse import quote_plus
 
 debug = env.get('DEBUG', 'False')
 rabbitmq_host = env.get('RABBITMQ_HOST', 'localhost')
@@ -46,7 +47,7 @@ DEBUG = debug
 ADMINS = ()
 MANAGERS = ADMINS
 ALLOWED_HOSTS = ['*']
-BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(rabbitmq_user, rabbitmq_pwd, rabbitmq_host, rabbitmq_port)
+BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(rabbitmq_user, quote_plus(rabbitmq_pwd), rabbitmq_host, rabbitmq_port)
 
 if bg_run_every is not None:
     # Defines the periodic task schedule for celerybeat

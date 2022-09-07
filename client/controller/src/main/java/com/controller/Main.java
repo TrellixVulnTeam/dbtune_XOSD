@@ -28,8 +28,10 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.collections15.functors.ExceptionClosure;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.core.util.SystemClock;
 import sun.misc.Signal;
 
 /**
@@ -166,7 +168,7 @@ public class Main {
             } else {
                 firstCollecting = true;
             }
-            LOG.info("Output the process pid to pid.txt");
+            LOG.info("Output the process pid to: " + f.getPath());
 
             while (!firstCollecting) {
                 Thread.sleep(1);

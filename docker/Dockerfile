@@ -38,9 +38,8 @@ COPY ./whl ./whl
 COPY ./docker/credentials.py  ./website/settings/credentials.py
 COPY ./docker/install.sh ./docker/start.sh  ./docker/wait-for-it.sh ./
 
-RUN chmod +x /opt/dmdbms/bin/*  &&  \
-    chmod +x ./*.sh &&  \
-    ./install.sh
+RUN chmod +x /opt/dmdbms/bin/* && chmod +x ./*.sh
+#    ./install.sh
 
 EXPOSE 8000 5555
 

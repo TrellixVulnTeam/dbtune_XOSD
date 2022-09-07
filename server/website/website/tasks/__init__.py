@@ -9,5 +9,5 @@ from .async_tasks import (aggregate_target_results,
                           train_ddpg,
                           configuration_recommendation_ddpg)
 
-
 from .periodic_tasks import (run_background_tasks)
+

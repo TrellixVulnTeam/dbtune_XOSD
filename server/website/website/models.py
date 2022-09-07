@@ -533,3 +533,25 @@ class ExecutionTime(models.Model):
             self.start_time = datetime.fromtimestamp(int(self.start_time), timezone(TIME_ZONE))
         super().save(force_insert=force_insert, force_update=force_update, using=using,
                      update_fields=update_fields)
+
+
+# class MessagePushManager(models.Manager):
+#
+#     def create_result(self, session, result, tps, push_time):
+#         return self.create(
+#             session=session,
+#             result=result,
+#             tps=tps,
+#             push_time=push_time)
+#
+#
+# class MessagePush(BaseModel):
+#     objects = MessagePushManager()
+#
+#     session = models.ForeignKey(Session)
+#     result = models.ForeignKey(Result)
+#     tps = models.CharField(max_length=50)
+#     push_time = models.DateTimeField()
+#
+#     def __unicode__(self):
+#         return str(self.pk)
