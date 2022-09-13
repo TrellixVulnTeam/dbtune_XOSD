@@ -50,7 +50,7 @@ public class Main {
     private static final int DEFAULT_TIME_SECONDS = -1;
 
     // Path to JSON schema directory
-    private static final String SCHEMA_PATH = "src/main/java/com/controller/json_validation_schema";
+//    private static final String SCHEMA_PATH = "src/main/java/com/controller/json_validation_schema";
 
     private static final int TO_MILLISECONDS = 1000;
 

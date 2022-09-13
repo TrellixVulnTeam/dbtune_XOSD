@@ -310,5 +310,5 @@ def copy_file_from_pod(api, namespace="dmcp-instance", name=None, container="dat
                 ]
                 tar.extractall(path=dest_path, members=subdir_and_files)
     except Exception as e:
-        print("copy_file_from_pod err: \n {}".format(e))
+        print("copy_file_from_pod err: {}".format(e))
         raise Exception("copy_file_from_pod err! {}".format(e))

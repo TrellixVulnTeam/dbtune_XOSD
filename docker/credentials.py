@@ -6,7 +6,7 @@ from os import environ as env
 import base64
 from urllib.parse import quote_plus
 
-debug = env.get('DEBUG', 'False')
+debug = env.get('DEBUG', False)
 rabbitmq_host = env.get('RABBITMQ_HOST', 'localhost')
 rabbitmq_port = env.get('RABBITMQ_PORT', '5672')
 rabbitmq_user = env.get('RABBITMQ_USER', 'guest')

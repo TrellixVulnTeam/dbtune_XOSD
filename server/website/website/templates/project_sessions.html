@@ -14,8 +14,8 @@
         <th>{{ labels.description }}</th>
         <th>{{ labels.result_count }}</th>
         <th>{{ labels.algorithm }}</th>
-        <!-- <th>{{ labels.creation_time }}</th> -->
-        <!-- <th>{{ labels.last_update }}</th> -->
+        <th>{{ labels.creation_time }}</th>
+{#        <th>{{ labels.last_update }}</th>#}
     </tr>
     {% for session in sessions %}
         <tr>
@@ -25,8 +25,8 @@
             <td style="vertical-align:middle">{{ session.description }}</td>
             <td style="vertical-align:middle">{{ session.result_count }}</td>
             <td style="vertical-align:middle">{{ session.algorithm_name }}</td>
-            <!-- <td style="vertical-align:middle">{{ session.creation_time }}</td> -->
-            <!-- td style="vertical-align:middle">{{ session.last_update }}</td> -->
+            <td style="vertical-align:middle">{{ session.creation_time }}</td>
+{#            <td style="vertical-align:middle">{{ session.last_update }}</td>#}
         </tr>
     {% endfor %}
 </table>

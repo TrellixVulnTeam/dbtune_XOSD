@@ -605,7 +605,7 @@ def check_and_run_celery():
     hostname = host_ip.split(':')[0]
     port = host_ip.split(':')[1]
     rabbitmq_status = os.popen('telnet {} {}'.format(hostname, port)).read()
-    LOG.info(rabbitmq_status)
+    LOG.info("rabbitmq_status: [%s]", rabbitmq_status)
 
     retries = 0
     while retries < 5:

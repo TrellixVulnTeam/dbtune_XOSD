@@ -46,10 +46,18 @@ class RabbitmqServer(object):
         logger.info('connect successful')
 
     def productMessage(self, queue, message):
-        self.channel.queue_declare(queue=queue, durable=True)
-        self.channel.basic_publish(exchange='',
+        topic_exchange = queue.split(".")[0]
+        # topic类型的exchange
+        self.channel.exchange_declare(exchange=topic_exchange,
+                                      exchange_type='topic', durable=True)
+        # self.channel.queue_declare(queue=queue, durable=True)
+        # self.channel.basic_publish(exchange='',
+        #                            routing_key=queue,  # 写明将消息发送给队列queuename
+        #                            body=message)
+        self.channel.basic_publish(exchange=topic_exchange,
                                    routing_key=queue,  # 写明将消息发送给队列queuename
                                    body=message)
 
     def close(self):
+        self.channel.close()
         self.conn.close()

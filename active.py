@@ -105,18 +105,38 @@
 #     yaml.dump(yaml_data, f)
 import datetime
 import json
+from urllib.parse import quote_plus, unquote_plus
 
 import pika
 
-BROKER_URL = 'amqp://guest:guest@192.168.144.152:5672//'
-CELERY_APP_QUEUE = 'app'
-protocol = BROKER_URL.split('@')[0]
-user = protocol.split('//')[1].split(':')[0]
-pwd = protocol.split('//')[1].split(':')[1]
-url = BROKER_URL.split('@')[-1]
-hostname = url.split(':')[0]
-port = url.split(':')[1].split('/')[0]
+# BROKER_URL = 'amqp://admin:dameng@777@192.168.113.145:5691//'
+CELERY_APP_QUEUE = 'tuneTopic.cdb-server-biz'
 
+# host_ip = BROKER_URL.split("@")[-1].replace("//","")
+# hostname = host_ip.split(':')[0]
+# port = host_ip.split(':')[1]
+user = 'admin'
+hostname = '192.168.113.145'
+# user = 'guest'
+# hostname = '192.168.144.152'
+# port = '5672'
+port = '5691'
+pwd = quote_plus('dameng@777')
+BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(user, pwd, hostname, port)
+
+topic = CELERY_APP_QUEUE.split(".")[0]
+# protocol = BROKER_URL.split('//')[1]
+# user = protocol.split('@')[0].split(":")[0]
+# pwd = protocol.split('@')[0].split(":")[1]
+# host_ip = protocol.split('"')[-1].split('@')[1]
+# hostname = host_ip.split(':')[0]
+# port = host_ip.split(':')[1].split('/')[0]
+
+host_ip = BROKER_URL.split("@")[-1].replace("//", "")
+hostname = host_ip.split(':')[0]
+port = host_ip.split(':')[1]
+
+pwd = unquote_plus(pwd)
 credentials = pika.PlainCredentials(user, pwd)
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname,
                                                                port=int(port),
@@ -124,15 +144,30 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname,
                                                                credentials=credentials))
 
 channel = connection.channel()
-# 申明消息队列。当不确定生产者和消费者哪个先启动时，可以两边重复声明消息队列。
-channel.queue_declare(queue=CELERY_APP_QUEUE, durable=True)
-
+# # 申明消息队列。当不确定生产者和消费者哪个先启动时，可以两边重复声明消息队列。
+# channel.queue_declare(queue=CELERY_APP_QUEUE, durable=True,
+#                       arguments={'x-message-ttl': 600000, 'x-dead-letter-exchange': 'DLX',
+#                                  'x-dead-letter-routing-key': 'tuneTopic.cdb-server-biz'})
+#
 for i in range(10):  # 生成10条消息
     message = json.dumps(
         {'id': "10000%s" % i, "amount": 100 * i, "name": "tony", "createtime": str(datetime.datetime.now())})
 # message不能直接发送给queue，需经exchange到达queue，此处使用以空字符串标识的默认的exchange
 # 向队列插入数值 routing_key是队列名
-channel.basic_publish(exchange='',
+# channel.basic_publish(exchange='',
+#                       routing_key=CELERY_APP_QUEUE,
+#                       body=message)
+# connection.close()
+
+# 声明一个名为direct_logs的direct类型的exchange
+# direct类型的exchange
+channel.exchange_declare(exchange=topic,
+                         exchange_type='topic', durable=True)
+
+# 向名为direct_logs的exchange按照设置的routing_key发送message
+channel.basic_publish(exchange=topic,
                       routing_key=CELERY_APP_QUEUE,
                       body=message)
+
+print(" [x] Sent :%r" % (message))
 connection.close()

@@ -13,7 +13,7 @@ from fabric.api import hide, lcd, local
 
 class Command(BaseCommand):
     help = 'Start celery and celerybeat in the background.'
-    celery_cmd = 'python3 manage.py {cmd} {opts} {pipe} &'.format
+    celery_cmd = 'nohup  python3 manage.py {cmd} {opts} {pipe} > /dev/null 2>&1 &'.format
     max_wait_sec = 60
 
     def add_arguments(self, parser):
@@ -40,9 +40,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '--concurrency',
             metavar='POOL_CLS',
-            default='4',
+            default='8',
             help='Number of celery tasks that can run in concurrency'
-                 'Default: 4')
+                 'Default: 8')
         parser.add_argument(
             '--celery-pidfile',
             metavar='PIDFILE',

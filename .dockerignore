@@ -1,12 +1,15 @@
 !client
-client/controller/.gradle
+!client/controller/controller.jar
+client/controller/*gradle*
 client/controller/build*
 client/controller/src
+!client/controller/src/main/json_validation_schema
 client/controller/output
 client/controller/sample_output
 client/controller/gradle.properties
 client/driver/log
 client/driver/results
+client/driver/dumpfiles
 !docker
 docker/Dockerfile*
 docker/docker-compose*.yml

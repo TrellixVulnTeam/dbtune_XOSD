@@ -24,20 +24,21 @@ ENV DJANGO_SETTINGS_MODULE=website.settings
 ENV C_FORCE_ROOT=true
 ENV LANG C.UTF-8
 
+
 COPY --from=build_mysql /usr/local/mysql /usr/local/mysql
 
 WORKDIR /home
 COPY ./dmdbms /opt/dmdbms
 COPY ./sysbench ./sysbench
 COPY ./client  ./client
-COPY ./controller.jar ./client/controller/controller.jar
 COPY ./server  ./server
 WORKDIR ./server/website
 
 COPY ./whl ./whl
 COPY ./docker/credentials.py  ./website/settings/credentials.py
-COPY ./docker/install.sh ./docker/start.sh  ./docker/wait-for-it.sh ./
+COPY ./docker/install.sh ./docker/start.sh  ./docker/wait-for-it.sh ./docker/check-celery.sh  ./
 
+RUN echo "Asia/shanghai" > /etc/timezone && ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN chmod +x /opt/dmdbms/bin/* && chmod +x ./*.sh
 #    ./install.sh
 

@@ -68,8 +68,8 @@ ALLOWED_HOSTS = ['*']
 # RABBITMQ/CELERY CONFIGURATION
 # ==============================================
 # Broker URL for RabbitMq
-pwd = quote_plus('dameng@777')
-BROKER_URL = 'amqp://admin:' + pwd + '@192.168.113.145:5691//'
+pwd = quote_plus('guest')
+BROKER_URL = 'amqp://guest:' + pwd + '@192.168.144.152:5691//'
 # CELERY_TASK_SERIALIZER = 'msgpack'
 # CELERY_RESULT_SERIALIZER = 'msgpack'
 # CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24

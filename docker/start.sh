@@ -13,9 +13,10 @@ if [ $IS_DB_INIT -lt 1 ]; then
   python3 manage.py createuser admin admin --superuser
 fi
 
-python3 manage.py initmq
+#python3 manage.py initmq
 python3 manage.py stopcelery
-python3 manage.py startcelery
+nohup /bin/bash check-celery.sh >/dev/null 2>&1 &
+#python3 manage.py startcelery
 #celery -A celery flower
 
 echo ""

@@ -92,7 +92,7 @@ MAX_DISK_USAGE = 90
 WARMUP_ITERATIONS = 0
 
 # Let the database initialize for this many seconds after it restarts
-RESTART_SLEEP_SEC = 10
+RESTART_SLEEP_SEC = 30
 
 # ==========================================================
 #  WEBSITE OPTIONS

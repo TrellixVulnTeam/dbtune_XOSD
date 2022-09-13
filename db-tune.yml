@@ -68,13 +68,15 @@ spec:
               value: "admin"
             - name: RABBITMQ_PWD
               value: "dameng@777"
+            - name: CELERY_APP_QUEUE
+              value: "tuneTopic.cdb-server-biz"
           resources:
             requests:
               memory: 8Gi
-              cpu: 0.5
+              cpu: 2
             limits:
               memory: 16Gi
-              cpu: 2
+              cpu: 4
           ports:
             - containerPort: 5555
               name: celery

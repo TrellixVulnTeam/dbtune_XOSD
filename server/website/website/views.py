@@ -1946,6 +1946,12 @@ def param_recommend(request, db_id):  # pylint: disable=unused-argument,too-many
 
         if data is None:
             raise Exception("参数未传递!")
+        if int(data['cpu']) < 2:
+            raise Exception("CPU最小配置为2C!")
+        if int(data['memory']) < 2:
+            raise Exception("MEMORY最小配置为2G!")
+        if int(data['loop_num']) < 1:
+            raise Exception("训练次数不能少于1次!")
         LOG.info(data)
         # 创建用户
         # username = "admin"
