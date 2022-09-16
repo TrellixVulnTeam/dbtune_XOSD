@@ -110,6 +110,8 @@ from urllib.parse import quote_plus, unquote_plus
 import pika
 
 # BROKER_URL = 'amqp://admin:dameng@777@192.168.113.145:5691//'
+from pika.exchange_type import ExchangeType
+
 CELERY_APP_QUEUE = 'tuneTopic.cdb-server-biz'
 
 # host_ip = BROKER_URL.split("@")[-1].replace("//","")
@@ -145,10 +147,10 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname,
 
 channel = connection.channel()
 # # 申明消息队列。当不确定生产者和消费者哪个先启动时，可以两边重复声明消息队列。
-# channel.queue_declare(queue=CELERY_APP_QUEUE, durable=True,
+# channel.queue_declare(queue=CELERY_APP_QUEUE, durable=True,exclusive=True,
 #                       arguments={'x-message-ttl': 600000, 'x-dead-letter-exchange': 'DLX',
-#                                  'x-dead-letter-routing-key': 'tuneTopic.cdb-server-biz'})
-#
+#                                  'x-dead-letter-routing-key': CELERY_APP_QUEUE})
+
 for i in range(10):  # 生成10条消息
     message = json.dumps(
         {'id': "10000%s" % i, "amount": 100 * i, "name": "tony", "createtime": str(datetime.datetime.now())})
@@ -161,8 +163,7 @@ for i in range(10):  # 生成10条消息
 
 # 声明一个名为direct_logs的direct类型的exchange
 # direct类型的exchange
-channel.exchange_declare(exchange=topic,
-                         exchange_type='topic', durable=True)
+channel.exchange_declare(exchange=topic, exchange_type=ExchangeType.topic, durable=True)
 
 # 向名为direct_logs的exchange按照设置的routing_key发送message
 channel.basic_publish(exchange=topic,

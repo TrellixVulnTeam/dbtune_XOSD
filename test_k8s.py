@@ -1,25 +1,25 @@
-from kubernetes import client, config
-
-# Configs can be set in Configuration class directly or using helper utility
-from kubernetes.stream import stream
-
-config.load_kube_config(config_file="./admin.conf")
-
-api = client.CoreV1Api()
-print("Listing pods with their IPs:")
-ret = api.list_pod_for_all_namespaces(watch=False)
-for i in ret.items:
-    print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
-
-exec_command = ['/bin/sh', '-c', '/usr/local/bin/reload;echo $?']
-resp = stream(api.connect_get_namespaced_pod_exec,
-              name='dm1564236029523857408-0',
-              namespace='dmcp-instance',
-              container='database',
-              command=exec_command,
-              stderr=True, stdin=False,
-              stdout=True, tty=False)
-print("Response: " + resp)
+# from kubernetes import client, config
+#
+# # Configs can be set in Configuration class directly or using helper utility
+# from kubernetes.stream import stream
+#
+# config.load_kube_config(config_file="./admin.conf")
+#
+# api = client.CoreV1Api()
+# print("Listing pods with their IPs:")
+# ret = api.list_pod_for_all_namespaces(watch=False)
+# for i in ret.items:
+#     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
+#
+# exec_command = ['/bin/sh', '-c', '/usr/local/bin/reload;echo $?']
+# resp = stream(api.connect_get_namespaced_pod_exec,
+#               name='dm1564236029523857408-0',
+#               namespace='dmcp-instance',
+#               container='database',
+#               command=exec_command,
+#               stderr=True, stdin=False,
+#               stdout=True, tty=False)
+# print("Response: " + resp)
 
 # Copying file
 # source_file = '/Users/Administrator/Desktop/source-code/ottertune/admin.conf'
@@ -60,3 +60,25 @@ print("Response: " + resp)
 #     else:
 #         break
 # resp.close()
+import os
+import subprocess
+
+from fabric.operations import local
+
+
+def __external_cmd(cmd, code="GBK"):
+    print(cmd)
+    process = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    while process.poll() is None:
+        line = process.stdout.readline().strip().decode(code)
+        # print(line)
+        if 'SSL' in line:
+            print(line)
+            # raise Exception("drop user Failed! {}".format(line))
+    process.kill()
+
+
+cmd = '/opt/dmdbms/bin/disql SYSCDB/Dameng8888@192.168.113.150:31497 -e "drop user IF EXISTS TRAIN cascade;"'
+__external_cmd(cmd)
+# res = local(cmd, capture=True)
+# raise Exception("drop user Failed! {}".format(res.stderr))

@@ -2452,6 +2452,7 @@ def set_field(fields):
     if fields['name'] == 'MAX_SESSION_STATEMENT':
         fields['tunable'] = True
         fields['vartype'] = 2
+        fields['minval'] = 2000
     # BDTA缓存的记录数。有效值范围（1~10000）
     if fields['name'] == 'BDTA_SIZE':
         fields['tunable'] = True

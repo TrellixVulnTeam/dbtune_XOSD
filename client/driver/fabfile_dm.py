@@ -2,6 +2,7 @@ import importlib
 import json
 import os
 import re
+import subprocess
 import time
 from collections import OrderedDict
 
@@ -78,7 +79,7 @@ def load_driver_conf(driver_conf, data):
     mod.CONTROLLER_CONFIG = os.path.join(mod.CONTROLLER_HOME,
                                          'config/{}_{}_config.json'.format(mod.DB_TYPE, mod.UPLOAD_CODE))
     # LOG files
-    # mod.DRIVER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'driver.LOG')
+    # mod.DRIVER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'driver.log')
     mod.DRIVER_LOG = os.path.join(mod.LOG_DIR, 'driver.log')
     mod.BENCH_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'bench.log')
     mod.CONTROLLER_LOG = os.path.join(mod.LOG_DIR, mod.UPLOAD_CODE, 'controller.log')
@@ -113,11 +114,20 @@ def drop_user(dconf):
                                                                                          dconf.DB_HOST,
                                                                                          dconf.DB_PORT,
                                                                                          dconf.DB_USER)
+    process = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    while process.poll() is None:
+        line = process.stdout.readline().strip().decode("GBK")
+        if 'SSL' in line:
+            LOG.error('[%s] drop user Failed!', dconf.UPLOAD_CODE)
+            raise Exception("drop user Failed! {}".format(line))
+    process.kill()
+
     # with lcd("/opt/dmdbms/bin"):  # pylint: disable=not-context-manager
-    res = local(cmd, capture=True)
-    if res.failed:
-        LOG.error('[%s] drop user Failed!', dconf.UPLOAD_CODE)
-        raise Exception("drop user Failed!{}\n".format(res.stderr))
+    # res = local(cmd, capture=True)
+    # if 'failure' in res.stdout:
+    #     LOG.error('[%s] drop user Failed!', dconf.UPLOAD_CODE)
+    #     raise Exception("drop user Failed! {}".format(res.stderr))
     # run(dconf=dconf,
     #     cmd='/opt/dmdbms/bin/disql {}/{}@{}:{} -e "drop user IF EXISTS {} cascade"'.format(dconf.ADMIN_USER,
     #                                                                                        dconf.ADMIN_PWD,
@@ -128,9 +138,12 @@ def drop_user(dconf):
 
 
 def create_user(dconf):
-    run_sql_script(dconf, 'createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER,
-                   dconf.DB_PASSWORD,
-                   dconf.DB_HOST, dconf.DB_PORT)
+    try:
+        run_sql_script(dconf, 'createUser.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_USER,
+                       dconf.DB_PASSWORD,
+                       dconf.DB_HOST, dconf.DB_PORT)
+    except Exception as e:
+        raise Exception("create user err! {}".format(e))
 
 
 def clean_sysbench(dconf):
@@ -140,7 +153,7 @@ def clean_sysbench(dconf):
         res = local(cmd, True)
         if res.failed:
             LOG.error('[%s] clean sysbench Failed!', dconf.UPLOAD_CODE)
-            raise Exception("clean sysbench Failed!{}\n".format(res.stderr))
+            raise Exception("clean sysbench Failed! {}".format(res.stderr))
 
 
 def load_sysbench(dconf):
@@ -150,7 +163,7 @@ def load_sysbench(dconf):
         res = local(cmd, True)
         if res.failed:
             LOG.error('[%s] load sysbench Failed!', dconf.UPLOAD_CODE)
-            raise Exception("Failed load sysbench!{}\n".format(res.stderr))
+            raise Exception("Failed load sysbench! {}".format(res.stderr))
 
 
 # 数据dump导出
@@ -175,8 +188,8 @@ def restart_database(dconf, api):
         try:
             if exec_command_to_pod(api=api, name=dconf.DB_POD_NAME, cmd='/usr/local/bin/reload'):
                 return True
-            time.sleep(dconf.RESTART_SLEEP_SEC)
         except Exception as e:
+            time.sleep(dconf.RESTART_SLEEP_SEC)
             LOG.warning("[%s] restart database failed, retry %s/5...", dconf.UPLOAD_CODE, index + 1)
         try:
             if index == 4: return exec_command_to_pod(api=api, name=dconf.DB_POD_NAME, cmd='/usr/local/bin/reload')
@@ -315,8 +328,8 @@ def is_ready_db(api, dconf):
         try:
             if check_db_ready(dconf, api=api, name=dconf.DB_POD_NAME):
                 return True
-            time.sleep(dconf.RESTART_SLEEP_SEC)
         except Exception as e:
+            time.sleep(dconf.RESTART_SLEEP_SEC)
             LOG.warning("[%s] db not ready, retry %s/5...", dconf.UPLOAD_CODE, index + 1)
         try:
             if index == 4: return check_db_ready(dconf, api=api, name=dconf.DB_POD_NAME)
@@ -336,8 +349,11 @@ def restore_database(dconf):
     LOG.info('[%s] Start restoring database', dconf.UPLOAD_CODE)
     drop_user(dconf)
     create_user(dconf)
-    run_sql_script(dconf, 'restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile, dconf.DB_HOST,
-                   dconf.DB_PORT)
+    try:
+        run_sql_script(dconf, 'restoreDm.sh', dconf.ADMIN_USER, dconf.ADMIN_PWD, dconf.DB_NAME, dumpfile, dconf.DB_HOST,
+                       dconf.DB_PORT)
+    except Exception as e:
+        raise Exception("restore database err! {}".format(e))
 
 
 def loop(i, dconf, api):

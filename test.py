@@ -18,6 +18,8 @@ from urllib.parse import quote_plus, unquote_plus
 import pika
 
 # BROKER_URL = 'amqp://admin:dameng@777@192.168.113.145:5691//'
+from pika.exchange_type import ExchangeType
+
 CELERY_APP_QUEUE = 'tuneTopic.cdb-server-biz'
 
 # host_ip = BROKER_URL.split("@")[-1].replace("//","")
@@ -57,9 +59,9 @@ topic = CELERY_APP_QUEUE.split(".")[0]
 # 声明一个名为direct_logs类型为direct的exchange
 # 同时在producer和consumer中声明exchage或queue是个好习惯，以保证其存在
 channel.exchange_declare(exchange=topic,
-                         exchange_type='topic', durable=True)
+                         exchange_type=ExchangeType.topic, durable=True)
 
-result = channel.queue_declare(queue=CELERY_APP_QUEUE, exclusive=False, durable=True,
+result = channel.queue_declare(queue=CELERY_APP_QUEUE, durable=True, exclusive=False,
                                arguments={'x-message-ttl': 600000, 'x-dead-letter-exchange': 'DLX',
                                           'x-dead-letter-routing-key': CELERY_APP_QUEUE})
 queue_name = result.method.queue
